@@ -1,0 +1,79 @@
+\section{Les opérations mémoire}
+
+Pour ce qui concerne les opérations mémoire, il faut effectuer un peu plus d'étapes que les opérations arithmétiques et logiques.
+En effet, une opération mémoire se compose des étapes suivantes:
+\begin{itemize}
+\item lecture de l'adresse de base
+\item ajout de l’offset (valeur immédiate) sur l'adresse
+\item lecture/écriture dans le banc mémoire
+\item écriture dans un registre si on fait un load
+\end{itemize}
+
+Comme les instructions de rangement(store) sont assez différentes des instructions de chargement(load), nous allons présenter ceux-ci de façon séparée.
+
+\subsection{Les opérations de rangement(store)}
+\subsubsection{Chemin de données}
+Voici le parcours des données pour une instruction de type store:
+\begin{figureGraphics}{Chemin de données STORE}{fig:chemdonnstore}
+  \centering
+  \includegraphics[width=1\textwidth]{./src/img/PipelineStore.pdf}
+\end{figureGraphics}
+\subsubsection{Signaux de contrôle}
+\begin{itemize}
+  \item etage DI
+    \begin{description}
+      \item[SIGN\_EXT = 1] on doit signer l'extension de la valeur immédiate pour le calcul de l’adresse de rangement
+    \end{description}
+  \item etage EX
+    \begin{description}
+      \item[ALU\_SIGNED = 1] l'opération immédiate est signée par défaut
+      \item[ALU\_SRCB = IMMD] l'ALU prends la valeur immédiate en opérande B
+    \end{description}
+  \item etage MEM
+    \begin{description}
+      \item[DC\_DS = MEM\_8, MEM\_16, MEM\_32] en fonction de la taille du store
+      \item[DC\_RW = 0] on veut écrire dans le banc mémoire
+      \item[DC\_AS = 1] on veut activer le banc mémoire
+    \end{description}
+\end{itemize}
+\subsubsection{Tests réalisés}
+Pour tester le rangement, nous avons utilisé ce fichier assembleur:
+\lstinputlisting[caption=Test STORE, label=codeStr]{../benchs/testStr.asm}
+
+
+\subsection{Les opérations de chargement(load)}
+\subsubsection{Chemin de données}
+Voici le parcours des données pour une instruction de type load:
+\begin{figureGraphics}{Chemin de données LOAD}{fig:chemdonnload}
+  \centering
+  \includegraphics[width=1\textwidth]{./src/img/PipelineLoad.pdf}
+\end{figureGraphics}
+\subsubsection{Signaux de contrôle}
+\begin{itemize}
+  \item etage DI
+    \begin{description}
+      \item[SIGN\_EXT = 1] on doit signer l'extension de la valeur immédiate pour le calcul de l'adresse de chargement
+    \end{description}
+  \item etage EX
+    \begin{description}
+       \item[ ALU\_SIGNED = 1] l"opération immédiate est signée par défaut
+        \item[ALU\_SRCB = IMMD] l’ALU prends la valeur immédiate en opérande B
+        \item[REG\_DST = REG\_RT] le registre de destination (là ou on va écrire le résultat) est le registre RT
+    \end{description}
+  \item etage MEM
+    \begin{description}
+      \item[DC\_DS = MEM\_8, MEM\_16, MEM\_32] en fonction de la taille du load
+          \item[DC\_RW = 1]  on veut lire dans le banc mémoire
+          \item[DC\_AS = 1] on veut activer le banc mémoire
+          \item[DC\_SIGNED = 1] si on veut une opération signée (LW) et 0 pour opération non signée(LBU par exemple) 
+    \end{description}
+  \item etage ER
+    \begin{description}
+        \item[REGS\_W = 0] on doit écrire le résultat de la lecture mémoire dans le banc de registres
+        \item[REGS\_SRCD = MEM\_Q] on veut stocker le résultat de la lecture mémoire dans le banc de registres
+    \end{description}
+\end{itemize}
+
+\subsubsection{Tests réalisés}
+Pour tester le chargement, nous avons utilisé ce fichier assembleur:
+\lstinputlisting[caption=Test LOAD, label=codeLdr]{../benchs/testLdrStr.asm}

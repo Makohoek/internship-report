@@ -1,0 +1,104 @@
+\section{Les opérations de saut}
+\subsection{Problèmes liés aux opérations de contrôle}\label{sec:bulles}
+Pour les instructions de saut, nous allons casser un peu la structure du pipeline.
+En effet, nous devons "retourner en arrière" pour affecter le PC. Ceci impose plusieurs problèmes dont:
+\begin{description}
+  \item[Vidage du pipeline (bulle) après un saut]
+    Après un saut, nous devons \emph{ignorer l'instruction suivante} pour ne pas exécuter celle-ci. Si on considère l'exemple de code suivant:
+    \lstinputlisting[caption=Test JUMP, label=codejump]{../benchs/jumpNormal.asm}
+    Dans ce code, il ne faut pas exécuter la dernière instruction d'addition car on doit jump.
+    Or celle-ci se retrouve quand même dans le pipeline:
+      \begin{figureGraphics}{Etat pipeline pendant le jump}{fig:etatpipelinejump}
+        \centering
+        \begin{tabular}{|c|c|c|c|c|}
+          \hline
+          EI  &   DI &  EX  &   MEM   &   ER \\
+          \hline
+          \hline
+          J   &   ?  &  ?   &   ?     &  ?     \\
+          \hline
+          ADDI& J    &  ?   &   ?     & ?   \\
+          \hline
+        \end{tabular}
+      \end{figureGraphics}
+      Il faut donc insérer des bulles en fonction de l'endroit du pipeline où on fait le saut:
+      \begin{description}
+        \item[J, JAL] une bulle
+        \item[JR, JALR] deux bulles
+        \item[branchements] trois bulles
+      \end{description}
+  \item[priorité à l'instruction de contrôle la plus loin dans le pipeline]
+      Il faut toujours prendre en compte l'instruction la plus éloignée dans le pipeline. Celle ci se retrouve "plus haut" dans le code et le 
+    programmeur s'attends à cet exécution là. Dans la Figure \ref{fig:prioJump} nous avons un aperçu de l'étage dans lequel sont exécutés les instructions de contrôle.
+      \begin{figureGraphics}{Etat pipeline pendant le jump}{fig:prioJump}
+        \centering
+        \includegraphics[width=1\textwidth]{./src/img/branchsJumps.pdf}
+      \end{figureGraphics}
+      D'après ce schéma, on peut conclure qu'il faut toujours privilégier les branchs, puis les jumps par registre et enfin les jumps par constante.
+\end{description}
+
+Comme pour les opérations mémoire, nous pouvons découper les instructions de type saut en deux catégories:
+\begin{itemize}
+  \item saut par constante (J, JAL)
+  \item saut par registre (JR, JALR)
+\end{itemize}
+Nous allons donc décrire le fonctionnement de celles-ci dans les sections ci-dessous.
+
+
+\subsection{Saut par constante}
+\subsubsection{Chemin de données}
+Nous avons affaire à deux données différentes lors d’un saut ou d’un saut avec lien (JAL). La partie concernant le \emph{ei\_pc\_next} sert pour les sauts avec liens.
+La seconde partie concerne l'affectation du PC. 
+On voit bien ici qu’il faut effectuer le saut dés l’étage DI, ainsi qu’un retour en arrière dans le pipeline pour affecter le PC.
+\begin{figureGraphics}{Chemin de données JAL}{fig:chemdonnjal}
+  \centering
+  \includegraphics[width=1\textwidth]{./src/img/PipelineJump.pdf}
+\end{figureGraphics}
+\subsubsection{Signaux de contrôle}
+\begin{itemize}
+  \item etage DI
+    \begin{description}
+      \item[JUMP = 1] on indique qu’on a trouvé un JUMP. Ceci sert pour que l’étage EI sache ou prendre son nouveau PC.
+    \end{description}
+  \item etage EX
+    \begin{description}
+      \item[REG\_DST = R31] on veut stocker l'adresse $pc+4$ dans le registre R31 (en cas de saut avec lien)
+    \end{description}
+  \item etage ER
+    \begin{description}
+      \item[REGS\_W = 0] On doit écrire dans le banc de registres
+      \item[REGS\_SRCD = Next\_PC] la donnée à écrire est le $pc+4$ récupéré lors du jump
+    \end{description}
+\end{itemize}
+\subsubsection{Tests réalisés}
+Pour le jump, nous avons testé avec le code du Listing \ref{codejump}.
+\lstinputlisting[caption=Test JAL, label=codeJAL]{../benchs/jumpAL.asm}
+
+\subsection{Saut par registre}
+\subsubsection{Chemin de données}
+Ici, comme pour le saut par constante, nous avons deux grand chemins de données:
+\begin{itemize}
+  \item Celui pour l'adresse de saut, qui doit être lu dans le banc de registre
+  \item Celui pour l'adresse du $pc+4$ qu'il faut stocker dans le banc de registre, dans le cas d'un JALR
+\end{itemize}
+\begin{figureGraphics}{Chemin de données JALR}{fig:chemdonnjalr}
+  \centering
+  \includegraphics[width=1\textwidth]{./src/img/PipelineJumpRegistre.pdf}
+\end{figureGraphics}
+\subsubsection{Signaux de contrôle}
+\begin{itemize}
+  \item etage EX
+    \begin{description}
+      \item[JR = 1] on indique qu’on a trouvé un saut par registre. Ceci sert pour que l’étage EI sache ou prendre son nouveau PC.
+        \item[REG\_DST = RD] on veut stocker l'adresse $pc+4$ dans le registre RD (en cas de saut avec lien)
+    \end{description}
+  \item etage ER
+    \begin{description}
+      \item[REGS\_W = 0] On doit écrire dans le banc de registres
+      \item[REGS\_SRCD = Next\_PC] la donnée à écrire est le $pc+4$ récupéré lors du jump
+    \end{description}
+\end{itemize}
+\subsubsection{Tests réalisés}
+\lstinputlisting[caption=Test JR, label=codeJR]{../benchs/jumpRegistre.asm}
+\lstinputlisting[caption=Test JALR 1, label=codeJALR]{../benchs/jumpALR.asm}
+\lstinputlisting[caption=Test JALR 2, label=codeJALR2]{../benchs/jumpALR2.asm}

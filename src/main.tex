@@ -1,0 +1,166 @@
+\documentclass[a4paper,11pt]{report}
+
+%%%%%%%%%%%%
+% packages %
+%%%%%%%%%%%%
+\usepackage{caption}
+\usepackage{color}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+\usepackage{listings}
+\usepackage{microtype}
+\usepackage{avant}
+
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{pgfgantt}
+
+%% Maths symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% float figures forcing
+\usepackage{placeins}
+% GNUPLOT
+%\usepackage{gnuplot-lua-tikz}
+
+\usepackage{sectsty}
+
+%%%%%%%%%%%%%%%%%%%
+% custom commands %
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+%\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{geometry}
+
+
+%%%%%%%%%%%%%%
+% new colors %
+%%%%%%%%%%%%%%
+% solarized colors
+\definecolor{base03}{HTML}{002B36}
+\definecolor{base02}{HTML}{073642}
+\definecolor{base01}{HTML}{586E75}
+\definecolor{base00}{HTML}{657B83}
+\definecolor{base0}{HTML}{839496}
+\definecolor{base1}{HTML}{93A1A1}
+\definecolor{base2}{HTML}{EEE8D5}
+\definecolor{base3}{HTML}{FDF6E3}
+\definecolor{yellow}{HTML}{B58900}
+\definecolor{orange}{HTML}{CB4B16}
+\definecolor{red}{HTML}{DC322F}
+\definecolor{magenta}{HTML}{D33682}
+\definecolor{violet}{HTML}{6C71C4}
+\definecolor{blue}{HTML}{268BD2}
+\definecolor{cyan}{HTML}{2AA198}
+\definecolor{green}{HTML}{859900}
+
+\definecolor{defaultFontColor}{HTML}{073642} % base 02
+
+%%%%%%%%%
+% fonts %
+%%%%%%%%%
+% inconsolata %
+\usepackage{inconsolata}
+%\renewcommand*\familydefault{\ttdefault} %% Only if the base font of the document is to be typewriter style
+%\usepackage[T1]{fontenc}
+\renewcommand*\familydefault{\rmdefault}\color{defaultFontColor} %% Only if the base font of the document is to be typewriter style
+
+\chapterfont{\color{red}}
+\sectionfont{\color{orange}}
+\subsectionfont{\color{blue}}
+\paragraphfont{\color{base01}}
+\paragraphfont{\color{base2}}
+\subparagraphfont{\color{base2}}
+
+% title specific %
+% title rule
+\newcommand{\titleRule}{\color{base2}\HRule\color{defaultFontColor}}
+
+%%%%%%%%%%%%%%%%%%%%
+% listing settings %
+%%%%%%%%%%%%%%%%%%%%
+\lstset{
+    basicstyle=\ttfamily,
+    language=c,
+    frame=lines,
+    sensitive=true
+    tabsize=2,
+    breaklines=true,
+    showstringspaces=false,
+    showspaces=false,
+    numbers=left,
+    backgroundcolor=\color{base3},
+    keywordstyle=\color{cyan},
+    commentstyle=\color{base1},
+    stringstyle=\color{blue},
+    numberstyle=\color{violet},
+    rulecolor=\color{base00},
+    morekeywords={nm}
+}
+
+%%%%%%%%%%%%%%%%%%%%
+% caption settings %
+%%%%%%%%%%%%%%%%%%%%
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[HTML]{657B83}{\parbox{0.98\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=true, margin=0pt, font={sf,footnotesize}}
+\DeclareCaptionFormat{figure}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[figure]{format=figure,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% pagestyle settings %
+%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead{}
+\fancyhead[LE]{\textit{\nouppercase{\leftmark}}}
+\fancyhead[RO]{\textit{\nouppercase{\rightmark}}}
+\fancyfoot{}
+\fancyfoot[C]{\thepage}
+
+\usepackage{hyperref}
+% Hyperref setup
+\hypersetup{colorlinks=true}
+\hypersetup{urlcolor=blue}
+\hypersetup{citecolor=dkgreen}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% custom environnments %
+%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{sectionIntro}{\textsf}{\newline}
+\newenvironment{figureGraphics}[2]
+{\begin{figure}[h!] \caption{#1} \label{#2} \centering}%
+{\color{gray}\hrule\end{figure}\FloatBarrier}
+%{{\color{gray}{\hrule}} \end{figure}}
+
+%%%%%%%%%%
+% Biblio %
+%%%%%%%%%%
+\bibliographystyle{alpha}
+
+%#############################################################################%
+% End of preamble                                                             %
+%#############################################################################%
+
+\begin{document}
+\input{./src/title.tex}
+\input{./src/toc.tex}
+\input{./src/thanks.tex}
+\input{./src/introduction.tex}
+\input{./src/context.tex}
+%\input{./src/Approach.tex}
+%\input{./src/cahierCharges.tex}
+%\input{./src/introductionProgrammation.tex}
+%\input{./src/operationsArithLogique.tex}
+%\input{./src/operationsMemoire.tex}
+%\input{./src/operationsJump.tex}
+%\input{./src/operationsBranch.tex}
+\input{./src/conclusion.tex}
+%\bibliography{./src/biblio}
+%\input{./src/annexes.tex}
+\end{document}
