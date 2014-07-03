@@ -1,4 +1,4 @@
-DOCNAME=InternshipReportMaKoHoek
+DOCNAME=InternshipReportMattijsKorpershoek
 all:
 	pdflatex -output-directory out src/main.tex
 	cp out/main.pdf ${DOCNAME}.pdf
