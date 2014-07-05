@@ -1,5 +1,12 @@
 \chapter{Achievements}
 
+\begin{sectionIntro}
+    All the work I have done during this internship is related
+    to the Parameter-framework, which was presented in section
+    \ref{sec:parameter-framework}.
+    Top three committer of the parameter-framework according to GitHub.
+\end{sectionIntro}
+
 % Context will be moved to another place
 \section{Context}
 
@@ -11,15 +18,38 @@ Scalable, fully configurable, userland
 \subsection{Parameter framework}
 Middleware, gap, no standard
 
-
-
 \section{Defining the new middleware standard}
 \subsection{Discovery tutorials}
+
+At the start of my internship, I had to check out the Parameter-framework's
+source code without any documentation. The idea was to have a fresh look at
+this piece of software to determine if it was open-source ready, straightforward
+to use, for someone who is unfamiliar with it.
+
+While doing that, I struggled a bit with the basic usage of the framework. The
+team decided that it would be nice to have some newcomer tutorials and examples,
+for an easier early-adoption of the open-source community. So I wrote several
+tutorials:
+\begin{description}
+    \item[Compile and install]
+    \item[Run a simple example]
+    \item[An introduction to the .pfw language]\label{desc:pfw-language}
+\end{description}
+
 \subsection{Open-sourcing on GitHub}
+Pull requests to simulate external contributions.
 
 \section{Improving build process}
-\subsection{Parameter-framework}
 \subsection{Build process}
+pwf language as described here\ref{desc:pfw-language} is used for rule based
+description. Need structure files as well, which are written in XML.
+
+\begin{figureGraphics}{Xml generation build process}{ref:build-proces}
+    TODO
+\end{figureGraphics}
+
+Some constraints may apply. Writting XML is error prone, and no check was done at
+build time. Lead to run-time errors and undefined behaviour.
 \subsection{Xml checker}
 \subsection{Schemas}
 
@@ -35,17 +65,21 @@ The parameter-framework has several kinds of parameters:
     \item IntegerParameter
     \item BooleanParameter
     \item FixedPointParameter
-    \item TODO OTHERS
+    \item StringParameter
+    \item EnumParameter
+    \item And more..
 \end{itemize}
 
-Fixed point numbers are useful for representing fractional numbers. It is used
-when the processor does not haves a floating point unit or when there is a
-performance gain by using them.(TODO reword)
+Fixed point numbers are useful for representing fractional numbers. Their usage
+is appropriate when the processor does not haves a floating point unit or when
+there is a performance gain by using them.
 
-The implementation of Fixed point numbers had some corner cases which were not
-correctly handled. Round issues appear when we were writing to a configuration
-file or displaying user input. In order to support those corner cases, the
-implementation had to be changed, and tested.
+The implementation of fixed point numbers in the Parameter-framework had some
+corner cases which were not correctly handled. Round issues appeared when we
+were writing to a configuration file or displaying user input. In order to
+support the expected behaviour for thos cases, I changed the implementation, and
+wrote tests for it.
+
 \subsection{Test suite in python}
 \subsection{Rework display mechanism}
 
@@ -57,6 +91,7 @@ Python internal tool
 
 \section{Alsa plugin refactoring}
 Not the same controls, some proprietary code was mixed with open-source code.
+Some part of the code is Intel specific. We do not wish to open-source that.
 
 \subsection{Alsa}
 \subsection{Tinyalsa}
@@ -65,16 +100,17 @@ CTL and MIX merged
 
 \section{Debug and trace participation}
 
-\section{File system plugin upstream}
+\section{File system plugin upload}
 
-\section{Core upstream}
+\section{Core upload}
 Requirements, vanilla AOSP, internal tree and open-source version must be the
 same.
 01org organisation, Intel opensource technology center.
 
 \section{Multiple modems handling(DSDA)}
-
-
+TODO
 
 \section{Porting the Intel Audio HAL on a new platform}
+TODO
 \subsection{Pandaboard}
+
