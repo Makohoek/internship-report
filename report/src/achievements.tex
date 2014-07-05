@@ -1,5 +1,6 @@
 \chapter{Achievements}
 
+% Context will be moved to another place
 \section{Context}
 
 \subsection{Android architecture}
@@ -10,13 +11,70 @@ Scalable, fully configurable, userland
 \subsection{Parameter framework}
 Middleware, gap, no standard
 
+
+
 \section{Defining the new middleware standard}
+\subsection{Discovery tutorials}
 \subsection{Open-sourcing on GitHub}
-\subsection{Tutorials}
 
 \section{Improving build process}
+\subsection{Parameter-framework}
+\subsection{Build process}
 \subsection{Xml checker}
 \subsection{Schemas}
+
+\section{Multi-variant support draft}
+\subsection{Alsa}
+\subsection{parameter-framework}
+
+\section{Remote parameter echancements}
+
+\section{FixedPointParameter enhancements}
+The parameter-framework has several kinds of parameters:
+\begin{itemize}
+    \item IntegerParameter
+    \item BooleanParameter
+    \item FixedPointParameter
+    \item TODO OTHERS
+\end{itemize}
+
+Fixed point numbers are useful for representing fractional numbers. It is used
+when the processor does not haves a floating point unit or when there is a
+performance gain by using them.(TODO reword)
+
+The implementation of Fixed point numbers had some corner cases which were not
+correctly handled. Round issues appear when we were writing to a configuration
+file or displaying user input. In order to support those corner cases, the
+implementation had to be changed, and tested.
+\subsection{Test suite in python}
+\subsection{Rework display mechanism}
+
+\section{Parameter-framework's intellectual property}
+BSD
+Private
+\subsection{license checker}
+Python internal tool
+
+\section{Alsa plugin refactoring}
+Not the same controls, some proprietary code was mixed with open-source code.
+
+\subsection{Alsa}
+\subsection{Tinyalsa}
+\subsection{Plugin architecture}
+CTL and MIX merged
+
+\section{Debug and trace participation}
+
+\section{File system plugin upstream}
+
+\section{Core upstream}
+Requirements, vanilla AOSP, internal tree and open-source version must be the
+same.
+01org organisation, Intel opensource technology center.
+
+\section{Multiple modems handling(DSDA)}
+
+
 
 \section{Porting the Intel Audio HAL on a new platform}
 \subsection{Pandaboard}
