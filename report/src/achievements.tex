@@ -2,21 +2,19 @@
 
 \begin{sectionIntro}
     All the work I have done during this internship is related
-    to the Parameter-framework, which was presented in section
-    \ref{sec:parameter-framework}.
-    Top three committer of the parameter-framework according to GitHub.
+    to the Parameter-framework, which was presented in section \ref{sec:parameter-framework}.
 \end{sectionIntro}
 
 % Context will be moved to another place
-\section{Context}
-
-\subsection{Android architecture}
-
-\subsection{Audio XML HAL}
-Scalable, fully configurable, userland
-
-\subsection{Parameter framework}
-Middleware, gap, no standard
+%\section{Context}
+%
+%\subsection{Android architecture}
+%
+%\subsection{Audio XML HAL}
+%Scalable, fully configurable, userland
+%
+%\subsection{Parameter framework}
+%Middleware, gap, no standard
 
 \section{Defining the new middleware standard}
 \subsection{Discovery tutorials}
@@ -32,8 +30,18 @@ for an easier early-adoption of the open-source community. So I wrote several
 tutorials:
 \begin{description}
     \item[Compile and install]
+        is a step-by-step guide about how to get the Parameter-framework's sources,
+        build it and install it as a standalone on Ubuntu.
     \item[Run a simple example]
+        is a howto about running the Parameter-framework command-line interface, such
+        as \lstinline{remote-process} and \lstinline {test-platform}.
+        In this howto, the configuration and setting files are provided so that
+        the user can focus on the results.
     \item[An introduction to the .pfw language]\label{desc:pfw-language}
+        is a tutorial about the .pfw language. This language was
+        created to simplify the writing of settings files for the
+        Parameter-framework. Those files are then converted into XML, which is
+        the only language the Parameter-framework understands.
 \end{description}
 
 \subsection{Open-sourcing on GitHub}
@@ -41,7 +49,7 @@ Pull requests to simulate external contributions.
 
 \section{Improving build process}
 \subsection{Build process}
-pwf language as described here\ref{desc:pfw-language} is used for rule based
+The pfw language as described here\ref{desc:pfw-language} is used for rule based
 description. Need structure files as well, which are written in XML.
 
 \begin{figureGraphics}{Xml generation build process}{ref:build-proces}
@@ -53,13 +61,13 @@ build time. Lead to run-time errors and undefined behaviour.
 \subsection{Xml checker}
 \subsection{Schemas}
 
-\section{Multi-variant support draft}
+\section{Multi-variant initial support}
 \subsection{Alsa}
 \subsection{parameter-framework}
 
-\section{Remote parameter echancements}
+\section{Remote parameter enhancements}
 
-\section{FixedPointParameter enhancements}
+\section{Fixed point parameter enhancements}
 The parameter-framework has several kinds of parameters:
 \begin{itemize}
     \item IntegerParameter
@@ -77,7 +85,7 @@ there is a performance gain by using them.
 The implementation of fixed point numbers in the Parameter-framework had some
 corner cases which were not correctly handled. Round issues appeared when we
 were writing to a configuration file or displaying user input. In order to
-support the expected behaviour for thos cases, I changed the implementation, and
+support the expected behaviour for those cases, I changed the implementation, and
 wrote tests for it.
 
 \subsection{Test suite in python}
@@ -103,6 +111,8 @@ CTL and MIX merged
 \section{File system plugin upload}
 
 \section{Core upload}
+Open-sourcing the Parameter-framework required some initial work.
+In order to smoothly integrate features from external contributors and internal work,
 Requirements, vanilla AOSP, internal tree and open-source version must be the
 same.
 01org organisation, Intel opensource technology center.
