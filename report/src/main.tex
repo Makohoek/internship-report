@@ -105,11 +105,11 @@
 %%%%%%%%%%%%%%%%%%%%
 % caption settings %
 %%%%%%%%%%%%%%%%%%%%
-\DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox[HTML]{657B83}{\parbox{0.98\textwidth}{\hspace{15pt}#1#2#3}}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=true, margin=0pt, font={sf,footnotesize}}
-\DeclareCaptionFormat{figure}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
-\captionsetup[figure]{format=figure,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
+\DeclareCaptionFont{captionText}{\color{base1}}
+\DeclareCaptionFormat{listing}{\colorbox{base03}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=captionText,textfont=captionText, singlelinecheck=true, margin=0pt, font={sf,footnotesize}}
+\DeclareCaptionFormat{figure}{\colorbox{base03}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[figure]{format=figure,labelfont=captionText,textfont=captionText, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
 
 %%%%%%%%%%%%%%%%%%%%%%
 % pagestyle settings %
@@ -128,15 +128,13 @@
 \hypersetup{urlcolor=blue}
 \hypersetup{citecolor=dkgreen}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%
 % custom environnments %
 %%%%%%%%%%%%%%%%%%%%%%%%
 \newenvironment{sectionIntro}{\textsf}{\newline}
 \newenvironment{figureGraphics}[2]
 {\begin{figure}[h!] \caption{#1} \label{#2} \centering}%
-{\color{gray}\hrule\end{figure}\FloatBarrier}
-%{{\color{gray}{\hrule}} \end{figure}}
+{\color{base03}\hrule\end{figure}\FloatBarrier}
 
 %%%%%%%%%%
 % Biblio %
@@ -156,13 +154,6 @@
 \input{./src/organisation.tex} % HOW I PLANNED the work
 \input{./src/achievements.tex} % WHAT I CREATED at work
 \input{./src/discoveries.tex} % WHAT I have learned
-%\input{./src/Approach.tex}
-%\input{./src/cahierCharges.tex}
-%\input{./src/introductionProgrammation.tex}
-%\input{./src/operationsArithLogique.tex}
-%\input{./src/operationsMemoire.tex}
-%\input{./src/operationsJump.tex}
-%\input{./src/operationsBranch.tex}
 \input{./src/conclusion.tex}
 %\bibliography{./src/biblio}
 %\input{./src/annexes.tex}

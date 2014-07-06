@@ -1,12 +1,172 @@
 \chapter{Achievements}
 
-\section{Defining the new middleware standard}
+\begin{sectionIntro}
+    All the work I have done during this internship is related
+    to the Parameter-framework, which was presented in section \ref{sec:parameter-framework}.
+\end{sectionIntro}
+
+\section{Parameter-framework introduction}
+\subsection{Discovery tutorials}
+
+At the start of my internship, I had to check out the Parameter-framework's
+source code without any documentation. The idea was to have a fresh look at
+this piece of software to determine if it was open-source ready, straightforward
+to use, for someone who is unfamiliar with it.
+
+While doing that, I struggled a bit with the basic usage of the framework. The
+team decided that it would be nice to have some newcomer tutorials and examples,
+for an easier early-adoption of the open-source community. So I wrote several
+tutorials:
+\begin{description}
+    \item[Compile and install]
+        is a step-by-step guide about how to get the Parameter-framework's sources,
+        build it and install it as a standalone on Ubuntu.
+    \item[Run a simple example]
+        is a howto about running the Parameter-framework command-line interface,
+        such as \lstinline{remote-process} and \lstinline {test-platform}.  In
+        this howto, the configuration and setting files are provided so that
+        the user can focus on the results. The example covers music play-list
+        changing based on a user's mood.
+    \item[An introduction to the .pfw language]\label{desc:pfw-language}
+        is a tutorial about the .pfw language. This language was
+        created to simplify the writing of settings files for the
+        Parameter-framework. Those files are then converted into XML, which is
+        the only language the Parameter-framework understands.
+\end{description}
+
 \subsection{Open-sourcing on GitHub}
-\subsection{Tutorials}
+Pull requests to simulate external contributions.
+set up for easy internal tree contributions and external contributions.
+
+\begin{figureGraphics}{Xml generation build process}{ref:build-proces}
+    Figure: branching process
+\end{figureGraphics}
 
 \section{Improving build process}
+\subsection{Build process}
+The pfw language as described in \ref{desc:pfw-language} is used for rule based
+description. Need structure files as well, which are written in XML.
+
+\begin{figureGraphics}{Xml generation build process}{ref:build-proces}
+    TODO
+\end{figureGraphics}
+
+Some constraints may apply. Writting XML is error prone, and no check was done at
+build time. Lead to run-time errors and undefined behaviour.
 \subsection{Xml checker}
 \subsection{Schemas}
 
+\section{Multi-variant initial support}
+\subsection{Alsa}
+\subsection{parameter-framework}
+
+\section{Remote parameter enhancements}
+
+\section{Fixed point parameter enhancements}
+The parameter-framework has several kinds of parameters:
+\begin{itemize}
+    \item IntegerParameter
+    \item BooleanParameter
+    \item FixedPointParameter
+    \item StringParameter
+    \item EnumParameter
+    \item ...
+\end{itemize}
+
+Fixed point numbers are useful for representing fractional numbers. Their
+usage is appropriate when the processor does not haves a floating point unit
+or when there is a performance gain by using them. Usually, fixed points are
+represented by $Qn.m$ format, where $n$ is the \emph{Integral part} and $m$ the
+\emph{Fractional part}.
+
+The implementation of fixed point numbers in the Parameter-framework had some
+corner cases which were not correctly handled. Round issues appeared when we
+were writing to a configuration file or displaying user input. To
+support the expected behaviour for those cases, I changed the implementation, and
+wrote tests for it.
+
+\subsection{Test suite in python}
+
+In order to verify that the new implementation was correct, I wrote a test suite
+in Python. That test suite performs several checks on each fixed point. Let's
+take an example to illustrate the purpose of the test suite.
+
+Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
+\emph{Fractional part} is $3$. We can compute some specific values for that number:
+
+\begin{figureGraphics}{$Q.2.3$ special values}{fig:fixedPoint}
+    TODO special values for a Q.2.3 number
+\end{figureGraphics}
+
+The test suite takes each of these special values and performs four checks on
+them:
+
+\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
+    TODO figure interaction between PFW and python test script.
+\end{figureGraphics}
+
+\begin{description}
+    \item[Bound check] The Parameter-framework should throw an error if we
+        attempt to set an out-of-bound value.
+    \item[Sanity check] If we manage to set the value, The Parameter-framework should not modify too much
+        the value. It can only change by a quantum.
+    \item[Consistency check] The Parameter-framework should accept the value he sent us previously.
+    \item[Bijectivity check] The Parameter-framework should return us the same value we provided him at the Consistency check.
+\end{description}
+
+After that the test suite was complete, it was time to rework the internal
+mechanism of the Parameter-framework.
+
+\subsection{Rework the internal mechanism}
+The Parameter-framework can export parameters towards a file. Fixed
+point parameters can be exported as well.
+\begin{itemize}
+    \item When exporting them, the Parameter-framework converts the value from
+        its internal representation towards a floating point number, because that is
+        easier to read.
+    \item By converting that number, it also computes the amount of digits
+        to use for display, or writing towards a file. This can result in
+        \emph{rounding issues}, due to old C++ limitations.
+\end{itemize}
+The fix I proposed was to replace the computation of displayable digits by something
+easier, which is the \emph{Fractional part} of the fixed point number.
+
+The example below illustrates the rounding error, and the output in the corrected version.
+\begin{figureGraphics}{$Q.2.3$ rounding issue}{fig:fixedPointProblem}
+    TODO show limitation example here and the new solution\\
+\end{figureGraphics}
+
+
+\section{Parameter-framework's intellectual property}
+BSD
+Private
+\subsection{license checker}
+Python internal tool
+
+\section{Alsa plugin refactoring}
+Not the same controls, some proprietary code was mixed with open-source code.
+Some part of the code is Intel specific. We do not wish to open-source that.
+
+\subsection{Alsa}
+\subsection{Tinyalsa}
+\subsection{Plugin architecture}
+CTL and MIX merged
+
+\section{Debug and trace participation}
+
+\section{File system plugin upload}
+
+\section{Core upload}
+Open-sourcing the Parameter-framework required some initial work.
+In order to smoothly integrate features from external contributors and internal work,
+Requirements, vanilla AOSP, internal tree and open-source version must be the
+same.
+01org organisation, Intel opensource technology center.
+
+\section{Multiple modem support (DSDA)}
+\subsection{Parameter-framework plugin}
+
 \section{Porting the Intel Audio HAL on a new platform}
+TODO
 \subsection{Pandaboard}
+
