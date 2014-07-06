@@ -75,21 +75,52 @@ The parameter-framework has several kinds of parameters:
     \item FixedPointParameter
     \item StringParameter
     \item EnumParameter
-    \item And more..
+    \item ...
 \end{itemize}
 
-Fixed point numbers are useful for representing fractional numbers. Their usage
-is appropriate when the processor does not haves a floating point unit or when
-there is a performance gain by using them.
+Fixed point numbers are useful for representing fractional numbers. Their
+usage is appropriate when the processor does not haves a floating point unit
+or when there is a performance gain by using them. Usually, fixed points are
+represented by $Qn.m$ format, where $n$ is the \emph{Integral part} and $m$ the
+\emph{Fractional part}.
 
 The implementation of fixed point numbers in the Parameter-framework had some
 corner cases which were not correctly handled. Round issues appeared when we
-were writing to a configuration file or displaying user input. In order to
+were writing to a configuration file or displaying user input. To
 support the expected behaviour for those cases, I changed the implementation, and
 wrote tests for it.
 
 \subsection{Test suite in python}
+
+In order to verify that the new implementation was correct, I wrote a test suite
+in Python. That test suite performs several checks on each fixed point. Let's
+take an example to illustrate the purpose of the test suite.
+
+Let's take the case of a $Q2.3$ number: the Integral part is $2$ and the
+Fractional part is $3$. We can compute some specific values for that number:
+
+\begin{figureGraphics}{Q.2.3 special values}{fig:fixedPoint}
+    TODO special values for a Q.2.3 number
+\end{figureGraphics}
+
+The test suite takes each of these special values and performs four checks on
+them:
+
+\begin{description}
+    \item[Bound check] The Parameter-framework should throw an error if we
+        attempt to set an out-of-bound value.
+    \item[Sanity check] If we manage to set the value, The Parameter-framework should not modify too much
+        the value. It can only change by a quantum.
+    \item[Consistency check] The Parameter-framework should accept the value he sent us previously.
+    \item[Bijectivity check] The Parameter-framework should return us the same value we provided him at the Consistency check.
+\end{description}
+
+\begin{figureGraphics}{fixedPoint test suite}{fig:fixedPointTest}
+    TODO figure interaction between PFW and python test script.
+\end{figureGraphics}
+
 \subsection{Rework display mechanism}
+
 
 \section{Parameter-framework's intellectual property}
 BSD
