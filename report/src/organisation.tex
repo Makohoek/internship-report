@@ -1,4 +1,4 @@
-\chapter{Organisation}\label{chap:organisation}
+\chapter{Organization}\label{chap:organisation}
 
 \section{Planning}
 \subsection{Discovering the code}
@@ -11,11 +11,14 @@ newcomer tutorials which content are described at section \ref{sec:tutorials}.
 
 \subsection{Joining forces with the scrum team}
 After three weeks, I requested to join a scrum team so that I could experience
-Intel's way of working with scrum! I did the rest of my internship as an agile developer,
-working the same way as the other team members.
+Intel's way of working with scrum! (TODO: add scrum to glossary)
+The rest of my internship I was considered as an \emph{agile developer}, completely member of the team.
+In section \ref{sec:agile}, I describe a bit more the agile methodology.
 
-\subsection{Gantt}
-TODO REWORK
+\subsection{Gantt chart}
+Since I worked as an agile developer, I had no long term goal to reach. This
+Gantt chart is more like a trace of my different activities than a real planning
+diagram.
 \begin{ganttchart}[
         x unit=0.5cm,
         y unit title=.6cm,
@@ -31,7 +34,7 @@ TODO REWORK
     \gantttitlelist{1, ..., 24}{1} \\
     \ganttgroup{GitHub}{1}{4} \\
     \ganttbar{Installation}{1}{2} \\
-    \ganttbar{Découverte PFW}{1}{4} \\
+    \ganttbar{PFW discovery}{1}{4} \\
     \ganttgroup{Android}{4}{9} \\
     \ganttbar{XML validation}{4}{8} \\
     \ganttbar{Code checker}{6}{7} \\
@@ -43,11 +46,16 @@ TODO REWORK
     \ganttbar{File system plugin}{14}{15} \\
     \ganttbar{PFW Core}{16}{18} \\
     \ganttbar{Xmm plugin}{18}{19} \\
-    \ganttbar{Vacances}{21}{21} \\
+    \ganttbar{VACANCES}{21}{21} \\
     \ganttbar{Internship report}{22}{24} \\
 \end{ganttchart}
+TODO: group by topic: discovery, core enhancements, plugin opensourcing.
 
-\section{Agile methodology}
+Every task has a dedicated section in this document to describe what have been done.
+This can be found in chapter \ref{chap:contributions}.
+
+
+\section{Agile methodology}\label{sec:agile}
 
 In the team I was working, we were organized around Agile software
 development. This way of working promotes incremental results and adaptive planning.
@@ -55,16 +63,18 @@ There are several implementations of Agile methods. In our team we were using Sc
 
 In order to understand how I worked during my internship, some key concepts of Scrum must be described.
 
-\subsection{Core concepts}
+\subsection{Key concepts}
 
 \subsubsection{Story}\label{sec:story}
-A story is a \emph{business-oriented}, short description of a client's
-need. Most of the times, it is divided into several tasks so that the developers
+A story is a \emph{business-oriented}, short description of a client's need.
+Most of the times, it is divided into several tasks so that the developers
 can take small steps to complete the story. A story is usually printed or
-written on sticky note. Those notes are grouped on a story board.
+written on sticky note. Those notes are grouped on a story board (see figure
+\ref{fig:storyboard}). When a developer starts to work on a new Story, he takes
+the sticky note and moves it on the board.
 
 \begin{figureGraphics}{A story board}{fig:storyboard}
-    TODO picture of a story board
+    \includegraphics[width=\textwidth]{./src/img/taskboard.jpg}
 \end{figureGraphics}
 
 
@@ -143,10 +153,9 @@ to find out what the team did wrong last sprint, but also to highlight what the 
 It is frequent to see little psychological games during the retrospective, which makes all members more
 eager to participate.
 
-\section{Workflow}
-In this section, we will see how I was working during my internship.
+\section{Environment and setup}
 
-\subsection{Setup}
+\subsection{Development setup}
 Since compiling the Android source tree requires a lot of computing power,
 most of developers of our team are working remotely, via ssh.
 The server we are connecting to is far more powerful than the desktops we use.
@@ -158,8 +167,10 @@ I also worked via that server, everything via command-line interface, as showed 
 \includegraphics[width=\textwidth]{./src/img/setup.pdf}
 \end{figureGraphics}
 
-\subsection{Development}
-During the
-\subsection{Verification}
-\subsection{Review}
-\subsection{Pre-integration}
+\subsection{Code review}
+Code quality matters. Clean code eases maintenance and is less error-prone. Those facts
+are driving the team that I integrated at Intel.
+Naturally, all the patches I have delivered during my internship have been reviewed and meet the expected quality.
+
+I have done some code review myself during this internship. It is really good to
+understand how other people are working and to come up with new ideas.
