@@ -1,13 +1,51 @@
-\chapter{Organisation}
+\chapter{Organisation}\label{chap:organisation}
 
 \section{Planning}
-% What i did, when, how long
-TODO
+\subsection{Discovering the code}
+At the first work week, I dug into the Parameter-framework's code. I had no
+documentation at all, just the code on GitHub. The absence of help was done on
+purpose: the team needed an external point of view on the source code. I had
+to understand the powerful concepts of the Parameter-framework just by reading
+the code. Since I struggled a bit with the concepts, I decided to write some
+newcomer tutorials which content are described at section \ref{sec:tutorials}.
+
+\subsection{Joining forces with the scrum team}
+After three weeks, I requested to join a scrum team so that I could experience
+Intel's way of working with scrum! I did the rest of my internship as an agile developer,
+working the same way as the other team members.
 
 \subsection{Gantt}
-% Disovering the team, the PWF
-% Working with them within the scrum: xml stories
-%
+TODO REWORK
+\begin{ganttchart}[
+        x unit=0.5cm,
+        y unit title=.6cm,
+        y unit chart=.6cm,
+        hgrid=true,
+        vgrid={*1{red,  dotted}},
+        canvas/.style={fill=base2},
+        bar/.style={fill=orange},
+        title/.style={fill=base2},
+        group/.style={fill=blue, shape=ganttgroup},
+        bar height = 0.4,
+    ]{1}{24}
+    \gantttitlelist{1, ..., 24}{1} \\
+    \ganttgroup{GitHub}{1}{4} \\
+    \ganttbar{Installation}{1}{2} \\
+    \ganttbar{Découverte PFW}{1}{4} \\
+    \ganttgroup{Android}{4}{9} \\
+    \ganttbar{XML validation}{4}{8} \\
+    \ganttbar{Code checker}{6}{7} \\
+    \ganttbar{HW detection}{8}{9} \\
+    \ganttbar{Fixed point improvements}{9}{13} \\
+    \ganttbar{Build system issues}{11}{13} \\
+    \ganttbar{Alsa plugin refactor}{13}{15} \\
+    \ganttbar{PFW IP plan}{13}{14} \\
+    \ganttbar{File system plugin}{14}{15} \\
+    \ganttbar{PFW Core}{16}{18} \\
+    \ganttbar{Xmm plugin}{18}{19} \\
+    \ganttbar{Vacances}{21}{21} \\
+    \ganttbar{Internship report}{22}{24} \\
+\end{ganttchart}
 
 \section{Agile methodology}
 
@@ -76,16 +114,28 @@ This meeting is very useful, it helps tackle early problems and can assist the s
 Note that this should not take longer than 15 minutes.
 
 
-\subsubsection{Poker planning}
-TODO
+\subsubsection{Planning poker}
+During planning poker sessions, we have to estimate how much time each story takes. In order to do a correct estimate,
+the product owner is explaining what the exact requirements are. After that, each member of the team should guess
+how much "story points" (which can sometimes be approximated to a day of work) the story should take to be done.
+This is done in the form of a vote, with poker session cards.
+
+\begin{figureGraphics}{Planning poker cards}{fig:poker}
+\includegraphics[width=\textwidth]{./src/img/poker.jpg}
+\end{figureGraphics}
+
+After arriving at a team consensus, the story is considered \emph{planned}. This
+is very useful so that the Product owner can group multiple stories which have
+to be done in a sprint.
 
 
 \subsubsection{Demos}
 At the end of each sprint, the team has to demonstrate their achievements. This
 is a very important meeting with people external to the team. Only the work
-which was \emph{completely done} during the last sprint is showed off during that presentation.
-This presentation is about one hour. It is important to focus on the business value of the things that
-have been done during the last sprint and set apart the technical details.  TODO reword a bit
+which was \emph{done} during the last sprint is showed off during that presentation.
+
+This presentation is important to show the contributions that the team has made.
+I participated in every Demo since I was fully member of the scrum team.
 
 \subsubsection{Retrospectives}
 After the Demo, the team has a look back at how the last sprint happened. This short meeting is made
@@ -94,8 +144,7 @@ It is frequent to see little psychological games during the retrospective, which
 eager to participate.
 
 \section{Workflow}
-In this section, we will see 
-TODO
+In this section, we will see how I was working during my internship.
 
 \subsection{Setup}
 Since compiling the Android source tree requires a lot of computing power,
@@ -110,6 +159,7 @@ I also worked via that server, everything via command-line interface, as showed 
 \end{figureGraphics}
 
 \subsection{Development}
+During the
 \subsection{Verification}
 \subsection{Review}
 \subsection{Pre-integration}

@@ -1,0 +1,24 @@
+% Disovering the team, the PWF
+% Working with them within the scrum: xml stories
+%
+\begin{ganttchart}[
+        x unit=0.8cm,
+        y unit title=.6cm,
+        y unit chart=.6cm,
+        hgrid=true,
+        vgrid={*1{red,  dotted}},
+        canvas/.style={fill=base2},
+        bar/.style={fill=orange},
+        title/.style={fill=base2},
+        group/.style={fill=blue, shape=ganttgroup},
+        bar height = 0.4,
+    ]{1}{9}
+    \gantttitlelist{1, ..., 9}{1} \\
+    \ganttgroup{GitHub}{1}{4} \\
+    \ganttbar{Installation}{1}{2} \\
+    \ganttbar{Découverte PFW}{1}{4} \\
+    \ganttgroup{Android}{4}{9} \\
+    \ganttbar{XSD validation}{4}{8} \\
+    \ganttbar{Code checker}{6}{7} \\
+    \ganttbar{HW detection}{8}{9}
+\end{ganttchart}
