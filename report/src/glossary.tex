@@ -1,0 +1,641 @@
+% je n'ai pas écrit ce glossaire, je l'ai traduis les termes utilisés en français
+
+% $0 glossary entries: UMG, MeeGo, Android, PSI, Medfield, MID, SoC
+
+% define an acronym using \newglossaryentry
+\newglossaryentry{umg}
+{
+% how the entry name should appear in the glossary
+  name=UMG (Ultra Mobility Group),
+% how the description should appear in the glossary
+  description={Le departement d'Intel responsable pour le dévelopement
+    des processeurs sur les platformes mobiles},
+% how the entry should appear in the document text
+  text=UMG,
+% how the entry should appear the first time it is used in the
+% document text
+  first=Ultra Mobility Group (UMG)
+}
+
+\newglossaryentry{meego}
+{
+  name=MeeGo\textsuperscript{\texttrademark},
+  description={Un système d'exploitation libre pour mobile basé sur linux créé par 
+      l'association d'Intel et de Nokia}
+}
+
+\newglossaryentry{android}
+{
+  name=Android\textsuperscript{\texttrademark},
+  description={La suite logiciel de google pour les mobiles,
+  basée sur le noyau Linux, qui inclut un système d'exploitation, l'intergiciel
+  et des applications clés}
+}
+
+\newglossaryentry{psi}
+{
+  name=PSI (Platform Software Integration),
+  description={La division d'UMG responsable de l'intégration et de la 
+    validation des composants logiciels des plateformes mobiles d'Intel},
+  text=PSI,
+  first=Platform Software Integration (PSI)
+}
+
+\newglossaryentry{medfield}
+{
+  name=Medfield,
+  description={La quatrième génération de plateforme mobile. 
+    Elle est construite autour d'un System-on-Chip d'Intel qui contient
+    un Intel Atom\textsuperscript{\texttrademark} gravé en 32nm
+  } 
+}
+
+\newglossaryentry{mid}
+{
+  name=MID (Mobile Internet Device),
+  description={A multimedia-capable mobile device providing wireless
+    Internet access},
+  text=MID,
+  first=Mobile Internet Devices (MID)
+}
+
+\newglossaryentry{soc}
+{
+  name=SoC (System-on-Chip),
+  description={Tous les composants d'un ordinateur ou autre 
+    système électronique complet embarqué sur une seule puce},
+  text=SoC,
+  first=System-on-Chip (SoC)
+}
+
+\newglossaryentry{shell}
+{
+  name=Shell,
+  description={Interface en lignes de commande (interpreteur) d'un système 
+  d’exploitation},
+  text=shell,
+}
+
+\newglossaryentry{bash}
+{
+  name=Bourne-Again shell (Bash),
+  description={Interprète par défaut sur de nombreux Unix libres, notamment 
+  sur les systèmes GNU/Linux. C'est aussi le "shell" par défaut de Mac OS X.
+  Il dispose de nombreuses fonctionnalités comme l'historique ou l'autocomplétion},
+  text=Bash,
+}
+
+\newglossaryentry{python}
+{
+  name=Python,
+  description={Langage de programmation de haut niveau favorisant la programmation impérative structurée et orientée objet. 
+  Il est doté d'un typage dynamique fort, d'une gestion automatique de 
+  la mémoire ainsi que d'un système d'exception },
+  text=python,
+}
+
+
+
+% $1 glossary entries: Atom, ODM, OS, Autotools, Makefile, Logic
+% analyzer, GDB, strace, Git, Kernel, Latex, Penwell, MSIC, 3G, iCDK,
+% eMMC, kboot, Firmware
+
+\newglossaryentry{atom}
+{
+  name=Intel Atom\textsuperscript{\texttrademark},
+  description={Le nom de la marque d'une série de microprocesseurs x86
+    ultra basse consommation d'Intel. Ils sont surtout utilisés dans les netbook
+	et les appareils mobiles},
+  text=Atom,
+  first=Intel Atom\textsuperscript{\texttrademark}
+}
+\newglossaryentry{xml}
+{
+  name=XML (Extensible Markup Language),
+  description={Language informatique de balisage, servant à échanger
+  des données entre systèmes hétérogènes. L'objectif de conception
+    du XML est la simplicité, la généricité et la facilité d'utilisation},
+  text=XML,
+  first=Extensible Markup Language (XML)
+}
+
+\newglossaryentry{pfw}
+{
+  name=PFW (Parameter FrameWork),
+  description={Une librairie qui permet une couche d'abstraction
+  matérielle grâce à des paramètres hiérarchisés. De plus, des configurations peuvent 
+  s'appliquer sur ces paramètres en fonction de critères. Les configurations et 
+  structures sont sauvées dans des fichiers XML. Il n'est donc pas nécessaire de 
+  recompiler le PFW pour modifier son comportement},
+  text=PFW,
+  first=Parameter FrameWork (PFW)
+}
+
+\newglossaryentry{odm}
+{
+  name=ODM (Original Design Manufacturer),
+  description={Une compagnie qui dessine et fabrique un produit dont les 
+    les spécifications et éventuellement la marque est détenue par une autre 
+    firme},
+  text=ODM,
+  first=Original Design Manufacturers (ODM)
+}
+
+
+\newglossaryentry{msic}
+{
+  name=MSIC (Mixed Signal Integrated Circuit),
+  description={Un circuit intégré qui contient des circuits analogiques et
+    numériques. Il gère les haut-parleurs du téléphone ainsi que les micros et 
+    tous les appareils se branchant sur la prise jack},
+  text=MSIC,
+  first=Mixed Signal Integrated Circuit (MSIC)
+}
+
+
+\newglossaryentry{os}
+{
+  name=OS (Operating System),
+  description={A software that runs on computers, manages computer
+    hardware resources, and provides common services for execution of
+    various application software. Without an operating system, a user
+    cannot run an application program on his computer, unless the
+    application program is self booting},
+  text=OS,
+  first=Operating Systems (OS)
+}
+
+\newglossaryentry{autotools}
+{
+  name=Autotools,
+  description={The GNU build system, also known as the Autotools, is a
+    suite of programming tools designed to assist in making
+    source-code packages portable to many Unix-like systems},
+  text=autotools
+}
+
+\newglossaryentry{makefile}
+{
+  name=Makefile,
+  description={Dans le développement logiciel, «Make» est un utilitaire
+    qui construit automatiquement des programmes ou librairies
+	depuis le code source, grâce a des fichiers appeler makefile qui spécifient
+	comment fabriquer le programme cible},
+  text=makefile
+}
+
+\newglossaryentry{logic analyzer}
+{
+  name=Logic Analyzer,
+  description={An electronic instrument which displays signals in a
+    digital circuit. For PC-based analyzers, the hardware connects to
+    a computer through a USB or Ethernet connection and then relays
+    the captured signals to the software on the computer},
+  text=logic analyzer
+}
+
+\newglossaryentry{gdb}
+{
+  name=GDB (GNU Debugger),
+  description={The GNU Debugger is the standard debugger for the GNU
+    software system. It is a portable debugger that runs on many
+    Unix-like systems and works for many programming languages},
+  text=GDB,
+  first=GNU Debugger (GDB)
+}
+
+\newglossaryentry{strace}
+{
+  name=Strace,
+  description={A debugging utility in Linux to monitor the system
+    calls used by a program and all the signals it receives},
+  text=strace
+}
+
+\newglossaryentry{git}
+{
+  name=Git,
+  description={A distributed revision control system with an emphasis
+    on speed. Git was initially designed and developed by Linus
+    Torvalds for Linux kernel development},
+}
+
+\newglossaryentry{3gpp}
+{
+  name=3rd Generation Partnership Projec (3gpp),
+  description={Coopération entre organismes de standardisation régionaux en 
+    Télécommunications, visant à produire des spécifications techniques 
+    pour les réseaux mobiles de 3e (3G) et 4e générations (4G)},
+   text=3rd Generation Partnership Project
+}
+
+\newglossaryentry{noyau linux}
+{
+  name=Noyau linux,
+  description={Un noyau de système d'exploitation libre et "open source". 
+  C'est l'un des plus utilisés dans le monde},
+  text=noyau linux
+}
+
+\newglossaryentry{latex}
+{
+  name=\LaTeX,
+  description={A document markup language and document preparation
+    system for the TeX typesetting program. The term LaTeX refers only
+    to the language in which documents are written, not to the editor
+    used to write those documents},
+}
+
+\newglossaryentry{penwell}
+{
+  name=Penwell,
+  description={Le nom de code du system-on-Chip qui contient le notament le processeur
+   central Atom},
+  text=Penwell
+}
+
+\newglossaryentry{ifx}
+{
+  name=IFX (Infineon),
+  description={The codename of the Infineon modem on the software
+    development plateform. Infineon Technologies AG is a German
+    semiconductor manufacturer and was founded in 1999, when the
+    semiconductor operations of the parent company Siemens AG were
+    spun off to form a separate legal entity},
+  text=IFX,
+  first=Infineon (IFX)
+}
+
+\newglossaryentry{3g}
+{
+  name=3G,
+  description={Also known as ``3rd generation mobile
+    telecommunications'', it is a generation of standards for mobile
+    phones and mobile telecommunication services. Application services
+    include wide-area wireless voice telephone, mobile Internet
+    access, video calls and mobile TV, all in a mobile
+    environment. Recent 3G releases, often denoted 3.5G and 3.75G,
+    also provide mobile broadband access of several Mbit/s to
+    smartphones and mobile modems in laptop computers}
+}
+
+\newglossaryentry{ti}
+{
+  name=TI (Texas Instrument),
+  description={An American company founded in 1930, which develops and
+    commercializes semiconductor and computer technology. Texas
+    Instrument is one of the largest manufacturer of semiconductors
+    worldwide after Intel},
+  text=TI,
+  first=Texas Instrument (TI)
+}
+
+\newglossaryentry{icdk}
+{
+  name=iCDK (Intel Customer Development Kit),
+  description={The codename of the Intel software development
+    platform. It is a printed circuit board containing an Intel
+    System-on-Chip, electronic components and peripherals from various
+    hardware manufacturers},
+  text=iCDK,
+  first=Intel Customer Development Kit (iCDK)
+}
+
+\newglossaryentry{emmc}
+{
+  name=eMMC (Embedded MultiMedia Card),
+  description={A flash memory card standard. eMMC describes an
+    architecture consisting of an embedded storage solution, flash
+    memory and controller, all in a small package},
+  text=eMMC
+}
+
+\newglossaryentry{kboot}
+{
+  name=Kboot,
+  description={A proof-of-concept implementation of a Linux
+    bootloader. This relatively small program is needed to access the
+    nonvolatile devices from which the operating system programs and
+    data are loaded},
+  text=kboot
+}
+
+\newglossaryentry{firmware}
+{
+  name=Firmware,
+  description={A fixed, usually rather small, program and/or data
+    structure that internally control various electronic devices such
+    as remote controls, calculators, hard disks, keyboards or memory
+    cards},
+  text=firmware
+}
+
+% $2 glossary entries: Pulseaudio, PCM, ACS, API, Driver, SSP, I2S,
+% KTS
+
+\newglossaryentry{pulseaudio}
+{
+  name=PulseAudio,
+  description={A cross-platform, networked sound server commonly used
+    on the Linux-based and FreeBSD operating systems. One of the goals
+    of PulseAudio is to reroute all sound streams through it,
+    including those from processes that attempt to directly access the
+    hardware}
+}
+
+\newglossaryentry{pcm}
+{
+  name=PCM (Pulse-Code Modulation),
+  description={A method used to digitally represent sampled analog
+    signals. It is the standard form for digital audio in computers as
+    well as digital telephone systems},
+  text=PCM,
+  first=Pulse-Code Modulation (PCM)
+}
+
+\newglossaryentry{acs}
+{
+  name=ACS (Automation Control System),
+  description={An automation and test sequencing tool developed by
+    Intel. It is written in Python and serves test requirements at the
+    middleware level. It was chosen as a solution to automate the
+    audio quality checker tool},
+  text=ACS,
+  first=Automation Control System (ACS)
+}
+
+\newglossaryentry{api}
+{
+  name=API (Application Programming Interface),
+  description={A particular set of rules (`code') and specifications
+    that software programs can follow to communicate with each
+    other. It serves as an interface between different software
+    programs and facilitates their interaction},
+  text=API,
+  first=Application Programming Interface (API)
+}
+
+\newglossaryentry{driver}
+{
+  name=Device driver,
+  description={A computer program allowing higher-level computer
+    programs to interact with a hardware device},
+  text=driver,
+  first=device drivers
+}
+
+\newglossaryentry{ssp}
+{
+  name=SSP (Synchronous Serial Port),
+  description={A controller that supports the Serial Peripheral
+    Interface and Integrated Interchip Sound interface. It uses a
+    master-slave paradigm to communicate across its connected bus},
+  text=SSP,
+  first=Synchronous Serial Port (SSP)
+}
+
+
+\newglossaryentry{kts}
+{
+  name=KTS (Kernel Test Suite),
+  description={A suite of test programs for audio quality assurance at
+    the driver level. The programs in this suite are aimed at the
+    audio hardware devices in Medfield, but currently provide test
+    routines for the bluetooth and modem chip},
+  text=KTS,
+  first=Kernel Test Suite (KTS)
+}
+
+% $3 glossary entries: LPE, DMAC, FIFO, MISO, MOSI, SPI, BlueZ, HCI,
+% UART, IOCTL, ssploop, sspconf, AT commands, KGDB, dmesg, GPL, Free
+% Software, Gitorious, XML
+
+\newglossaryentry{lpe}
+{
+  name=LPE (Low Power Engine),
+  description={A circuit of the Intel System-on-Chip responsible for
+    audio processing. It is designed to process Pulse-Code Modulation
+    data as well as compressed audio data while being power efficient},
+  text=LPE,
+  first=Low Power Engine (LPE)
+}
+
+\newglossaryentry{dmac}
+{
+  name=DMAC (Direct Memory Access Controller),
+  description={A controller that allows certain hardware subsystems
+    within the computer to access system memory for reading and/or
+    writing independently of the central processing unit. Without
+    Direct Memory Access, the central processing unit is typically
+    fully occupied for the entire duration of the read or write
+    operation, and is thus unavailable to perform other work. With
+    Direct Memory Access, the central processing unit would initiate
+    the transfer, do other operations while the transfer is in
+    progress, and receive an interrupt from the Direct Memory Access
+    Controller once the operation has been done},
+  text=DMAC,
+  first=Direct Memory Access Controller (DMAC)
+}
+
+\newglossaryentry{fifo}
+{
+  name={FIFO (First In, First Out)},
+  description={An abstraction in ways of organizing and manipulation
+    of data relative to time and prioritization. This expression
+    describes the principle of a queue processing technique: what
+    comes in first is handled first, what comes in next waits until
+    the first is finished},
+  text=FIFO,
+  first={First In, First Out (FIFO)}
+}
+
+\newglossaryentry{miso}
+{
+  name={MISO (Master Input, Slave Output)},
+  description={A data line in the Serial Peripheral Interface and
+    Integrated Interchip Sound buses. The name means that data on this
+    line is outputed from the slave device},
+  text=MISO,
+  first={Master Input, Slave Output (MISO)}
+}
+
+\newglossaryentry{mosi}
+{
+  name={MOSI (Master Output, Slave Input)},
+  description={A data line in the Serial Peripheral Interface and
+    Integrated Interchip Sound buses. The name means that data on this
+    line is outputed from the master device},
+  text=MOSI,
+  first={Master Output, Slave Input (MOSI)}
+}
+
+\newglossaryentry{spi}
+{
+  name=SPI (Serial Peripheral Interface),
+  description={A synchronous serial data link standard named by
+    Motorola that operates in full duplex mode},
+  text=SPI,
+  first=Serial Peripheral Interface (SPI)
+}
+
+\newglossaryentry{bluez}
+{
+  name=BlueZ,
+  description={The canonical Bluetooth stack for Linux. Its goal is to
+    make an implementation of the Bluetooth wireless standards
+    specifications for Linux. As of 2006, the BlueZ stack supports all
+    core Bluetooth protocols and layers. It was initially developed by
+    Qualcomm, and is available for Linux kernel versions 2.4.6 and up}
+}
+
+\newglossaryentry{hci}
+{
+  name=HCI (Host/Controller Interface),
+  description={A protocol of the Bluetooth stack. It standardizes
+    communication between the host stack (e.g., a personal computer or
+    mobile phone Operating System) and the controller (the Bluetooth
+    integrated circuit). There are several Host/Controller Interface
+    transport layer standards, each using a different hardware
+    interface to transfer the same command, event and data
+    packets. The most commonly used are USB (in personal computers)
+    and UART (in mobile phones)},
+  text=HCI,
+  first=Host/Controller Interface (HCI)
+}
+
+\newglossaryentry{uart}
+{
+  name=UART (Universal Asynchronous Receiver/Transmitter),
+  description={An individual (or part of an) integrated circuit used
+    for serial communications over a computer or peripheral device
+    serial port. It is now commonly included in micro-controllers},
+  text=UART,
+  first=Universal Asynchronous Receiver/Transmitter (UART)
+}
+
+\newglossaryentry{ioctl}
+{
+  name=IOCTL (Input/Output Control),
+  description={A system call for device-specific operations and other
+    operations which cannot be expressed by regular system calls. It
+    takes a parameter specifying a request code; the effect of a call
+    depends completely on the request code},
+  text=IOCTL,
+  first=Input/Output Control (IOCTL)
+}
+
+\newglossaryentry{ssploop}
+{
+  name=Ssploop,
+  description={A loopback test program which is part of the utilities
+    found in the Kernel Test Suite. In its current state it provides
+    test routines for the Infineon modem and the Texas Instrument
+    bluetooth chips},
+  text=ssploop
+}
+
+\newglossaryentry{sspconf}
+{
+  name=Sspconf,
+  description={A configuration program which is part of the utilities
+    found in the Kernel Test Suite. In its current state it provides
+    configuration capabilities for the Synchronous Serial Port
+    controller on the Intel System-on-Chip associated to the Texas
+    Instrument bluetooth chip},
+  text=sspconf
+}
+
+\newglossaryentry{at commands}
+{
+  name=AT Commands,
+  description={Also known as ``Hayes command set'', it is a specific
+    command-language originally developed for the Hayes Smartmodem 300
+    baud modem in 1981 by Hayes Communications. The command set
+    consists of a series of short text strings which combine together
+    to produce complete commands for operations such as dialling,
+    hanging up, and changing the parameters of the connection}
+}
+
+\newglossaryentry{kgdb}
+{
+  name=KGDB,
+  description={A debugger for the Linux kernel. It requires two
+    machines that are connected via a serial connection. It was
+    originally implemented as a patch to Linux kernel, but it has been
+    included in the official kernel in 2.6.26. The target machine (the
+    one being debugged) runs the patched kernel and the other (host)
+    machine runs the GNU Debugger. The GNU Debugger remote protocol is
+    used between the two machines},
+}
+
+\newglossaryentry{dmesg}
+{
+  name=Dmesg,
+  description={A command on most Linux and Unix based operating
+    systems that prints the message buffer of the kernel},
+  text=dmesg
+}
+
+\newglossaryentry{gpl}
+{
+  name=GPL (GNU General Public License),
+  description={The most widely used Free Software license, originally
+    written by Richard Stallman for the GNU project. It is the first
+    copyleft license for general use, which means that derived works
+    can only be distributed under the same license terms. Under this
+    philosophy, the GNU Public License grants the recipients of a
+    computer program the rights of the free software definition and
+    uses copyleft to ensure the freedoms are preserved, even when the
+    work is changed or added to},
+  text=GPL,
+  first=GNU General Public License (GPL)
+}
+
+\newglossaryentry{free software}
+{
+  name=Free Software,
+  description={Software that can be used, studied, and modified
+    without restriction, and which can be copied and redistributed in
+    modified or unmodified form either without restriction, or with
+    restrictions that only ensure that further recipients can also do
+    these things and that manufacturers of consumer-facing hardware
+    allow user modifications to their hardware. In practice, for
+    software to be distributed as free software, the human-readable
+    form of the program (the source code) must be made available to
+    the recipient along with a notice granting the above
+    permissions. Such a notice either is a free software license, or a
+    notice that the source code is released into the public domain},
+}
+
+\newglossaryentry{gitorious}
+{
+  name=Gitorious,
+  description={A website hosting collaborative open source projects
+    using the Git distributed revision control system. It is used
+    internally by Platform Software Intergration engineering teams to
+    manage code delivery},
+}
+
+% $4 glossary entries: CAMSI
+
+\newglossaryentry{camsi}
+{
+  name=CAMSI,
+  description={Stands for ``Concepteur en Architectures de Machines et
+    Systèmes Informatiques''. It is a Master Degree diploma
+    collaboratively issued by Université Paul Sabatier and INP
+    ENSEEIHT in Toulouse. The courses of this diploma include
+    electronic layout design, computer architecture design,
+    micro-controller programming, Linux kernel programming and
+    real-time Operating Systems scheduling}
+}
+
+% easter-egg glossary entry: Toulouse
+
+\newglossaryentry{toulouse}
+{
+  name=Toulouse,
+  description={A middle-sized city in southwest France with friendly
+    people and an almost constantly sunny weather, albeit windy}
+}
+

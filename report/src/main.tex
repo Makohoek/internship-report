@@ -141,12 +141,20 @@
 %%%%%%%%%%
 \bibliographystyle{alpha}
 
+
+% make use of glossary
+\usepackage[toc]{glossaries}
+\makeglossaries
+\input{src/glossary}
+\renewcommand{\glossaryname}{Glossary}
+
 %#############################################################################%
 % End of preamble                                                             %
 %#############################################################################%
 
 \begin{document}
 \input{./src/title.tex}
+\printglossary[title=\glossaryname,toctitle=\glossaryname]
 \input{./src/toc.tex}
 \input{./src/thanks.tex}
 \input{./src/introduction.tex}
