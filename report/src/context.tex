@@ -47,20 +47,47 @@ the Audio \gls{hal} is placed within this platform.
 
 \subsection{Global Android architecture}
 
+On the figure \ref{fig:archi}, the we can see the Audio \gls{hal} between the
+Linux \gls{kernel} and the libraries layers.
 \begin{figureGraphics}{Global Android architecture}{fig:archi}
-\includegraphics[width=\textwidth]{./src/img/android-archi.jpg}
+\includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
 \end{figureGraphics}
 
 \subsection{Intel Audio HAL}
-Middleware
+Intel's Audio \gls{hal} for Android platforms is based around a generic, plugin-based solution: the \gls{pfw}.
+It runs in the \emph{userland}, which is easier to maintain than kernel-space code.
+Since this solution is plugin-based, it is easy to extend to add more subsystems if needed.
+
+\begin{figureGraphics}{Intel Audio HAL}{fig:hal}
+%\includegraphics[width=\textwidth]{./src/img/setup.pdf}
+    TODO Sylvain NDA?
+\end{figureGraphics}
+
 HAL, multiple platforms with different architectures.
 Scalable, fully configurable, userland.
+Tinyalsa
 TODO
 
 \subsection{Parameter-framework}
 \label{sec:parameter-framework}
+The Linux \gls{kernel} has a set of standard APIs, but the middleware layers do not have such standardization.
+
+There is gap
+
+No standards in middleware:
+Big gap to fill
+
+
 Middleware, gap, no standard.
-Internship was around the parameter-framework. Middleware standard. Audio team. Opensourcing.
+
+\subsection{Topic of my internship}
+
+I worked within the Intel Audio development team, as an \emph{agile
+software developer}. The team is customers oriented, using \gls{scrum}
+methodology (see chapter \ref{chap:organisation}). My tasks
+within the team were focused around opensourcing the \gls{pfw} on
+GitHub\footnote{\url{www.github.com/01org/parameter-framework}} to give it some
+visibilty.
 
 
 \section{Environment and setup}
@@ -82,7 +109,7 @@ I also worked via that server, everything via command-line interface, as showed 
 \begin{figureGraphics}{Developer workflow}{fig:workflow}
 %\includegraphics[width=\textwidth]{./src/img/setup.pdf}
     TODO
-Development => review => rework => review => submission to integration team
+%Development => review => rework => review => submission to integration team
 \end{figureGraphics}
 
 Within the team, we use \gls{git} as versioning system and \gls{gerrit} as code review tool.
