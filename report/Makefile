@@ -6,3 +6,5 @@ clean:
 	rm -rf out/*
 biblio:
 	bibtex out/main.aux
+glossary:
+	cd out && makeglossaries main; cd ..

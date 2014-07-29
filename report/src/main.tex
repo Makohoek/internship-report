@@ -128,6 +128,13 @@
 \hypersetup{urlcolor=blue}
 \hypersetup{citecolor=dkgreen}
 
+
+% make use of glossary
+\usepackage{glossaries}
+\makeglossaries
+\input{src/glossary}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%
 % custom environnments %
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,26 +149,28 @@
 \bibliographystyle{alpha}
 
 
-% make use of glossary
-\usepackage[toc]{glossaries}
-\makeglossaries
-\input{src/glossary}
-\renewcommand{\glossaryname}{Glossary}
-
 %#############################################################################%
 % End of preamble                                                             %
 %#############################################################################%
 
 \begin{document}
 \input{./src/title.tex}
-\printglossary[title=\glossaryname,toctitle=\glossaryname]
-\input{./src/toc.tex}
+\newpage
+
 \input{./src/thanks.tex}
+
+\input{./src/toc.tex}
+
 \input{./src/introduction.tex}
 \input{./src/context.tex} % WHERE I DID the work, and on what
 \input{./src/organisation.tex} % HOW I PLANNED the work
 \input{./src/achievements.tex} % WHAT I CREATED at work
 \input{./src/conclusion.tex} % WHAT I have learned
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Glossary and Acronyms}
+\printglossaries
+
 %\bibliography{./src/biblio}
 %\input{./src/annexes.tex}
 \end{document}

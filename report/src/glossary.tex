@@ -1,42 +1,61 @@
-% je n'ai pas écrit ce glossaire, je l'ai traduis les termes utilisés en français
+% Thanks to Apelete Seketeli <apelete@seketeli.org> for this glossary.
 
 % $0 glossary entries: UMG, MeeGo, Android, PSI, Medfield, MID, SoC
 
 % define an acronym using \newglossaryentry
+%\newglossaryentry{umg}
+%{
+% how the entry name should appear in the glossary
+%  name=UMG (Ultra Mobility Group),
+%% how the description should appear in the glossary
+%  description={Intel's department responsible for focusing core
+%    processor and chipset business on mobile platforms},
+%% how the entry should appear in the document text
+%  text=UMG,
+%% how the entry should appear the first time it is used in the
+%% document text
+%
+%  first=Ultra Mobility Group (UMG)
+%}
+
 \newglossaryentry{umg}
 {
-% how the entry name should appear in the glossary
   name=UMG (Ultra Mobility Group),
-% how the description should appear in the glossary
-  description={Le departement d'Intel responsable pour le dévelopement
-    des processeurs sur les platformes mobiles},
-% how the entry should appear in the document text
+  description={Intel's department responsible for focusing core
+    processor and chipset business on mobile platforms},
   text=UMG,
-% how the entry should appear the first time it is used in the
-% document text
   first=Ultra Mobility Group (UMG)
 }
 
 \newglossaryentry{meego}
 {
   name=MeeGo\textsuperscript{\texttrademark},
-  description={Un système d'exploitation libre pour mobile basé sur linux créé par 
-      l'association d'Intel et de Nokia}
+  description={A Linux-based open source mobile operating system
+    jointly created by Intel and Nokia}
 }
 
 \newglossaryentry{android}
 {
   name=Android\textsuperscript{\texttrademark},
-  description={La suite logiciel de google pour les mobiles,
-  basée sur le noyau Linux, qui inclut un système d'exploitation, l'intergiciel
-  et des applications clés}
+  description={Google's software stack for mobile devices, based on
+  the Linux kernel, that includes an operating system, middleware and
+  key applications}
+}
+
+\newglossaryentry{hal}
+{
+  name=HAL
+  description={A set of routines that eases the access to a
+  platform's hardware resources.}
+  first=Hardware Abstraction Layer (HAL)
 }
 
 \newglossaryentry{psi}
 {
   name=PSI (Platform Software Integration),
-  description={La division d'UMG responsable de l'intégration et de la 
-    validation des composants logiciels des plateformes mobiles d'Intel},
+  description={A division of UMG, responsible for the integration and
+    validation of the software components for the future Intel mobile
+    phone platform},
   text=PSI,
   first=Platform Software Integration (PSI)
 }
@@ -44,10 +63,10 @@
 \newglossaryentry{medfield}
 {
   name=Medfield,
-  description={La quatrième génération de plateforme mobile. 
-    Elle est construite autour d'un System-on-Chip d'Intel qui contient
-    un Intel Atom\textsuperscript{\texttrademark} gravé en 32nm
-  } 
+  description={Intel's fourth generation Mobile Internet Device
+    platform. It is build around an Intel System-on-Chip which
+    contains a 32nm Intel Atom\textsuperscript{\texttrademark}
+    processor}
 }
 
 \newglossaryentry{mid}
@@ -62,39 +81,11 @@
 \newglossaryentry{soc}
 {
   name=SoC (System-on-Chip),
-  description={Tous les composants d'un ordinateur ou autre 
-    système électronique complet embarqué sur une seule puce},
+  description={Refers to integrating all components of a computer or
+    other electronic system into a single integrated circuit},
   text=SoC,
   first=System-on-Chip (SoC)
 }
-
-\newglossaryentry{shell}
-{
-  name=Shell,
-  description={Interface en lignes de commande (interpreteur) d'un système 
-  d’exploitation},
-  text=shell,
-}
-
-\newglossaryentry{bash}
-{
-  name=Bourne-Again shell (Bash),
-  description={Interprète par défaut sur de nombreux Unix libres, notamment 
-  sur les systèmes GNU/Linux. C'est aussi le "shell" par défaut de Mac OS X.
-  Il dispose de nombreuses fonctionnalités comme l'historique ou l'autocomplétion},
-  text=Bash,
-}
-
-\newglossaryentry{python}
-{
-  name=Python,
-  description={Langage de programmation de haut niveau favorisant la programmation impérative structurée et orientée objet. 
-  Il est doté d'un typage dynamique fort, d'une gestion automatique de 
-  la mémoire ainsi que d'un système d'exception },
-  text=python,
-}
-
-
 
 % $1 glossary entries: Atom, ODM, OS, Autotools, Makefile, Logic
 % analyzer, GDB, strace, Git, Kernel, Latex, Penwell, MSIC, 3G, iCDK,
@@ -103,55 +94,44 @@
 \newglossaryentry{atom}
 {
   name=Intel Atom\textsuperscript{\texttrademark},
-  description={Le nom de la marque d'une série de microprocesseurs x86
-    ultra basse consommation d'Intel. Ils sont surtout utilisés dans les netbook
-	et les appareils mobiles},
+  description={The brand name for a line of ultra-low-voltage x86 and
+    x86-64 microprocessors from Intel, used mainly in netbooks and
+    Mobile Internet Devices},
   text=Atom,
   first=Intel Atom\textsuperscript{\texttrademark}
 }
 \newglossaryentry{xml}
 {
   name=XML (Extensible Markup Language),
-  description={Language informatique de balisage, servant à échanger
-  des données entre systèmes hétérogènes. L'objectif de conception
-    du XML est la simplicité, la généricité et la facilité d'utilisation},
+  description={A set of rules for encoding documents in
+    machine-readable form. The design goals of XML emphasize
+    simplicity, generality, and usability over the Internet. It is a
+    textual data format with strong support via Unicode for the
+    languages of the world. Although the design of XML focuses on
+    documents, it is widely used for the representation of arbitrary
+    data structures, for example in web services},
   text=XML,
   first=Extensible Markup Language (XML)
-}
-
-\newglossaryentry{pfw}
-{
-  name=PFW (Parameter FrameWork),
-  description={Une librairie qui permet une couche d'abstraction
-  matérielle grâce à des paramètres hiérarchisés. De plus, des configurations peuvent 
-  s'appliquer sur ces paramètres en fonction de critères. Les configurations et 
-  structures sont sauvées dans des fichiers XML. Il n'est donc pas nécessaire de 
-  recompiler le PFW pour modifier son comportement},
-  text=PFW,
-  first=Parameter FrameWork (PFW)
 }
 
 \newglossaryentry{odm}
 {
   name=ODM (Original Design Manufacturer),
-  description={Une compagnie qui dessine et fabrique un produit dont les 
-    les spécifications et éventuellement la marque est détenue par une autre 
-    firme},
+  description={A company which designs and manufactures a product
+    which is specified and eventually branded by another firm for
+    sale},
   text=ODM,
   first=Original Design Manufacturers (ODM)
 }
 
-
 \newglossaryentry{msic}
 {
   name=MSIC (Mixed Signal Integrated Circuit),
-  description={Un circuit intégré qui contient des circuits analogiques et
-    numériques. Il gère les haut-parleurs du téléphone ainsi que les micros et 
-    tous les appareils se branchant sur la prise jack},
+  description={Any integrated circuit that has both analog circuits
+    and digital circuits on a single semiconductor die},
   text=MSIC,
   first=Mixed Signal Integrated Circuit (MSIC)
 }
-
 
 \newglossaryentry{os}
 {
@@ -177,10 +157,10 @@
 \newglossaryentry{makefile}
 {
   name=Makefile,
-  description={Dans le développement logiciel, «Make» est un utilitaire
-    qui construit automatiquement des programmes ou librairies
-	depuis le code source, grâce a des fichiers appeler makefile qui spécifient
-	comment fabriquer le programme cible},
+  description={In software development, ``make'' is a utility that
+    automatically builds executable programs and libraries from source
+    code, by reading files called makefiles which specify how to
+    derive the target program},
   text=makefile
 }
 
@@ -220,21 +200,13 @@
     Torvalds for Linux kernel development},
 }
 
-\newglossaryentry{3gpp}
+\newglossaryentry{kernel}
 {
-  name=3rd Generation Partnership Projec (3gpp),
-  description={Coopération entre organismes de standardisation régionaux en 
-    Télécommunications, visant à produire des spécifications techniques 
-    pour les réseaux mobiles de 3e (3G) et 4e générations (4G)},
-   text=3rd Generation Partnership Project
-}
-
-\newglossaryentry{noyau linux}
-{
-  name=Noyau linux,
-  description={Un noyau de système d'exploitation libre et "open source". 
-  C'est l'un des plus utilisés dans le monde},
-  text=noyau linux
+  name=Linux kernel,
+  description={An operating system kernel used by the Linux family of
+    Unix-like operating systems. It is one of the most prominent
+    examples of free and open source software},
+  text=kernel
 }
 
 \newglossaryentry{latex}
