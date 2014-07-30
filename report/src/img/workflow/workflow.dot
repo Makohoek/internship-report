@@ -31,8 +31,13 @@ digraph hierarchy
     node[shape=record,style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"]
     edge[dir=forward, arrowtail=open, color="#586e75"]
 
+start [shape=ellipse, label="Todo"];
+end [shape=ellipse, label="Done"];
+
 dev [label="Development"];
 integrated [label="Ready to be integrated"];
+
+start -> dev
 
 dev -> review [label="submit patch"];
 
@@ -45,4 +50,7 @@ preint [shape=diamond, label="Integration ?"]
 
 preint -> dev [label="Found regression"];
 preint -> integrated [label="Validated"];
+
+integrated -> end
+
 }
