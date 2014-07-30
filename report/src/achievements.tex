@@ -27,16 +27,35 @@ The figure \ref{fig:build-process} shows how it works:
 
 But there were some limitations. Since the writing of the \gls{xml} structure files is done by human beings, there was
 \emph{no guarantee} that their files were semantically correct.
-Since no check was done during the build-process, the generator could write erronous files because it supposes that
-the Structure files are \emph{correct}.
-This lead to \emph{run-time errors} and \emph{undefined behaviour}.
+Since no check was done during the build-process, the generator could write erroneous files because it supposes that
+the Structure files are \emph{correct}. An example can be that someone forgot to specify the \emph{size} property of a parameter.
+This lead to \emph{run-time errors} and \emph{undefined behaviour} because we are basically allocating zero memory for that parameter.
 
 \subsubsection{Schemas}
+To avoid strange run-time errors to bad generated files, we must make it impossible to generate erroneous files.
+In order to do that we use \gls{xsd} files, which are describing what the content of an .xml element \emph{should be}.
+
+Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
+
+\begin{lstlisting}[language=XML, caption=XSD rules for an Integer parameter, label=lst:xsd]
+<xs:attributeGroup name="IntegerParameterAttributes">
+    <xs:attribute name="Size" type="SizeType" use="required"/>
+    <xs:attribute name="Min" type="xs:integer" use="optional"/>
+    <xs:attribute name="Max" type="xs:integer" use="optional"/>
+    <xs:attribute name="Signed" type="xs:boolean" use="optional" default="false"/>
+</xs:attributeGroup>
+\end{lstlisting}
+
+In this code, we see that the \gls{xsd} is \emph{requiring} that we specify the \emph{Size} attribute.
 
 \subsubsection{Xml checker}
+We decided to integrate an automatic \gls{xsd} check at build time. In order to do so, I started writing a python script
+to integrate with the XmlGenerator tool. Since we wanted a more robust solution, It was finally done within the \gls{pfw} itself.
+
+Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
 
 \begin{figureGraphics}{Xml generation build process with XSD check}{fig:build-process-reworked}
-    \includegraphics[height=0.4\textheight]{./src/img/build-generation.pdf}
+    \includegraphics[height=0.4\textheight]{./src/img/build-generation-after.pdf}
 \end{figureGraphics}
 
 \subsection{Multi-variant initial support}
