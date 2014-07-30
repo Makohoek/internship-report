@@ -1,8 +1,5 @@
 \chapter{Contributions}\label{chap:contributions}
 
-TODO:
-Reorg around plugins/core add more contributions
-
 \begin{sectionIntro}
     All the work I have done during this internship is related
     to the \gls{pfw}, which was briefly presented in section \ref{sec:parameter-framework}.
@@ -16,17 +13,31 @@ Should i really add this?
 \subsection{Improving build process}
 \subsubsection{Build process}
 The pfw language as described in \ref{desc:pfw-language} is used for rule based
-description. Need structure files as well, which are written in \gls{xml}.
+description. Those are translated into \gls{xml} files during the build via a
+specific make target.  In order to generate those \gls{xml} files, we also need
+the information of the Structure files, which are written by the integration
+engineers.
 
-\begin{figureGraphics}{Xml generation build process}{ref:build-process}
-    TODO
+To generate those files, we rely on a toolset we call \emph{XmlGenerator}.
+The figure \ref{fig:build-process} shows how it works:
+
+\begin{figureGraphics}{Xml generation build process}{fig:build-process}
+    \includegraphics[height=0.4\textheight]{./src/img/build-generation.pdf}
 \end{figureGraphics}
 
-Some constraints may apply. Writting \gls{xml} is error prone, and no check was done at
-build time. Lead to run-time errors and undefined behaviour.
-\subsubsection{Xml checker}
+But there were some limitations. Since the writing of the \gls{xml} structure files is done by human beings, there was
+\emph{no guarantee} that their files were semantically correct.
+Since no check was done during the build-process, the generator could write erronous files because it supposes that
+the Structure files are \emph{correct}.
+This lead to \emph{run-time errors} and \emph{undefined behaviour}.
+
 \subsubsection{Schemas}
 
+\subsubsection{Xml checker}
+
+\begin{figureGraphics}{Xml generation build process with XSD check}{fig:build-process-reworked}
+    \includegraphics[height=0.4\textheight]{./src/img/build-generation.pdf}
+\end{figureGraphics}
 
 \subsection{Multi-variant initial support}
 \subsubsection{Alsa}
