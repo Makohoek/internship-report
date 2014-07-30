@@ -40,7 +40,7 @@ digraph hierarchy
     parsingScript[label=".pfw parsing script"];
     parsingScript -> pfw [label="commands"];
     pfw[label="Parameter-framework"];
-    bgcolor="#268bd2";
+    bgcolor="#cb4b16";
     fontcolor="#ffffff";
 
   }
