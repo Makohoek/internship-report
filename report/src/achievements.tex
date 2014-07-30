@@ -5,10 +5,11 @@ Reorg around plugins/core add more contributions
 
 \begin{sectionIntro}
     All the work I have done during this internship is related
-    to the Parameter-framework, which was presented in section \ref{sec:parameter-framework}.
-
-    TODO: maybe detail how the parameter-framework works here?
+    to the \gls{pfw}, which was briefly presented in section \ref{sec:parameter-framework}.
 \end{sectionIntro}
+
+\section{Parameter-framework mechanisms}
+Should i really add this?
 
 \section{Parameter-framework core enhancements}
 
@@ -29,10 +30,10 @@ build time. Lead to run-time errors and undefined behaviour.
 
 \subsection{Multi-variant initial support}
 \subsubsection{Alsa}
-\subsubsection{parameter-framework}
+\subsubsection{Parameter-framework}
 
 \subsection{Fixed point parameter enhancements}
-The parameter-framework has several kinds of parameters:
+The \gls{pfw} has several kinds of parameters:
 \begin{itemize}
     \item IntegerParameter
     \item BooleanParameter
@@ -48,7 +49,7 @@ or when there is a performance gain by using them. Usually, fixed points are
 represented by $Qn.m$ format, where $n$ is the \emph{Integral part} and $m$ the
 \emph{Fractional part}.
 
-The implementation of fixed point numbers in the Parameter-framework had some
+The implementation of fixed point numbers in the \gls{pfw} had some
 corner cases which were not correctly handled. Round issues appeared when we
 were writing to a configuration file or displaying user input. To
 support the expected behavior for those cases, I changed the implementation, and
@@ -75,22 +76,22 @@ them:
 \end{figureGraphics}
 
 \begin{description}
-    \item[Bound check] The Parameter-framework should throw an error if we
+    \item[Bound check] The \gls{pfw} should throw an error if we
         attempt to set an out-of-bound value.
-    \item[Sanity check] If we manage to set the value, The Parameter-framework should not modify too much
+    \item[Sanity check] If we manage to set the value, The \gls{pfw} should not modify too much
         the value. It can only change by a quantum.
-    \item[Consistency check] The Parameter-framework should accept the value he sent us previously.
-    \item[Bijectivity check] The Parameter-framework should return us the same value we provided him at the Consistency check.
+    \item[Consistency check] The \gls{pfw} should accept the value he sent us previously.
+    \item[Bijectivity check] The \gls{pfw} should return us the same value we provided him at the Consistency check.
 \end{description}
 
 After that the test suite was complete, it was time to rework the internal
-mechanism of the Parameter-framework.
+mechanism of the \gls{pfw}.
 
 \subsubsection{Rework the internal mechanism}
-The Parameter-framework can export parameters towards a file. Fixed
+The \gls{pfw} can export parameters towards a file. Fixed
 point parameters can be exported as well.
 \begin{itemize}
-    \item When exporting them, the Parameter-framework converts the value from
+    \item When exporting them, the \gls{pfw} converts the value from
         its internal representation towards a floating point number, because that is
         easier to read.
     \item By converting that number, it also computes the amount of digits
@@ -122,7 +123,7 @@ Set up for easy internal tree contributions and external contributions.
 \subsection{Parameter-framework introduction}
 \subsubsection{Discovery tutorials}\label{sec:tutorials}
 
-At the start of my internship, I had to check out the Parameter-framework's
+At the start of my internship, I had to check out the \gls{pfw}'s
 source code without any documentation. The idea was to have a fresh look at
 this piece of software to determine if it was open-source ready, straightforward
 to use, for someone who is unfamiliar with it.
@@ -133,10 +134,10 @@ for an easier early-adoption of the open-source community. So I wrote several
 tutorials:
 \begin{description}
     \item[Compile and install]
-        is a step-by-step guide about how to get the Parameter-framework's sources,
+        is a step-by-step guide about how to get the \gls{pfw}'s sources,
         build it and install it as a standalone on Ubuntu.
     \item[Run a simple example]
-        is a howto about running the Parameter-framework command-line interface,
+        is a howto about running the \gls{pfw} command-line interface,
         such as \lstinline{remote-process} and \lstinline {test-platform}.  In
         this howto, the configuration and setting files are provided so that
         the user can focus on the results. The example covers music play-list
@@ -144,8 +145,8 @@ tutorials:
     \item[An introduction to the .pfw language]\label{desc:pfw-language}
         is a tutorial about the .pfw language. This language was
         created to simplify the writing of settings files for the
-        Parameter-framework. Those files are then converted into \gls{xml}, which is
-        the only language the Parameter-framework understands.
+        \gls{pfw}. Those files are then converted into \gls{xml}, which is
+        the only language the \gls{pfw} understands.
 \end{description}
 These tutorials have been written in \gls{markdown}, the standard format used
 on GitHub.
@@ -159,7 +160,7 @@ Private
 Python internal tool
 
 \subsection{Core upload}
-Open-sourcing the Parameter-framework required some initial work.
+Open-sourcing the \gls{pfw} required some initial work.
 In order to smoothly integrate features from external contributors and internal work,
 Requirements, vanilla AOSP, internal tree and open-source version must be the
 same.

@@ -37,7 +37,7 @@ Some key figures of Intel:
 \subsection{Audio feature team in Toulouse}
 The team I worked with is the audio feature team, in Toulouse.
 They are responsible for the Audio \gls{hal} and the interface between the
-librairies and the Android \gls{kernel}.
+librairies and the \gls{android} \gls{kernel}.
 
 
 \section{Android}
@@ -63,31 +63,44 @@ There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal}.
 \begin{figureGraphics}{Simplified view of Intel Audio HAL}{fig:hal}
 \includegraphics[height=0.5\textheight]{./src/img/hal-architecture.pdf}
 \end{figureGraphics}
-Two different instances of \gls{pfw} are used to communicate between the stream layers.
+Two different instances of \gls{pfw} are used to communicate between the
+different managers used in the \gls{hal}.
+
+Some requirements of the Intel Audio \gls{hal}:
+\begin{itemize}
+    \item Since the audio system needs to be tunable by the tuning engineers, the \gls{hal} should be configurable.
+        It is very painful to recompile the code at each time it is needed to adapt the value of a mixer!
+    \item Since the \gls{hal} needs to \emph{abstract} the hardware variations, it should also be scalable. It should be
+        easy to support new hardware.
+\end{itemize}
+
+The \gls{pfw} is a way to fill those requirements.
+
+\subsection{Parameter-framework}
+\label{sec:parameter-framework}
+TODO TODO TODO
+
+The Linux \gls{kernel} has a set of standard APIs, but the middleware layers do not have such standardization.
 
 HAL, multiple platforms with different architectures.
 Scalable, fully configurable, userland.
 Tinyalsa
 TODO
 
-\subsection{Parameter-framework}
-\label{sec:parameter-framework}
-The Linux \gls{kernel} has a set of standard APIs, but the middleware layers do not have such standardization.
-
 There is gap
 
 No standards in middleware:
 Big gap to fill
 
-
 Middleware, gap, no standard.
+lot of platforms, lot of hardware, combinatory explosion!
 
 \subsection{Topic of my internship}
 
 I worked within the Intel Audio development team, as an \emph{agile
 software developer}. The team is customers oriented, using \gls{scrum}
 methodology (see chapter \ref{chap:organisation}). My tasks
-within the team were focused around opensourcing the \gls{pfw} on
+within the team were focused around opensourcing and enchancing the \gls{pfw} on
 GitHub\footnote{\url{www.github.com/01org/parameter-framework}} to give it some
 visibilty.
 
@@ -100,6 +113,8 @@ to understand how I proceeded during my whole internship.
     \includegraphics[height=0.6\textheight]{./src/img/workflow.pdf}
 \end{figureGraphics}
 
+This workflow is the same for every developer member of the team. It is
+detailed in the sub sections below.
 
 \subsection{Development}
 Since compiling the Android source tree requires a lot of computing power,
