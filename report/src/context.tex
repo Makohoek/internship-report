@@ -52,16 +52,18 @@ Linux \gls{kernel} and the libraries layers.
 \begin{figureGraphics}{Global Android architecture}{fig:archi}
 \includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
 \end{figureGraphics}
+Within the Audio feature team in Toulouse, we are mainly focused around the Audio \gls{hal}.
 
 \subsection{Intel Audio HAL}
 Intel's Audio \gls{hal} for Android platforms is based around a generic, plugin-based solution: the \gls{pfw}.
 It runs in the \emph{userland}, which is easier to maintain than kernel-space code.
 Since this solution is plugin-based, it is easy to extend to add more subsystems if needed.
 
-\begin{figureGraphics}{Intel Audio HAL}{fig:hal}
-%\includegraphics[width=\textwidth]{./src/img/setup.pdf}
-    TODO Sylvain NDA?
+There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal}.
+\begin{figureGraphics}{Simplified view of Intel Audio HAL}{fig:hal}
+\includegraphics[height=0.5\textheight]{./src/img/hal-architecture.pdf}
 \end{figureGraphics}
+Two different instances of \gls{pfw} are used to communicate between the stream layers.
 
 HAL, multiple platforms with different architectures.
 Scalable, fully configurable, userland.

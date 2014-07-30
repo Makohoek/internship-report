@@ -1,0 +1,81 @@
+/**
+ * Hal Architecture diagram with solarized light colorscheme
+ * Example found on http://fsteeg.com/2006/11/17/uml-class-diagrams-with-graphviz/
+ *
+ * Colors added by Mattijs Korpershoek
+ * <mattijs.korpershoek@gmail.com>
+ */
+
+/*
+ * Solarized colorscheme:
+ * $base03:    #002b36;
+ * $base02:    #073642;
+ * $base01:    #586e75;
+ * $base00:    #657b83;
+ * $base0:     #839496;
+ * $base1:     #93a1a1;
+ * $base2:     #eee8d5;
+ * $base3:     #fdf6e3;
+ * $yellow:    #b58900;
+ * $orange:    #cb4b16;
+ * $red:       #dc322f;
+ * $magenta:   #d33682;
+ * $violet:    #6c71c4;
+ * $blue:      #268bd2;
+ * $cyan:      #2aa198;
+ * $green:     #859900;
+ * */
+graph hierarchy
+{
+    size="15,15";
+    node[shape=record,style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"];
+    edge[arrowhead=none, arrowtail=none, color="#586e75"];
+
+    subgraph clusterLibraries{
+        label="Libraries";
+        AudioMgr [label="Audio manager"];
+        bgcolor="#859900";
+    }
+
+    subgraph clusterHal{
+        label="HAL";
+        edge[arrowhead=none, arrowtail=none, color="#586e75"];
+        streamMgr [label="Stream manager"];
+        RoutePfw [label="Route Parameter-Framework"];
+        RouteMgr [label="Route manager"];
+        AudioPfw [label="Audio Parameter-Framework"];
+        TinyPlugin [label="TinyAlsa plugin"];
+        bgcolor="#268bd2";
+    }
+
+    subgraph clusterDrivers{
+        label="Linux Kernel";
+        TinyAlsa [label="TinyAlsa driver"];
+        bgcolor="#cb4b16";
+    }
+
+    AudioMgr -- streamMgr;
+    streamMgr -- RoutePfw;
+    RoutePfw -- RouteMgr;
+    RouteMgr -- AudioPfw;
+    AudioPfw -- TinyPlugin;
+    TinyPlugin -- TinyAlsa;
+}
+
+/*
+   graph G {
+   e
+   subgraph clusterA {
+   a -- b;
+   subgraph clusterC {
+   C -- D;
+   }
+   }
+   subgraph clusterB {
+   d -- f
+   }
+   d -- D
+   e -- clusterB
+   clusterC -- clusterB
+   }
+ */
