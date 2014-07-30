@@ -27,42 +27,42 @@
  * */
 graph hierarchy
 {
-    size="15,15";
-    node[shape=record,style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"];
+  size="15,15";
+  node[shape=record,style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"];
+  edge[arrowhead=none, arrowtail=none, color="#586e75"];
+
+  subgraph clusterLibraries{
+    label="Libraries";
+    AudioMgr [label="Audio manager"];
+    bgcolor="#859900";
+    fontcolor="#ffffff";
+  }
+
+  subgraph clusterHal{
+    label="HAL";
     edge[arrowhead=none, arrowtail=none, color="#586e75"];
+    streamMgr [label="Stream manager"];
+    RoutePfw [label="Route Parameter-Framework"];
+    RouteMgr [label="Route manager"];
+    AudioPfw [label="Audio Parameter-Framework"];
+    TinyPlugin [label="TinyAlsa plugin"];
+    bgcolor="#268bd2";
+    fontcolor="#ffffff";
+  }
 
-    subgraph clusterLibraries{
-        label="Libraries";
-        AudioMgr [label="Audio manager"];
-        bgcolor="#859900";
-        fontcolor="#ffffff";
-    }
+  subgraph clusterDrivers{
+    label="Linux Kernel";
+    TinyAlsa [label="TinyAlsa driver"];
+    bgcolor="#dc322f";
+    fontcolor="#ffffff";
+  }
 
-    subgraph clusterHal{
-        label="HAL";
-        edge[arrowhead=none, arrowtail=none, color="#586e75"];
-        streamMgr [label="Stream manager"];
-        RoutePfw [label="Route Parameter-Framework"];
-        RouteMgr [label="Route manager"];
-        AudioPfw [label="Audio Parameter-Framework"];
-        TinyPlugin [label="TinyAlsa plugin"];
-        bgcolor="#268bd2";
-        fontcolor="#ffffff";
-    }
-
-    subgraph clusterDrivers{
-        label="Linux Kernel";
-        TinyAlsa [label="TinyAlsa driver"];
-        bgcolor="#cb4b16";
-        fontcolor="#ffffff";
-    }
-
-    AudioMgr -- streamMgr;
-    streamMgr -- RoutePfw;
-    RoutePfw -- RouteMgr;
-    RouteMgr -- AudioPfw;
-    AudioPfw -- TinyPlugin;
-    TinyPlugin -- TinyAlsa;
+  AudioMgr -- streamMgr;
+  streamMgr -- RoutePfw;
+  RoutePfw -- RouteMgr;
+  RouteMgr -- AudioPfw;
+  AudioPfw -- TinyPlugin;
+  TinyPlugin -- TinyAlsa;
 }
 
 /*
