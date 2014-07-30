@@ -35,6 +35,7 @@ graph hierarchy
         label="Libraries";
         AudioMgr [label="Audio manager"];
         bgcolor="#859900";
+        fontcolor="#ffffff";
     }
 
     subgraph clusterHal{
@@ -46,12 +47,14 @@ graph hierarchy
         AudioPfw [label="Audio Parameter-Framework"];
         TinyPlugin [label="TinyAlsa plugin"];
         bgcolor="#268bd2";
+        fontcolor="#ffffff";
     }
 
     subgraph clusterDrivers{
         label="Linux Kernel";
         TinyAlsa [label="TinyAlsa driver"];
         bgcolor="#cb4b16";
+        fontcolor="#ffffff";
     }
 
     AudioMgr -- streamMgr;
