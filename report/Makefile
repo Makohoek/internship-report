@@ -1,5 +1,5 @@
 DOCNAME=InternshipReportMattijsKorpershoek
-all:
+all: subdirs
 	pdflatex -output-directory out src/main.tex
 	cp out/main.pdf ${DOCNAME}.pdf
 clean:
@@ -8,3 +8,5 @@ biblio:
 	bibtex out/main.aux
 glossary:
 	cd out && makeglossaries main; cd ..
+subdirs:
+	./regen-imgs.sh
