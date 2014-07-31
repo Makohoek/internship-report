@@ -193,7 +193,7 @@ BSD license. All the source files must contain the correct BSD license header ac
 to Intel's open-source policy.
 
 \subsubsection{license checker}
-Since there almost 279 source files released currently on GitHub, it seems a lot of
+Since there are 279 source files released currently on GitHub, it seems a lot of
 work to check all those files manually.
 I wrote an internal tool \gls{python} which performs the license check semi-automatically.
 The script usage is quite straightforward and showed in listing \ref{code:license}.
@@ -211,7 +211,7 @@ positional arguments:
 optional arguments:
     -h, --help     show this help message and exit
     --cpp          (default) scan for C++ files: ('h', 'c', 'hpp', 'cpp')
-    --mk           scan for Android make files: mk
+    --mk           scan for Android make files: .mk
 \end{lstlisting}
 
 
@@ -221,19 +221,33 @@ it is quite difficult to keep the two repositories in sync.
 On figure \ref{fig:branch-process} we can see how we manage to synchronize the different code.
 
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
-    TODO request from dawagner
-    Figure: branching process
+    \includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
 \end{figureGraphics}
 
+
+\subsection{Alsa plugin refactoring}
+The Alsa plugin is used to handle Alsa or TinyAlsa subsystems.
+For our internal uses, we have patched some \gls{aosp} projects.
+This allows us to support different controls.
+That control support was also visible in the Alsa \gls{pfw} plugin. Since
+we want to open-source the plugin, those proprietary features should be removed.
+
+During the removal of those proprietary features, we also simplified the plugin
+architecture by merging the controls and the mixer code.
+This results in a far simpler design.
 
 \subsection{Core upload}
 Open-sourcing the \gls{pfw} required some initial work.
 In order to smoothly integrate features from external contributors and internal work,
-Requirements, vanilla AOSP, internal tree and open-source version must be the
+Requirements, vanilla \gls{aosp}, internal tree and open-source version must be the
 same.
-01org organisation, Intel opensource technology center.
+01org organisation, Intel open-source technology center.
+
+The project is available at \url{https://github.com/01org/parameter-framework}
 
 \subsection{File system plugin upload}
+
+The project is available at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
 
 \subsection{Alsa plugin upload}
 \subsubsection{Alsa}
@@ -241,12 +255,7 @@ same.
 \subsubsection{Plugin architecture}
 CTL and MIX merged
 
-\subsection{Alsa plugin refactoring}
-The Alsa plugin, which is used to handle Alsa or TinyAlsa subsystems.
-Not the same controls, some proprietary code was mixed with open-source code.
-Some part of the code is Intel specific. We do not wish to open-source that.
-
-
+The project is available at \url{https://github.com/01org/parameter-framework-plugins-alsa/}
 
 
 \subsection{Porting the Intel Audio HAL on a new platform}
