@@ -49,7 +49,7 @@ Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
 In this code, we see that the \gls{xsd} is \emph{requiring} that we specify the \emph{Size} attribute.
 
 \subsubsection{Xml checker}
-We decided to integrate an automatic \gls{xsd} check at build time. In order to do so, I started writing a python script
+We decided to integrate an automatic \gls{xsd} check at build time. In order to do so, I started writing a \gls{python} script
 to integrate with the XmlGenerator tool. Since we wanted a more robust solution, It was finally done within the \gls{pfw} itself.
 
 Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
@@ -58,7 +58,10 @@ Figure \ref{fig:build-process-reworked} shows the final implementation and where
     \includegraphics[height=0.4\textheight]{./src/img/build-generation-after.pdf}
 \end{figureGraphics}
 
+
 \subsection{Multi-variant initial support}
+TODO
+
 \subsubsection{Alsa}
 \subsubsection{Parameter-framework}
 
@@ -85,10 +88,10 @@ were writing to a configuration file or displaying user input. To
 support the expected behavior for those cases, I changed the implementation, and
 wrote tests for it.
 
-\subsubsection{Test suite in python}
+\subsubsection{Test suite in Python}
 
 In order to verify that the new implementation was correct, I wrote a test suite
-in Python. That test suite performs several checks on each fixed point. Let's
+in \gls{python}. That test suite performs several checks on each fixed point. Let's
 take an example to illustrate the purpose of the test suite.
 
 Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
@@ -102,7 +105,7 @@ The test suite takes each of these special values and performs four checks on
 them:
 
 \begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
-    TODO figure interaction between PFW and python test script.
+    TODO figure interaction between PFW and \gls{python} test script.
 \end{figureGraphics}
 
 \begin{description}
@@ -141,14 +144,17 @@ The example below illustrates the rounding error, and the output in the correcte
 \subsubsection{Parameter-framework plugin}
 
 \section{Open-sourcing on GitHub}
-Pull requests to simulate external contributions.
-Set up for easy internal tree contributions and external contributions.
+In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
+our team decided to release the source-code on GitHub.
+This should favor external contributions via \gls{pullrequests} and motivate
+the community to use the \gls{pfw}.
 
-\begin{figureGraphics}{Branching process}{ref:branch-process}
-    TODO
-    Figure: branching process
-\end{figureGraphics}
-
+Around this activity, I covered several topics:
+\begin{description}
+    \item[Communicating, Documentating] the \gls{pfw} components.
+    \item[Push, clean, enchance] the code to make it sure no proprietary
+        elements are made public.
+\end{description}
 
 \subsection{Parameter-framework introduction}
 \subsubsection{Discovery tutorials}\label{sec:tutorials}
@@ -160,7 +166,7 @@ to use, for someone who is unfamiliar with it.
 
 While doing that, I struggled a bit with the basic usage of the framework. The
 team decided that it would be nice to have some newcomer tutorials and examples,
-for an easier early-adoption of the open-source community. So I wrote several
+for an easier adoption of the open-source community. So I wrote several
 tutorials:
 \begin{description}
     \item[Compile and install]
@@ -181,13 +187,44 @@ tutorials:
 These tutorials have been written in \gls{markdown}, the standard format used
 on GitHub.
 
-
 \subsection{Parameter-framework's intellectual property}
-Intellectual property is very important at Intel. TODO.
-BSD
-Private
+Intellectual property is very important at Intel. The \gls{pfw} is released in
+BSD license. All the source files must contain the correct BSD license header according
+to Intel's open-source policy.
+
 \subsubsection{license checker}
-Python internal tool
+Since there almost 279 source files released currently on GitHub, it seems a lot of
+work to check all those files manually.
+I wrote an internal tool \gls{python} which performs the license check semi-automatically.
+The script usage is quite straightforward and showed in listing \ref{code:license}.
+
+\begin{lstlisting}[language=bash, caption=License checker usage, label=code:license]
+usage: license_updater.py [-h] [--cpp | --mk] license root_location
+
+Scans recursively trough directories to find source code which should be
+updated with a new license header.
+
+positional arguments:
+    license        the license type: ['gpl', 'bsd', 'private']
+    root_location  the directory to start scanning
+
+optional arguments:
+    -h, --help     show this help message and exit
+    --cpp          (default) scan for C++ files: ('h', 'c', 'hpp', 'cpp')
+    --mk           scan for Android make files: mk
+\end{lstlisting}
+
+
+\subsection{Branch sync process}
+Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
+it is quite difficult to keep the two repositories in sync.
+On figure \ref{fig:branch-process} we can see how we manage to synchronize the different code.
+
+\begin{figureGraphics}{Final branch process}{fig:branch-process}
+    TODO request from dawagner
+    Figure: branching process
+\end{figureGraphics}
+
 
 \subsection{Core upload}
 Open-sourcing the \gls{pfw} required some initial work.
@@ -195,7 +232,6 @@ In order to smoothly integrate features from external contributors and internal 
 Requirements, vanilla AOSP, internal tree and open-source version must be the
 same.
 01org organisation, Intel opensource technology center.
-
 
 \subsection{File system plugin upload}
 
@@ -206,8 +242,12 @@ same.
 CTL and MIX merged
 
 \subsection{Alsa plugin refactoring}
+The Alsa plugin, which is used to handle Alsa or TinyAlsa subsystems.
 Not the same controls, some proprietary code was mixed with open-source code.
 Some part of the code is Intel specific. We do not wish to open-source that.
+
+
+
 
 \subsection{Porting the Intel Audio HAL on a new platform}
 TODO
