@@ -20,6 +20,8 @@ In section \ref{sec:agile}, I describe a bit more the agile methodology.
 Since I worked as an agile developer, I had no long term goal to reach. This
 Gantt chart is more like a trace of my different activities than a real planning
 diagram.
+
+\begin{figureGraphics}{Gantt chart}{fig:gantt}
 \begin{ganttchart}[
         x unit=0.5cm,
         y unit title=.6cm,
@@ -33,23 +35,38 @@ diagram.
         bar height = 0.4,
     ]{1}{24}
     \gantttitlelist{1, ..., 24}{1} \\
-    \ganttgroup{GitHub}{1}{4} \\
-    \ganttbar{Installation}{1}{2} \\
-    \ganttbar{PFW discovery}{1}{4} \\
-    \ganttgroup{Android}{4}{9} \\
-    \ganttbar{XML validation}{4}{8} \\
-    \ganttbar{Code checker}{6}{7} \\
-    \ganttbar{HW detection}{8}{9} \\
-    \ganttbar{Fixed point improvements}{9}{13} \\
-    \ganttbar{Build system issues}{11}{13} \\
-    \ganttbar{Alsa plugin refactor}{13}{15} \\
-    \ganttbar{PFW IP plan}{13}{14} \\
-    \ganttbar{File system plugin}{14}{15} \\
-    \ganttbar{PFW Core}{16}{18} \\
-    \ganttbar{Xmm plugin}{18}{19} \\
-    \ganttbar{VACANCES}{21}{21} \\
-    \ganttbar{Internship report}{22}{24} \\
+    \ganttbar{Improving build process}{}{} \\
+    \ganttbar{Xml checker}{}{} \\
+    \ganttbar{Multi-variant support}{}{} \\
+    \ganttbar{Fixed point enhancements}{}{}\\
+    \ganttbar{Multi modem support  }{}{}\\
+%
+    \ganttbar{Newcomer documentation}{1}{3}\\
+    \ganttbar{Intellectual property}{}{}\\
+    \ganttbar{Alsa plugin refactor }{}{}\\
+    \ganttbar{Filesystem plugin update}{}{}\\
+    \ganttbar{Core update             }{}{}\\
+    \ganttbar{Alsa plugin update      }{}{}\\
+%
+    \ganttbar{Internship report}{}{}\\
 \end{ganttchart}
+\end{figureGraphics}
+
+% Improving build process
+% Xml checker
+% Multi-variant support
+% Fixed point enhancements
+% Multi modem support
+
+% Newcomer documentation
+% Intellectual property
+% Alsa plugin refactor
+% Filesystem plugin update
+% Core update
+% Alsa plugin update
+
+% Internship report
+
 TODO: group by topic: discovery, core enhancements, plugin opensourcing.
 
 Every task has a dedicated section in this document to describe what have been done.
