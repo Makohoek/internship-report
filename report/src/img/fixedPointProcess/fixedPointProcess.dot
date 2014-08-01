@@ -54,7 +54,6 @@ Bound -> Sanity [label="yes"];
 Sanity -> Consistency [label="yes"];
 Consistency -> Bijectivity [label="yes"];
 Bijectivity -> success [label="yes"];
-
 BoundError -> success [label="no"];
 
 

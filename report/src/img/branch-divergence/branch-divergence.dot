@@ -26,18 +26,21 @@
 graph hierarchy
 {
   size="15,15"
-    node[shape=ellipse,style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"]
-    edge[dir=forward, arrowtail=open, color="#586e75"]
+    node[shape=circle, label="", style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"]
+    edge[dir=none, arrowtail=none, color="#586e75"]
+    rankdir="LR"  //left to right ranking
+    splines=false // straight lines
 
 // internal tree
 common -- ia [label="internal tree"];
-ia -- ib -- ic -- id;
+ia -- ib -- ic -- id -- merge;
 
 // github changes
 common -- ga [label="github contributions"];
-ga -- gb;
+ga -- gb -- merge;
 
-{ rank=same; ia; ib; ic; id }
-{ rank=same; ga; gb }
+// let's align some nodes for a prettier effect
+// { rank=same; ia; ga; }
+// { rank=same; ic; gb; }
 
 }

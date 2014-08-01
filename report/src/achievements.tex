@@ -283,7 +283,7 @@ This results in a far simpler design.
 
 When I had to update the different components on \gls{GitHub}, there were some problems:
 Our internal version and the \gls{GitHub} one had diverged.
-On figure \ref{fig:diverged}, we can see an overview of the branch state before rework.
+On figure \ref{fig:diverged}, we can see an overview of the branch state we want to have.
 
 \begin{figureGraphics}{Repository divergence}{fig:diverged}
     \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
@@ -313,13 +313,13 @@ I also worked on an other example: \emph{controlling} leds via the filesystem
 plugin on a Raspberry Pi.  This example was easy enough to be integrated into
 the online documentation of the filesystem plugin, on \gls{GitHub}.
 
-The filesystem plugin is available on \gls{GitHub} at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
+The filesystem plugin is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework-plugins-filesystem/}}
 
 % {{{2
 \subsection{Alsa plugin upload}
 
 The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
-on a \gls{linux} desktop environement to handle \gls{alsa} mixers.
+on a linux desktop environement to handle \gls{alsa} mixers.
 
 To demonstrate the power of this plugin, I wrote the README file which is on the
 front page on this \gls{GitHub} project.  The README contains :
@@ -327,10 +327,9 @@ front page on this \gls{GitHub} project.  The README contains :
     \item Build and install instructions
     \item Prerequisites for using this plugin
     \item A tutorial which details how to write the \gls{xml} files for this
-    plugin in order to be able to change the master volume on a \gls{linux}
-    desktop.
+    plugin in order to be able to change the master volume on a linux desktop.
 \end{itemize}
 I also reorganised some code within this plugin since we used to rely on proprietary \gls{aosp} modifications.
 This plugin is now vanilla \gls{aosp} compatible, and can be used if the \gls{pfw} is installed.
 
-The \gls{alsa} plugin is available on \gls{GitHub} \url{https://github.com/01org/parameter-framework-plugins-alsa/}
+The \gls{alsa} plugin is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework-plugins-alsa/}}
