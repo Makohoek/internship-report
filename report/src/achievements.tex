@@ -157,7 +157,7 @@ Around this activity, I covered several topics:
 \end{description}
 
 \subsection{Parameter-framework introduction}
-\subsubsection{Discovery tutorials}\label{sec:tutorials}
+\subsubsection{Rookie tutorials}\label{sec:tutorials}
 
 At the start of my internship, I had to check out the \gls{pfw}'s
 source code without any documentation. The idea was to have a fresh look at
@@ -236,6 +236,7 @@ architecture by merging the controls and the mixer code.
 This results in a far simpler design.
 
 \subsection{Code alignment}
+
 When I had to update the different components on GitHub, there were some problems:
 Our internal version and the GitHub one had diverged.
 On figure \ref{fig:diverged}, we can see an overview of the branch state before rework.
@@ -243,9 +244,10 @@ On figure \ref{fig:diverged}, we can see an overview of the branch state before 
 \begin{figureGraphics}{Repository divergence}{fig:diverged}
     \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
 \end{figureGraphics}
+Since all the components I uploaded on GitHub had modifications which weren't present
+in the internal source tree, I encountered the divergence problem every single time.
 
 This was a very good exercise to improve my \gls{git} skills!
-
 
 \subsection{Core upload}
 Open-sourcing the \gls{pfw} required some initial work.
@@ -256,17 +258,25 @@ same.
 
 The project is available at \url{https://github.com/01org/parameter-framework}
 
-\subsection{File system plugin upload}
+\subsection{Filesystem plugin upload}
 
-The project is available at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
+The file system plugin is used for global access to the filesystem. This can be to
+use \emph{/proc} entries for instance. I used this plugin as example in the rookie
+documentation I wrote as described in section \ref{sec:tutorials}.
+
+I also worked on an other example: \emph{controlling} leds via the filesystem
+plugin on a Raspberry Pi.  This example was easy enough to be integrated into
+the online documentation of the filesystem plugin, on GitHub.
+
+The filesystem plugin is available on GitHub at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
 
 \subsection{Alsa plugin upload}
 
 The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
 on a \gls{linux} desktop environement to handle \gls{alsa} mixers.
 
-To demonstrate the power of this plugin, I wrote the README file which is on the front page on this GitHub project.
-The README contains :
+To demonstrate the power of this plugin, I wrote the README file which is on the
+front page on this GitHub project.  The README contains :
 \begin{itemize}
     \item Build and install instructions
     \item Prerequisites for using this plugin
@@ -277,4 +287,4 @@ The README contains :
 I also reorganised some code within this plugin since we used to rely on proprietary \gls{aosp} modifications.
 This plugin is now vanilla \gls{aosp} compatible, and can be used if the \gls{pfw} is installed.
 
-The \gls{alsa} plugin is available at \url{https://github.com/01org/parameter-framework-plugins-alsa/}
+The \gls{alsa} plugin is available on GitHub \url{https://github.com/01org/parameter-framework-plugins-alsa/}
