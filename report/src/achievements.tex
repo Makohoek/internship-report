@@ -144,16 +144,32 @@ point parameters can be exported as well.
         easier to read.
     \item By converting that number, it also computes the amount of digits
         to use for display, or writing towards a file. This can result in
-        \emph{rounding issues}, due to old C++ limitations.
+        \emph{rounding issues}, due to limitation of the \gls{cpp} method.
 \end{itemize}
 The fix I proposed was to replace the computation of displayable digits by something
 easier, which is the \emph{Fractional part} of the fixed point number.
 
-The example in listing \ref {lst:fixedPointProblem} illustrates the rounding error, and the output in the corrected version.
+The example in listing \ref {lst:fixedPointProblem} illustrates a bound error error, and the output in the corrected version.
 \begin{lstlisting}[caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
-pfw setParameter /Example/fixedPoint/q2.3
+####################
+#  broken version  #
+####################
+$ pfw setParameter /Example/fixedPoint/q2.3 3.875
 # Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.9 <= this is not expected!
+$ pfw setParameter /Example/fixedPoint/q2.3 3.9
+# Value 3.9 standing out of admitted real range
+# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
+# ^ this is even weirder
 
+###################
+#  fixed version  #
+###################
+$ pfw setParameter /Example/fixedPoint/q2.3 3.875
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.875
 \end{lstlisting}
 
 
