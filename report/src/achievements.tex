@@ -5,11 +5,14 @@
     to the \gls{pfw}, which was briefly presented in section \ref{sec:parameter-framework}.
 \end{sectionIntro}
 
+% {{{1
 \section{Parameter-framework mechanisms}
 Should i really add this?
 
+% {{{1
 \section{Parameter-framework core enhancements}
 
+% {{{2
 \subsection{Improving build process}
 \subsubsection{Build process}
 The pfw language as described in \ref{desc:pfw-language} is used for rule based
@@ -55,16 +58,19 @@ to integrate with the XmlGenerator tool. Since we wanted a more robust solution,
 Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
 
 \begin{figureGraphics}{Xml generation build process with XSD check}{fig:build-process-reworked}
-    \includegraphics[height=0.4\textheight]{./src/img/build-generation-after.pdf}
+    \includegraphics[height=0.5\textheight]{./src/img/build-generation-after.pdf}
 \end{figureGraphics}
 
 
+% {{{2
 \subsection{Multi-variant initial support}
 TODO
 
 \subsubsection{Alsa}
 \subsubsection{Parameter-framework}
 
+
+% {{{2
 \subsection{Fixed point parameter enhancements}
 The \gls{pfw} has several kinds of parameters:
 \begin{itemize}
@@ -97,17 +103,21 @@ take an example to illustrate the purpose of the test suite.
 Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
 \emph{Fractional part} is $3$. We can compute some specific values for that number:
 
-\begin{figureGraphics}{$Q.2.3$ special values}{fig:fixedPoint}
-    TODO special values for a Q.2.3 number
+\begin{description}
+    \item[Quantum] $2^{-3} = 0.125$
+    \item[UpperBound] $2^2 - 0.125 = 3.875$
+    \item[LowerBound] $-2^2 = -4$
+\end{description}
+
+Those values can be represented as following on figure \ref{fig:fixedPointValues}. Note that
+this figure is not represented in real scale.
+\begin{figureGraphics}{Fixed point special values}{fig:fixedPointValues}
+    \includegraphics[width=\textwidth]{./src/img/fixedPoint.pdf}
 \end{figureGraphics}
 
-The test suite takes each of these special values and performs four checks on
-them:
 
-\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
-    TODO figure interaction between PFW and \gls{python} test script.
-\end{figureGraphics}
-
+The test suite computes some values within the green(valid) area and the
+red(invalid) area and performs the following checks on them:
 \begin{description}
     \item[Bound check] The \gls{pfw} should throw an error if we
         attempt to set an out-of-bound value.
@@ -117,10 +127,15 @@ them:
     \item[Bijectivity check] The \gls{pfw} should return us the same value we provided him at the Consistency check.
 \end{description}
 
-After that the test suite was complete, it was time to rework the internal
-mechanism of the \gls{pfw}.
+For a given value, the following test (view figure \ref{fig:fixedPointTest}) scenario is launched:
+\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
+    \includegraphics[height=0.6\textheight]{./src/img/fixedPointProcess.pdf}
+\end{figureGraphics}
 
 \subsubsection{Rework the internal mechanism}
+After that the test suite was implemented, it was time to rework the internal
+mechanism of the \gls{pfw}.
+
 The \gls{pfw} can export parameters towards a file. Fixed
 point parameters can be exported as well.
 \begin{itemize}
@@ -134,15 +149,19 @@ point parameters can be exported as well.
 The fix I proposed was to replace the computation of displayable digits by something
 easier, which is the \emph{Fractional part} of the fixed point number.
 
-The example below illustrates the rounding error, and the output in the corrected version.
-\begin{figureGraphics}{$Q.2.3$ rounding issue}{fig:fixedPointProblem}
-    TODO show limitation example here and the new solution\\
-\end{figureGraphics}
+The example in listing \ref {lst:fixedPointProblem} illustrates the rounding error, and the output in the corrected version.
+\begin{lstlisting}[caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
+pfw setParameter /Example/fixedPoint/q2.3
+# Done
+
+\end{lstlisting}
 
 
+% {{{2
 \subsection{Multiple modem support}
 \subsubsection{Parameter-framework plugin}
 
+% {{{1
 \section{Open-sourcing on GitHub}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
 our team decided to release the source-code on GitHub.
@@ -156,6 +175,7 @@ Around this activity, I covered several topics:
         elements are made public.
 \end{description}
 
+% {{{2
 \subsection{Parameter-framework introduction}
 \subsubsection{Discovery tutorials}\label{sec:tutorials}
 
@@ -187,6 +207,7 @@ tutorials:
 These tutorials have been written in \gls{markdown}, the standard format used
 on GitHub.
 
+% {{{2
 \subsection{Parameter-framework's intellectual property}
 Intellectual property is very important at Intel. The \gls{pfw} is released in
 BSD license. All the source files must contain the correct BSD license header according
@@ -215,6 +236,7 @@ optional arguments:
 \end{lstlisting}
 
 
+% {{{2
 \subsection{Branch sync process}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
 it is quite difficult to keep the two repositories in sync.
@@ -225,6 +247,7 @@ On figure \ref{fig:branch-process} we can see how we manage to synchronize the d
 \end{figureGraphics}
 
 
+% {{{2
 \subsection{Alsa plugin refactoring}
 The Alsa plugin is used to handle Alsa or TinyAlsa subsystems.
 For our internal uses, we have patched some \gls{aosp} projects.
@@ -236,6 +259,7 @@ During the removal of those proprietary features, we also simplified the plugin
 architecture by merging the controls and the mixer code.
 This results in a far simpler design.
 
+% {{{2
 \subsection{Core upload}
 Open-sourcing the \gls{pfw} required some initial work.
 In order to smoothly integrate features from external contributors and internal work,
@@ -245,10 +269,12 @@ same.
 
 The project is available at \url{https://github.com/01org/parameter-framework}
 
+% {{{2
 \subsection{File system plugin upload}
 
 The project is available at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
 
+% {{{2
 \subsection{Alsa plugin upload}
 \subsubsection{Alsa}
 \subsubsection{Tinyalsa}

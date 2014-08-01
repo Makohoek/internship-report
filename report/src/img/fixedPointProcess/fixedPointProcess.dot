@@ -1,0 +1,72 @@
+/**
+ * fixedPoint test flow diagram with solarized light colorscheme
+ *
+ * <mattijs.korpershoek@gmail.com>
+ */
+
+/*
+ * Solarized colorscheme:
+ * $base03:    #002b36;
+ * $base02:    #073642;
+ * $base01:    #586e75;
+ * $base00:    #657b83;
+ * $base0:     #839496;
+ * $base1:     #93a1a1;
+ * $base2:     #eee8d5;
+ * $base3:     #fdf6e3;
+ * $yellow:    #b58900;
+ * $orange:    #cb4b16;
+ * $red:       #dc322f;
+ * $magenta:   #d33682;
+ * $violet:    #6c71c4;
+ * $blue:      #268bd2;
+ * $cyan:      #2aa198;
+ * $green:     #859900;
+ * */
+digraph hierarchy
+{
+  size="15,15"
+    node[shape=record,style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"]
+    edge[dir=forward, arrowtail=open, color="#586e75"]
+
+// states
+start [shape=ellipse, label="Start"];
+error [shape=ellipse, label="Report error"];
+success [shape=ellipse, label="Report success"];
+
+
+// test phases
+validity [shape=diamond, label="Valid value?"];
+Bound [shape=diamond, label="Bound valid?", fillcolor="#859900", fontcolor="#ffffff"];
+BoundError [shape=diamond, label="Bound valid?", fillcolor="#dc322f", fontcolor="#ffffff"];
+Sanity [shape=diamond, label="Sanity valid?"];
+Consistency [shape=diamond, label="Consistency valid?"];
+Bijectivity [shape=diamond, label="Bijectivity valid?"];
+
+
+// valid/invalid value paths:
+start -> validity;
+validity -> Bound [label="yes"];
+validity -> BoundError [label="no"];
+
+// valid path
+Bound -> Sanity [label="yes"];
+Sanity -> Consistency [label="yes"];
+Consistency -> Bijectivity [label="yes"];
+Bijectivity -> success [label="yes"];
+
+BoundError -> success [label="no"];
+
+
+//invalid path
+Bound -> error [label="no"];
+Sanity -> error [label="no"];
+Consistency -> error [label="no"];
+Bijectivity -> error [label="no"];
+
+BoundError -> error [label="yes"];
+
+{ rank=same; Bound; BoundError }
+{ rank=same; success; error }
+
+}
