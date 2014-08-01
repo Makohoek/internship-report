@@ -224,9 +224,8 @@ On figure \ref{fig:branch-process} we can see how we manage to synchronize the d
     \includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
 \end{figureGraphics}
 
-
 \subsection{Alsa plugin refactoring}
-The Alsa plugin is used to handle Alsa or TinyAlsa subsystems.
+The Alsa plugin is used to handle Alsa (for desktop mostly) or TinyAlsa (for boards mostly) subsystems.
 For our internal uses, we have patched some \gls{aosp} projects.
 This allows us to support different controls.
 That control support was also visible in the Alsa \gls{pfw} plugin. Since
@@ -235,6 +234,18 @@ we want to open-source the plugin, those proprietary features should be removed.
 During the removal of those proprietary features, we also simplified the plugin
 architecture by merging the controls and the mixer code.
 This results in a far simpler design.
+
+\subsection{Code alignment}
+When I had to update the different components on GitHub, there were some problems:
+Our internal version and the GitHub one had diverged.
+On figure \ref{fig:diverged}, we can see an overview of the branch state before rework.
+
+\begin{figureGraphics}{Repository divergence}{fig:diverged}
+    \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
+\end{figureGraphics}
+
+This was a very good exercise to improve my \gls{git} skills!
+
 
 \subsection{Core upload}
 Open-sourcing the \gls{pfw} required some initial work.
@@ -250,9 +261,20 @@ The project is available at \url{https://github.com/01org/parameter-framework}
 The project is available at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
 
 \subsection{Alsa plugin upload}
-\subsubsection{Alsa}
-\subsubsection{Tinyalsa}
-\subsubsection{Plugin architecture}
-CTL and MIX merged
 
-The project is available at \url{https://github.com/01org/parameter-framework-plugins-alsa/}
+The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
+on a \gls{linux} desktop environement to handle \gls{alsa} mixers.
+
+To demonstrate the power of this plugin, I wrote the README file which is on the front page on this GitHub project.
+The README contains :
+\begin{itemize}
+    \item Build and install instructions
+    \item Prerequisites for using this plugin
+    \item A tutorial which details how to write the \gls{xml} files for this
+    plugin in order to be able to change the master volume on a \gls{linux}
+    desktop.
+\end{itemize}
+I also reorganised some code within this plugin since we used to rely on proprietary \gls{aosp} modifications.
+This plugin is now vanilla \gls{aosp} compatible, and can be used if the \gls{pfw} is installed.
+
+The \gls{alsa} plugin is available at \url{https://github.com/01org/parameter-framework-plugins-alsa/}
