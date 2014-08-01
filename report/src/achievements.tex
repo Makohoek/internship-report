@@ -183,7 +183,7 @@ Within the Intel Audio \gls{hal}, we are
 % {{{1
 \section{Open-sourcing on GitHub}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
-our team decided to release the source-code on GitHub.
+our team decided to release the source-code on \gls{GitHub}.
 This should favor external contributions via \gls{pullrequests} and motivate
 the community to use the \gls{pfw}.
 
@@ -196,7 +196,7 @@ Around this activity, I covered several topics:
 
 % {{{2
 \subsection{Parameter-framework introduction}
-\subsubsection{Discovery tutorials}\label{sec:tutorials}
+\subsubsection{Rookie tutorials}\label{sec:tutorials}
 
 At the start of my internship, I had to check out the \gls{pfw}'s
 source code without any documentation. The idea was to have a fresh look at
@@ -224,7 +224,7 @@ tutorials:
         the only language the \gls{pfw} understands.
 \end{description}
 These tutorials have been written in \gls{markdown}, the standard format used
-on GitHub.
+on \gls{GitHub}.
 
 % {{{2
 \subsection{Parameter-framework's intellectual property}
@@ -233,7 +233,7 @@ BSD license. All the source files must contain the correct BSD license header ac
 to Intel's open-source policy.
 
 \subsubsection{license checker}
-Since there are 279 source files released currently on GitHub, it seems a lot of
+Since there are 279 source files released currently on \gls{GitHub}, it seems a lot of
 work to check all those files manually.
 I wrote an internal tool \gls{python} which performs the license check semi-automatically.
 The script usage is quite straightforward and showed in listing \ref{code:license}.
@@ -268,7 +268,7 @@ On figure \ref{fig:branch-process} we can see how we manage to synchronize the d
 
 % {{{2
 \subsection{Alsa plugin refactoring}
-The Alsa plugin is used to handle Alsa or TinyAlsa subsystems.
+The Alsa plugin is used to handle Alsa (for desktop mostly) or TinyAlsa (for boards mostly) subsystems.
 For our internal uses, we have patched some \gls{aosp} projects.
 This allows us to support different controls.
 That control support was also visible in the Alsa \gls{pfw} plugin. Since
@@ -279,6 +279,20 @@ architecture by merging the controls and the mixer code.
 This results in a far simpler design.
 
 % {{{2
+\subsection{Code alignment}
+
+When I had to update the different components on \gls{GitHub}, there were some problems:
+Our internal version and the \gls{GitHub} one had diverged.
+On figure \ref{fig:diverged}, we can see an overview of the branch state before rework.
+
+\begin{figureGraphics}{Repository divergence}{fig:diverged}
+    \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
+\end{figureGraphics}
+Since all the components I uploaded on \gls{GitHub} had modifications which weren't present
+in the internal source tree, I encountered the divergence problem every single time.
+
+This was a very good exercise to improve my \gls{git} skills!
+
 \subsection{Core upload}
 Open-sourcing the \gls{pfw} required some initial work.
 In order to smoothly integrate features from external contributors and internal work,
@@ -289,15 +303,34 @@ same.
 The project is available at \url{https://github.com/01org/parameter-framework}
 
 % {{{2
-\subsection{File system plugin upload}
+\subsection{Filesystem plugin upload}
 
-The project is available at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
+The file system plugin is used for global access to the filesystem. This can be to
+use \emph{/proc} entries for instance. I used this plugin as example in the rookie
+documentation I wrote as described in section \ref{sec:tutorials}.
+
+I also worked on an other example: \emph{controlling} leds via the filesystem
+plugin on a Raspberry Pi.  This example was easy enough to be integrated into
+the online documentation of the filesystem plugin, on \gls{GitHub}.
+
+The filesystem plugin is available on \gls{GitHub} at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
 
 % {{{2
 \subsection{Alsa plugin upload}
-\subsubsection{Alsa}
-\subsubsection{Tinyalsa}
-\subsubsection{Plugin architecture}
-CTL and MIX merged
 
-The project is available at \url{https://github.com/01org/parameter-framework-plugins-alsa/}
+The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
+on a \gls{linux} desktop environement to handle \gls{alsa} mixers.
+
+To demonstrate the power of this plugin, I wrote the README file which is on the
+front page on this \gls{GitHub} project.  The README contains :
+\begin{itemize}
+    \item Build and install instructions
+    \item Prerequisites for using this plugin
+    \item A tutorial which details how to write the \gls{xml} files for this
+    plugin in order to be able to change the master volume on a \gls{linux}
+    desktop.
+\end{itemize}
+I also reorganised some code within this plugin since we used to rely on proprietary \gls{aosp} modifications.
+This plugin is now vanilla \gls{aosp} compatible, and can be used if the \gls{pfw} is installed.
+
+The \gls{alsa} plugin is available on \gls{GitHub} \url{https://github.com/01org/parameter-framework-plugins-alsa/}
