@@ -1,0 +1,178 @@
+%
+% auth: Mattijs Korpershoek
+% mail: <mattijs.korpershoek@gmail.com>
+%
+\documentclass[compress]{beamer}
+%%%%%%%%%%%
+% Headers %
+%%%%%%%%%%%
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{multicol}
+\usepackage[normalem]{ulem}
+\usepackage{soul}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{textpos} % for textblock
+\usepackage{mathtools} % math environment
+\usepackage{textcomp}
+%\usepackage{avant}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Special variables %
+%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ImageFolder}{./img}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer environments %
+%%%%%%%%%%%%%%%%%%%%%%%
+% sets automatically the current subsection as frame title on your slide
+\newenvironment<>{FrameWithSubSection}%
+{%
+  \begin{frame}%
+    \frametitle{\insertsubsectionhead}%
+    \par%
+  }
+  {%
+    \par%
+  \end{frame}%
+}
+% the % are at the end of each line because with some text editors,
+% the LaTeX compiler may understand the \n as a command caracter.
+
+%%%%%%%%%%%%%%%%%%%%
+% caption settings %
+%%%%%%%%%%%%%%%%%%%%
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[HTML]{657B83}{\parbox{0.98\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=true, margin=0pt, font={sf,footnotesize}}
+%\DeclareCaptionFormat{figure}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{0pt}#1#2#3}}}
+%\captionsetup[figure]{format=figure,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%  Solarized colors  %
+%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{base03}{HTML}{002B36}
+\definecolor{base02}{HTML}{073642}
+\definecolor{base01}{HTML}{586E75}
+\definecolor{base00}{HTML}{657B83}
+\definecolor{base0}{HTML}{839496}
+\definecolor{base1}{HTML}{93A1A1}
+\definecolor{base2}{HTML}{EEE8D5}
+\definecolor{base3}{HTML}{FDF6E3}
+\definecolor{yellow}{HTML}{B58900}
+\definecolor{orange}{HTML}{CB4B16}
+\definecolor{red}{HTML}{DC322F}
+\definecolor{magenta}{HTML}{D33682}
+\definecolor{violet}{HTML}{6C71C4}
+\definecolor{blue}{HTML}{268BD2}
+\definecolor{cyan}{HTML}{2AA198}
+\definecolor{green}{HTML}{859900}
+
+\usepackage{inconsolata}
+\lstset{
+  basicstyle=\ttfamily,
+  language=bash,                     % c language
+  frame=lines,                        % bottom frame
+  sensitive=true
+  tabsize=2,
+  breaklines=true,
+  showstringspaces=false,
+  showspaces=false,
+  numbers=left,
+  backgroundcolor=\color{base3},
+  keywordstyle=\color{cyan},
+  commentstyle=\color{base1},
+  stringstyle=\color{blue},
+  numberstyle=\color{violet},
+  rulecolor=\color{base00},
+  morekeywords={nm, grep, mkff, owcet}
+}
+
+%%%%%%%%%
+% fonts %
+%%%%%%%%%
+%\definecolor{defaultFontColor}{HTML}{073642} % base 02
+%\renewcommand*\familydefault{\sfdefault}\color{defaultFontColor} %% Only if the base font of the document is to be typewriter style
+
+\usefonttheme[onlymath]{serif}
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}
+\setsansfont[Ligatures={Common}]{Futura}
+
+%%%%%%%%%%%%%%%%
+% Beamer Theme %
+%%%%%%%%%%%%%%%%
+%\usetheme{Warsaw}
+
+\useinnertheme{circles}
+\useoutertheme{split}
+
+%\usecolortheme[RGB={255,51,0}]{structure} % Paul sabatier red logo color
+
+%\setbeamercolor{alerted text}{fg=orange}
+%\setbeamercolor{background canvas}{bg=base3}
+%\setbeamercolor{block body alerted}{bg=normal text.bg!90!black}
+%\setbeamercolor{block body example}{bg=normal text.bg!90!black}
+%\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+%\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!black}
+%\setbeamercolor{fine separation line}{}
+%\setbeamercolor{frametitle}{fg=base3}
+%\setbeamercolor{item projected}{fg=black}
+%\setbeamercolor{normal text}{bg=base2,fg=base02}
+%\setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
+%\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
+%\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
+%\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
+%\setbeamercolor{section in sidebar}{fg=orange}
+%\setbeamercolor{section in sidebar shaded}{fg=grey}
+%\setbeamercolor{separation line}{}
+\setbeamercolor{sidebar}{bg=blue}
+\setbeamercolor{structure}{fg=blue}
+%\setbeamercolor{subsection in sidebar}{fg=brown}
+%\setbeamercolor{subsection in sidebar shaded}{fg=grey}
+%\setbeamercolor{title}{fg=brown}
+%\setbeamercolor{titlelike}{fg=brown}
+\setbeamercolor{block body}{bg=base2 text.bg!90!base02}
+\setbeamercolor{block title}{bg=blue}
+
+\usetheme{Berlin}
+\useoutertheme[]{miniframes}
+
+\defbeamertemplate*{footline}{shadow theme}
+{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fil,rightskip=.3cm]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertframenumber\,/\,\inserttotalframenumber\hfill\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+      \usebeamerfont{title in head/foot}\insertshorttitle%
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
+\begin{document}
+% inserts at every new section the Overview
+%\AtBeginSection[]
+%{
+%  \frame<beamer>{\begin{multicols}{2}
+%      \frametitle{Table of contents}
+%      \tableofcontents[currentsection,currentsubsection]
+%    \end{multicols}
+%  }
+%}
+
+\input{./title}
+\input{./intro}
+\input{./context}
+\input{./agile}
+\input{./technical}
+\input{./conclusion}
+
+\end{document}
