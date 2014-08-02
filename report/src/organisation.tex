@@ -21,33 +21,6 @@ Since I worked as an agile developer, I had no long term goal to reach. This
 Gantt chart is more like a trace of my different activities than a real planning
 diagram.
 
-%\begin{figureGraphics}{Gantt chart}{fig:gantt}
-\begin{ganttchart}[
-        x unit=0.5cm,
-        y unit title=.6cm,
-        y unit chart=.6cm,
-        hgrid=true,
-        vgrid={*1{red,  dotted}},
-        canvas/.style={fill=base2},
-        bar/.style={fill=orange},
-        title/.style={fill=base2},
-        group/.style={fill=blue, shape=ganttgroup},
-        bar height = 0.4,
-    ]{1}{24}
-    \gantttitlelist{1, ..., 24}{1} \\
-    \ganttbar{Improving build process}{24}{24} \\
-    \ganttbar{Xml checker}{24}{24} \\
-    \ganttbar{Multi-variant support}{24}{24} \\
-    \ganttbar{Fixed point enhancements}{24}{24}\\
-    \ganttbar{Multi modem support}{24}{24}\\
-    \ganttbar{Newcomer documentation}{1}{3}\\
-    \ganttbar{Intellectual property}{24}{24}\\
-    \ganttbar{Alsa plugin refactor}{24}{24}\\
-    \ganttbar{Filesystem plugin update}{24}{24}\\
-    \ganttbar{Core update}{24}{24}\\
-    \ganttbar{Alsa plugin update}24{24}{24}\\
-    \ganttbar{Internship report}{24}{24}\\
-\end{ganttchart}
 %\end{figureGraphics}
 
 % Improving build process
@@ -65,7 +38,38 @@ diagram.
 
 % Internship report
 
-TODO: group by topic: discovery, core enhancements, plugin opensourcing.
+\begin{figureGraphics}{Gantt chart}{fig:gantt}
+    \hspace*{-2cm}
+\begin{ganttchart}[
+        x unit=0.5cm,
+        y unit title=.6cm,
+        y unit chart=.6cm,
+        hgrid=true,
+        vgrid={*1{red,  dotted}},
+        canvas/.style={fill=base2},
+        bar/.style={fill=orange},
+        title/.style={fill=base2},
+        group/.style={fill=blue, shape=ganttgroup},
+        bar height = 0.4,
+    ]{1}{24}
+    \gantttitlelist{1, ..., 24}{1} \\
+    \ganttgroup{Enchancements}{4}{20} \\
+    \ganttbar{Arrival, installation}{1}{1} \\
+    \ganttbar{Improving build process}{4}{11} \\
+    \ganttbar{Multi-variant support}{5}{6} \\
+    \ganttbar{Fixed point enhancements}{9}{11}\\
+    \ganttbar{Multi modem support}{17}{20}\\
+    \ganttgroup{Open-sourcing}{1}{20} \\
+    \ganttbar{Newcomer documentation}{1}{4}\\
+    \ganttbar{Intellectual property}{12}{13}\\
+    \ganttbar{Alsa plugin refactor}{12}{14}\\
+    \ganttbar{Filesystem plugin update}{14}{15}\\
+    \ganttbar{Core update}{15}{18}\\
+    \ganttbar{Alsa plugin update}{17}{20}\\
+    \ganttgroup{University}{21}{24} \\
+    \ganttbar{Internship report}{21}{24}
+\end{ganttchart}
+\end{figureGraphics}
 
 Every task has a dedicated section in this document to describe what have been done.
 This can be found in chapter \ref{chap:contributions}.
