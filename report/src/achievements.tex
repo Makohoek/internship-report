@@ -6,10 +6,6 @@
 \end{sectionIntro}
 
 % {{{1
-\section{Parameter-framework mechanisms}
-Should i really add this?
-
-% {{{1
 \section{Parameter-framework core enhancements}
 
 % {{{2
@@ -64,10 +60,16 @@ Figure \ref{fig:build-process-reworked} shows the final implementation and where
 
 % {{{2
 \subsection{Multi-variant initial support}
-TODO
+As seen in section \ref{sec:parameter-framework} the \gls{pfw} needs to know
+which \gls{xml} files it has to load.  Within the \gls{hal}, the Stream manager
+and the Route manager are aware of which \gls{xml} files should be loaded. This
+is preconfigured an known when compiling the library. This implies that
+it is \emph{executable dependant}.
 
-\subsubsection{Alsa}
-\subsubsection{Parameter-framework}
+An external requirement was to be able to have one single binary. With this
+requirement, the solution explained before does not work anymore.
+
+Route manager which config files to load.
 
 
 % {{{2
@@ -175,10 +177,13 @@ $ pfw getParameter /Example/fixedPoint/q2.3
 
 % {{{2
 \subsection{Multiple modem support}
-With the bring your own device trends more and more smartphones support dual simcards. This implies that the platform must support two modems.
-Within the Intel Audio \gls{hal}, we are
+With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This implies that the platform must support two modems.
+Within the Intel Audio \gls{hal}, we are handling voice processing algorithms via the modem.
+Naturally, we have a \gls{pfw} plugin to handle the modem. This plugin was not supporting multiple modems.
 
-\subsubsection{Parameter-framework plugin}
+I had to add \emph{modem instance awareness} to the plugin. With the current implementation, it
+is possible to have multiple Structure files, each describing a modem. This would theoretically allow
+to support as much modems as we want.
 
 % {{{1
 \section{Open-sourcing on GitHub}
