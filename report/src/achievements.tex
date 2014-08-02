@@ -69,7 +69,11 @@ it is \emph{executable dependant}.
 An external requirement was to be able to have one single binary. With this
 requirement, the solution explained before does not work anymore.
 
-Route manager which config files to load.
+The Route and Stream managers had to have a bit more intelligence. In
+order to detect what the current sound card is, we can read from \emph{/proc/asound} entries.
+The current implementation relies on the content of \emph{/proc/asound/cards}.
+This is just a proof of concept to show to clients that we are able to support multiple hardware
+with one single binary.
 
 
 % {{{2
@@ -288,13 +292,14 @@ This results in a far simpler design.
 
 When I had to update the different components on \gls{GitHub}, there were some problems:
 Our internal version and the \gls{GitHub} one had diverged.
-On figure \ref{fig:diverged}, we can see an overview of the branch state we want to have.
+On figure \ref{fig:diverged}, we can see an overview of the branch state before I reworked them.
 
 \begin{figureGraphics}{Repository divergence}{fig:diverged}
     \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
 \end{figureGraphics}
 Since all the components I uploaded on \gls{GitHub} had modifications which weren't present
-in the internal source tree, I encountered the divergence problem every single time.
+in the internal source tree, I encountered the divergence problem for each project I
+synchronized with \gls{GitHub} (Core, Alsa and Filesystem).
 
 This was a very good exercise to improve my \gls{git} skills!
 

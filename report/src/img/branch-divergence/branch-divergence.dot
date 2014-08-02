@@ -31,16 +31,22 @@ graph hierarchy
     rankdir="LR"  //left to right ranking
     splines=false // straight lines
 
+ia [fillcolor="#268bd2"];
+ib [fillcolor="#268bd2"];
+ic [fillcolor="#268bd2"];
+id [fillcolor="#268bd2"];
+
+ga [fillcolor="#d33682"];
+gb [fillcolor="#d33682"];
+
 // internal tree
-common -- ia [label="internal tree"];
-ia -- ib -- ic -- id -- merge;
+common -- ia [label="internal tree", weight=100];
+ia -- ib -- ic -- id;
 
 // github changes
 common -- ga [label="github contributions"];
-ga -- gb -- merge;
+ga -- gb;
 
 // let's align some nodes for a prettier effect
-// { rank=same; ia; ga; }
-// { rank=same; ic; gb; }
 
 }
