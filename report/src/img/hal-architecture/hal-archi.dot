@@ -27,9 +27,11 @@
  * */
 graph hierarchy
 {
-  size="15,15";
+  size="30,15";
   node[shape=record,style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"];
   edge[arrowhead=none, arrowtail=none, color="#586e75"];
+  ranksep=0.10; //packs the nodes a bit more
+  labeljust="r";
 
   subgraph clusterLibraries{
     label="Libraries";
@@ -43,6 +45,7 @@ graph hierarchy
     edge[arrowhead=none, arrowtail=none, color="#586e75"];
     streamMgr [label="Stream manager"];
     RoutePfw [label="Route Parameter-Framework"];
+    RoutePlugin [label="Route plugin"];
     RouteMgr [label="Route manager"];
     AudioPfw [label="Audio Parameter-Framework"];
     TinyPlugin [label="TinyAlsa plugin"];
@@ -51,7 +54,7 @@ graph hierarchy
   }
 
   subgraph clusterDrivers{
-    label="Linux Kernel";
+    label="Kernel";
     TinyAlsa [label="TinyAlsa driver"];
     bgcolor="#dc322f";
     fontcolor="#ffffff";
@@ -59,7 +62,8 @@ graph hierarchy
 
   AudioMgr -- streamMgr;
   streamMgr -- RoutePfw;
-  RoutePfw -- RouteMgr;
+  RoutePfw -- RoutePlugin;
+  RoutePlugin -- RouteMgr;
   RouteMgr -- AudioPfw;
   AudioPfw -- TinyPlugin;
   TinyPlugin -- TinyAlsa;
