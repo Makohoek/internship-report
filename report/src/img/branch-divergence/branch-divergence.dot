@@ -1,0 +1,46 @@
+/**
+ * branch divergence with solarized light colorscheme
+ *
+ * <mattijs.korpershoek@gmail.com>
+ */
+
+/*
+ * Solarized colorscheme:
+ * $base03:    #002b36;
+ * $base02:    #073642;
+ * $base01:    #586e75;
+ * $base00:    #657b83;
+ * $base0:     #839496;
+ * $base1:     #93a1a1;
+ * $base2:     #eee8d5;
+ * $base3:     #fdf6e3;
+ * $yellow:    #b58900;
+ * $orange:    #cb4b16;
+ * $red:       #dc322f;
+ * $magenta:   #d33682;
+ * $violet:    #6c71c4;
+ * $blue:      #268bd2;
+ * $cyan:      #2aa198;
+ * $green:     #859900;
+ * */
+graph hierarchy
+{
+  size="15,15"
+    node[shape=circle, label="", style=filled,fillcolor="#fdf6e3", fontcolor="#657b83", color="#eee8d5"]
+    edge[dir=none, arrowtail=none, color="#586e75"]
+    rankdir="LR"  //left to right ranking
+    splines=false // straight lines
+
+// internal tree
+common -- ia [label="internal tree"];
+ia -- ib -- ic -- id -- merge;
+
+// github changes
+common -- ga [label="github contributions"];
+ga -- gb -- merge;
+
+// let's align some nodes for a prettier effect
+// { rank=same; ia; ga; }
+// { rank=same; ic; gb; }
+
+}

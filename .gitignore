@@ -6,6 +6,8 @@ report/src/img/hal-architecture.pdf
 report/src/img/hal-architecture/hal-architecture.pdf
 report/src/img/workflow.pdf
 report/src/img/workflow/workflow.pdf
+report/src/img/fixedPointProcess.pdf
+report/src/img/fixedPointProcess/fixedPointProcess.pdf
 
 *.aux
 *.log

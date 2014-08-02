@@ -5,11 +5,14 @@
     to the \gls{pfw}, which was briefly presented in section \ref{sec:parameter-framework}.
 \end{sectionIntro}
 
+% {{{1
 \section{Parameter-framework mechanisms}
 Should i really add this?
 
+% {{{1
 \section{Parameter-framework core enhancements}
 
+% {{{2
 \subsection{Improving build process}
 \subsubsection{Build process}
 The pfw language as described in \ref{desc:pfw-language} is used for rule based
@@ -55,16 +58,19 @@ to integrate with the XmlGenerator tool. Since we wanted a more robust solution,
 Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
 
 \begin{figureGraphics}{Xml generation build process with XSD check}{fig:build-process-reworked}
-    \includegraphics[height=0.4\textheight]{./src/img/build-generation-after.pdf}
+    \includegraphics[height=0.5\textheight]{./src/img/build-generation-after.pdf}
 \end{figureGraphics}
 
 
+% {{{2
 \subsection{Multi-variant initial support}
 TODO
 
 \subsubsection{Alsa}
 \subsubsection{Parameter-framework}
 
+
+% {{{2
 \subsection{Fixed point parameter enhancements}
 The \gls{pfw} has several kinds of parameters:
 \begin{itemize}
@@ -97,17 +103,21 @@ take an example to illustrate the purpose of the test suite.
 Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
 \emph{Fractional part} is $3$. We can compute some specific values for that number:
 
-\begin{figureGraphics}{$Q.2.3$ special values}{fig:fixedPoint}
-    TODO special values for a Q.2.3 number
+\begin{description}
+    \item[Quantum] $2^{-3} = 0.125$
+    \item[UpperBound] $2^2 - 0.125 = 3.875$
+    \item[LowerBound] $-2^2 = -4$
+\end{description}
+
+Those values can be represented as following on figure \ref{fig:fixedPointValues}. Note that
+this figure is not represented in real scale.
+\begin{figureGraphics}{Fixed point special values}{fig:fixedPointValues}
+    \includegraphics[width=\textwidth]{./src/img/fixedPoint.pdf}
 \end{figureGraphics}
 
-The test suite takes each of these special values and performs four checks on
-them:
 
-\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
-    TODO figure interaction between PFW and \gls{python} test script.
-\end{figureGraphics}
-
+The test suite computes some values within the green(valid) area and the
+red(invalid) area and performs the following checks on them:
 \begin{description}
     \item[Bound check] The \gls{pfw} should throw an error if we
         attempt to set an out-of-bound value.
@@ -117,10 +127,15 @@ them:
     \item[Bijectivity check] The \gls{pfw} should return us the same value we provided him at the Consistency check.
 \end{description}
 
-After that the test suite was complete, it was time to rework the internal
-mechanism of the \gls{pfw}.
+For a given value, the following test (view figure \ref{fig:fixedPointTest}) scenario is launched:
+\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
+    \includegraphics[height=0.6\textheight]{./src/img/fixedPointProcess.pdf}
+\end{figureGraphics}
 
 \subsubsection{Rework the internal mechanism}
+After that the test suite was implemented, it was time to rework the internal
+mechanism of the \gls{pfw}.
+
 The \gls{pfw} can export parameters towards a file. Fixed
 point parameters can be exported as well.
 \begin{itemize}
@@ -129,23 +144,46 @@ point parameters can be exported as well.
         easier to read.
     \item By converting that number, it also computes the amount of digits
         to use for display, or writing towards a file. This can result in
-        \emph{rounding issues}, due to old C++ limitations.
+        \emph{rounding issues}, due to limitation of the \gls{cpp} method.
 \end{itemize}
 The fix I proposed was to replace the computation of displayable digits by something
 easier, which is the \emph{Fractional part} of the fixed point number.
 
-The example below illustrates the rounding error, and the output in the corrected version.
-\begin{figureGraphics}{$Q.2.3$ rounding issue}{fig:fixedPointProblem}
-    TODO show limitation example here and the new solution\\
-\end{figureGraphics}
+The example in listing \ref {lst:fixedPointProblem} illustrates a bound error error, and the output in the corrected version.
+\begin{lstlisting}[caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
+####################
+#  broken version  #
+####################
+$ pfw setParameter /Example/fixedPoint/q2.3 3.875
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.9 <= this is not expected!
+$ pfw setParameter /Example/fixedPoint/q2.3 3.9
+# Value 3.9 standing out of admitted real range
+# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
+# ^ this is even weirder
+
+###################
+#  fixed version  #
+###################
+$ pfw setParameter /Example/fixedPoint/q2.3 3.875
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.875
+\end{lstlisting}
 
 
+% {{{2
 \subsection{Multiple modem support}
+With the bring your own device trends more and more smartphones support dual simcards. This implies that the platform must support two modems.
+Within the Intel Audio \gls{hal}, we are
+
 \subsubsection{Parameter-framework plugin}
 
+% {{{1
 \section{Open-sourcing on GitHub}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
-our team decided to release the source-code on GitHub.
+our team decided to release the source-code on \gls{GitHub}.
 This should favor external contributions via \gls{pullrequests} and motivate
 the community to use the \gls{pfw}.
 
@@ -156,8 +194,9 @@ Around this activity, I covered several topics:
         elements are made public.
 \end{description}
 
+% {{{2
 \subsection{Parameter-framework introduction}
-\subsubsection{Discovery tutorials}\label{sec:tutorials}
+\subsubsection{Rookie tutorials}\label{sec:tutorials}
 
 At the start of my internship, I had to check out the \gls{pfw}'s
 source code without any documentation. The idea was to have a fresh look at
@@ -185,15 +224,16 @@ tutorials:
         the only language the \gls{pfw} understands.
 \end{description}
 These tutorials have been written in \gls{markdown}, the standard format used
-on GitHub.
+on \gls{GitHub}.
 
+% {{{2
 \subsection{Parameter-framework's intellectual property}
 Intellectual property is very important at Intel. The \gls{pfw} is released in
 BSD license. All the source files must contain the correct BSD license header according
 to Intel's open-source policy.
 
 \subsubsection{license checker}
-Since there are 279 source files released currently on GitHub, it seems a lot of
+Since there are 279 source files released currently on \gls{GitHub}, it seems a lot of
 work to check all those files manually.
 I wrote an internal tool \gls{python} which performs the license check semi-automatically.
 The script usage is quite straightforward and showed in listing \ref{code:license}.
@@ -215,19 +255,20 @@ optional arguments:
 \end{lstlisting}
 
 
+% {{{2
 \subsection{Branch sync process}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
 it is quite difficult to keep the two repositories in sync.
 On figure \ref{fig:branch-process} we can see how we manage to synchronize the different code.
 
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
-    TODO add to git repo
-    %\includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
+    \includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
 \end{figureGraphics}
 
 
+% {{{2
 \subsection{Alsa plugin refactoring}
-The Alsa plugin is used to handle Alsa or TinyAlsa subsystems.
+The Alsa plugin is used to handle Alsa (for desktop mostly) or TinyAlsa (for boards mostly) subsystems.
 For our internal uses, we have patched some \gls{aosp} projects.
 This allows us to support different controls.
 That control support was also visible in the Alsa \gls{pfw} plugin. Since
@@ -236,6 +277,21 @@ we want to open-source the plugin, those proprietary features should be removed.
 During the removal of those proprietary features, we also simplified the plugin
 architecture by merging the controls and the mixer code.
 This results in a far simpler design.
+
+% {{{2
+\subsection{Code alignment}
+
+When I had to update the different components on \gls{GitHub}, there were some problems:
+Our internal version and the \gls{GitHub} one had diverged.
+On figure \ref{fig:diverged}, we can see an overview of the branch state we want to have.
+
+\begin{figureGraphics}{Repository divergence}{fig:diverged}
+    \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
+\end{figureGraphics}
+Since all the components I uploaded on \gls{GitHub} had modifications which weren't present
+in the internal source tree, I encountered the divergence problem every single time.
+
+This was a very good exercise to improve my \gls{git} skills!
 
 \subsection{Core upload}
 Open-sourcing the \gls{pfw} required some initial work.
@@ -246,14 +302,34 @@ same.
 
 The project is available at \url{https://github.com/01org/parameter-framework}
 
-\subsection{File system plugin upload}
+% {{{2
+\subsection{Filesystem plugin upload}
 
-The project is available at \url{https://github.com/01org/parameter-framework-plugins-filesystem/}
+The file system plugin is used for global access to the filesystem. This can be to
+use \emph{/proc} entries for instance. I used this plugin as example in the rookie
+documentation I wrote as described in section \ref{sec:tutorials}.
 
+I also worked on an other example: \emph{controlling} leds via the filesystem
+plugin on a Raspberry Pi.  This example was easy enough to be integrated into
+the online documentation of the filesystem plugin, on \gls{GitHub}.
+
+The filesystem plugin is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework-plugins-filesystem/}}
+
+% {{{2
 \subsection{Alsa plugin upload}
-\subsubsection{Alsa}
-\subsubsection{Tinyalsa}
-\subsubsection{Plugin architecture}
-CTL and MIX merged
 
-The project is available at \url{https://github.com/01org/parameter-framework-plugins-alsa/}
+The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
+on a linux desktop environement to handle \gls{alsa} mixers.
+
+To demonstrate the power of this plugin, I wrote the README file which is on the
+front page on this \gls{GitHub} project.  The README contains :
+\begin{itemize}
+    \item Build and install instructions
+    \item Prerequisites for using this plugin
+    \item A tutorial which details how to write the \gls{xml} files for this
+    plugin in order to be able to change the master volume on a linux desktop.
+\end{itemize}
+I also reorganised some code within this plugin since we used to rely on proprietary \gls{aosp} modifications.
+This plugin is now vanilla \gls{aosp} compatible, and can be used if the \gls{pfw} is installed.
+
+The \gls{alsa} plugin is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework-plugins-alsa/}}
