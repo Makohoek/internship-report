@@ -304,13 +304,15 @@ synchronized with \gls{GitHub} (Core, Alsa and Filesystem).
 This was a very good exercise to improve my \gls{git} skills!
 
 \subsection{Core upload}
-Open-sourcing the \gls{pfw} required some initial work.
-In order to smoothly integrate features from external contributors and internal work,
-Requirements, vanilla \gls{aosp}, internal tree and open-source version must be the
-same.
-01org organisation, Intel open-source technology center.
+The \gls{pfw} core is quite a big project, with about 30 000 lines of code.
+Align the internal tree and the \gls{GitHub} version of this project required quite some work.
+Some extra requirements apply on open-source projects, such as being compilable in a vanilla \gls{aosp} environment.
 
-The project is available at \url{https://github.com/01org/parameter-framework}
+There is a \gls{GitHub} organization which groups all Intel open-source projects. This
+organization is called \emph{01org}. I joined it during my internship in order to have admin rights
+on the projects I had to open-source.
+
+The \gls{pfw} core is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework}}
 
 % {{{2
 \subsection{Filesystem plugin upload}
@@ -319,7 +321,7 @@ The file system plugin is used for global access to the filesystem. This can be 
 use \emph{/proc} entries for instance. I used this plugin as example in the rookie
 documentation I wrote as described in section \ref{sec:tutorials}.
 
-I also worked on an other example: \emph{controlling} leds via the filesystem
+I also worked on an other example: \emph{controlling leds} via the filesystem
 plugin on a Raspberry Pi.  This example was easy enough to be integrated into
 the online documentation of the filesystem plugin, on \gls{GitHub}.
 
