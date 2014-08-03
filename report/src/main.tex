@@ -29,6 +29,8 @@
 
 \usepackage{sectsty}
 
+\usepackage{dirtree}
+
 %%%%%%%%%%%%%%%%%%%
 % custom commands %
 %%%%%%%%%%%%%%%%%%%
@@ -99,6 +101,21 @@
     numberstyle=\color{violet},
     rulecolor=\color{base00},
     morekeywords={pfw, setParameter, getParameter}
+}
+
+% pfw xml language
+\lstdefinelanguage{pfwXml}
+{morekeywords={ComponentType, BooleanParameter, IntegerParameter, ParameterBlock},
+sensitive=false,
+morecomment=[s]{<!--}{-->},
+morestring=[b]",
+}
+
+\lstdefinelanguage{pfwLang}
+{morekeywords={Domain, Conf, Component},
+sensitive=false,
+morecomment=[l]{\#},
+morestring=[b]",
 }
 
 %%%%%%%%%%%%%%%%%%%%
