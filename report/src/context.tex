@@ -23,7 +23,7 @@ Intel Corporation is the world’s largest semiconductor chip maker. They
 introduced the first microprocessor in 1971 and have been the world leader in
 silicon innovation since.
 Following a strategy to extend the Intel Architecture to new market segments,
-they are delivering smartphones and powered by Intel chipsets.
+they are delivering smartphones and tablets powered by Intel chipsets.
 
 Some key figures of Intel:
 \begin{itemize}
@@ -57,11 +57,12 @@ the Audio \gls{hal} is placed within this platform.
 
 \subsection{Global Android architecture}
 
-On the figure \ref{fig:archi}, the we can see the Audio \gls{hal} between the
+On the figure \ref{fig:archi}, we can see the Audio \gls{hal} between the
 Linux \gls{kernel} and the libraries layers.
 \begin{figureGraphics}{Global Android architecture}{fig:archi}
 \includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
 \end{figureGraphics}
+
 Within the Audio feature team in Toulouse, we are mainly focused around the Audio \gls{hal}.
 
 \subsection{Intel Audio HAL}
@@ -88,10 +89,10 @@ The \gls{pfw} is a way to fill those requirements.
 
 \section{Parameter-framework}
 \label{sec:parameter-framework}
-During a phone call, the smartphone isn't just transmitting the sound received from the microhone. Various algorithms are
+During a phone call, the smartphone isn't just transmitting the sound received from the microphone. Various algorithms are
 enabled on on the signal which is transmitted and send.
 Those algorithms have a lot of parameters, which can change depending on the use case: whether we are in a phone call,
-or listing to some music. Furthermore, those parameters are \emph{often hardware} dependant.
+or listing to some music. Furthermore, those parameters are \emph{often hardware dependent}.
 
 To simplify the maintenance of those multiple parameters, the \gls{pfw} was born.
 
@@ -139,6 +140,7 @@ describing the tree from figure \ref{fig:pfwtree}.
 </ComponentType>
 <!--snippet-->
 \end{lstlisting}
+TODO FORCE no page breaks
 
 \subsubsection{Settings}
 The \gls{pfw} is also able to change multiple parameters without any manual action, depending on the context.
