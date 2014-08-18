@@ -121,6 +121,15 @@ morecomment=[l]{\#},
 morestring=[b]",
 }
 
+% Code listing without page break
+\lstnewenvironment{code}[1][]%
+{
+    \noindent
+    \minipage{\linewidth}
+    \vspace{0.5\baselineskip}
+        \lstset{#1}}
+{\endminipage}
+
 %%%%%%%%%%%%%%%%%%%%
 % caption settings %
 %%%%%%%%%%%%%%%%%%%%

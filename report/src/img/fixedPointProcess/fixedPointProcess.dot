@@ -36,34 +36,34 @@ success [shape=ellipse, label="Report success"];
 
 
 // test phases
-validity [shape=diamond, label="Valid value?"];
-Bound [shape=diamond, label="Bound valid?", fillcolor="#859900", fontcolor="#ffffff"];
-BoundError [shape=diamond, label="Bound valid?", fillcolor="#dc322f", fontcolor="#ffffff"];
-Sanity [shape=diamond, label="Sanity valid?"];
-Consistency [shape=diamond, label="Consistency valid?"];
-Bijectivity [shape=diamond, label="Bijectivity valid?"];
+validity [shape=diamond, label="Tested value?"];
+Bound [shape=diamond, label="Bound check\n(expect success)", fillcolor="#859900", fontcolor="#ffffff"];
+BoundError [shape=diamond, label="Bound check\n(expect failure)", fillcolor="#dc322f", fontcolor="#ffffff"];
+Sanity [shape=diamond, label="Sanity check"];
+Consistency [shape=diamond, label="Consistency check"];
+Bijectivity [shape=diamond, label="Bijectivity check"];
 
 
 // valid/invalid value paths:
 start -> validity;
-validity -> Bound [label="yes"];
-validity -> BoundError [label="no"];
+validity -> Bound [label="valid"];
+validity -> BoundError [label="invalid"];
 
 // valid path
-Bound -> Sanity [label="yes"];
-Sanity -> Consistency [label="yes"];
-Consistency -> Bijectivity [label="yes"];
-Bijectivity -> success [label="yes"];
-BoundError -> success [label="no"];
+Bound -> Sanity [label="success"];
+Sanity -> Consistency [label="success"];
+Consistency -> Bijectivity [label="success"];
+Bijectivity -> success [label="success"];
+BoundError -> success [label="failure"];
 
 
 //invalid path
-Bound -> error [label="no"];
-Sanity -> error [label="no"];
-Consistency -> error [label="no"];
-Bijectivity -> error [label="no"];
+Bound -> error [label="failure"];
+Sanity -> error [label="failure"];
+Consistency -> error [label="failure"];
+Bijectivity -> error [label="failure"];
 
-BoundError -> error [label="yes"];
+BoundError -> error [label="success"];
 
 { rank=same; Bound; BoundError }
 { rank=same; success; error }
