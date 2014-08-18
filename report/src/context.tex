@@ -70,7 +70,7 @@ Intel's Audio \gls{hal} for Android platforms is based around a generic, plugin-
 It runs in the \emph{userland}, which is easier to maintain than kernel-space code.
 Since this solution is plugin-based, it is easy to extend to add more subsystems if needed.
 
-There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal}.
+There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal} below.
 \begin{figureGraphics}{Simplified view of Intel Audio HAL}{fig:hal}
 \includegraphics[height=0.5\textheight]{./src/img/hal-architecture.pdf}
 \end{figureGraphics}
@@ -79,22 +79,22 @@ different managers used in the \gls{hal}.
 
 Some requirements of the Intel Audio \gls{hal}:
 \begin{itemize}
-    \item Since the audio system needs to be tunable by the tuning engineers, the \gls{hal} should be configurable.
-        It is very painful to recompile the code at each time it is needed to adapt the value of a mixer!
+    \item Since the audio system needs to be tuned by the tuning engineers, the \gls{hal} should be configurable.
+        It would have been very painful to recompile the code at each time it is needed to adapt the value of a mixer!
     \item Since the \gls{hal} needs to \emph{abstract} the hardware variations, it should also be scalable. It should be
         easy to support new hardware.
 \end{itemize}
 
-The \gls{pfw} is a way to fill those requirements.
+The \gls{pfw} is a way to fulfill those requirements.
 
 \section{Parameter-framework}
 \label{sec:parameter-framework}
 During a phone call, the smartphone isn't just transmitting the sound received from the microphone. Various algorithms are
-enabled on on the signal which is transmitted and send.
+enabled on the audio signal which is transmitted and received.
 Those algorithms have a lot of parameters, which can change depending on the use case: whether we are in a phone call,
 or listing to some music. Furthermore, those parameters are \emph{often hardware dependent}.
 
-To simplify the maintenance of those multiple parameters, the \gls{pfw} was born.
+The \gls{pfw} was born to manage easily those multiple parameters in a scalable way.
 
 \subsection{Some concepts}
 In this section we are going to discover the concepts which make the
@@ -144,7 +144,7 @@ describing the tree from figure \ref{fig:pfwtree}.
 
 \subsubsection{Settings}
 The \gls{pfw} is also able to change multiple parameters without any manual action, depending on the context.
-The context is defined via a set of criterion. Those criterion are variables which can take a set of defined values.
+The context is defined using a set of criteria. Those criteria are variables which can take a set of defined values.
 For example, a criteria called \emph{Output Device} can take several values such as \emph{Speaker} or \emph{Headset}.
 
 Depending on the value of those criteria, the \gls{pfw} can automatically apply a set of values towards
@@ -178,10 +178,9 @@ as Camera, or Bluetooth.
 I worked within the Intel Audio development team, as an \emph{agile
 software developer}. The team is customers oriented, using \gls{scrum}
 methodology (see chapter \ref{chap:organisation}). My tasks
-within the team were focused around enchancing and open-sourcing the \gls{pfw} on
-\gls{GitHub}\footnote{\url{www.github.com/01org/parameter-framework}} to give it some
-visibilty.
-
+within the team were focused around enhancing and open-sourcing the \gls{pfw} on
+\gls{GitHub}\footnote{\url{www.github.com/01org/parameter-framework}} to give the team some
+visibility and advertise its work.
 
 \section{Workflow and environment}
 In this section, we will cover my daily workflow. This helps
@@ -191,7 +190,7 @@ to understand how I proceeded during my whole internship.
     \includegraphics[height=0.6\textheight]{./src/img/workflow.pdf}
 \end{figureGraphics}
 
-This workflow is the same for every developer member of the team. It is
+This workflow is the same for every developer of the team. It is
 detailed in the sub sections below.
 
 \subsection{Development}
@@ -203,7 +202,7 @@ than compiling locally!
 This server also helps to have the same developer environment to avoid
 time-consuming installations on local machines.
 
-I also worked on that server. This constraints to use command line programs only.
+Working remotely on that server constraints developers to use command line programs only.
 During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
 On the figure \ref{fig:setup} below, there is a screenshot of my development setup at Intel.
 
@@ -229,7 +228,8 @@ I have done some code review myself during this internship. It helps a lot to
 understand how other people work. Viewing other peoples code also makes me come
 up with new ideas to improve my own work.
 
-\subsection{Submission to integration team}
-After the code is ready and validated by the development team, it is submitted towards the integration team.
-They are responsible for testing complicated uses cases and validating the work the developers did.
+\subsection{Submission to gatekeeping team}
+After the code is ready and validated by the development team, it is submitted towards the gatekeeping team.
+They are responsible for testing complicated uses cases and they ensure there is no regression nor sound side effects
+due to the modifications the development team made.
 

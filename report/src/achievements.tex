@@ -7,7 +7,7 @@ which was briefly presented in section \ref{sec:parameter-framework}.
 \section{Parameter-framework core enhancements}
 
 % {{{2
-\subsection{Improving build process}
+\subsection{Enabling XML validation at build time}
 \subsubsection{Build process}
 The pfw language as described in \ref{desc:pfw-language} is used for rule based
 description. Those are translated into \gls{xml} files during the build via a
@@ -58,16 +58,18 @@ Figure \ref{fig:build-process-reworked} shows the final implementation and where
 
 % {{{2
 \subsection{Multi-variant initial support}
-As seen in section \ref{sec:parameter-framework} the \gls{pfw} needs to know
-which \gls{xml} files it has to load.  Within the \gls{hal}, the Stream manager
-and the Route manager are aware of which \gls{xml} files should be loaded. This
-is preconfigured an known when compiling the library. This implies that
-it is \emph{executable dependant}.
+As seen in section \ref{sec:parameter-framework} the \gls{pfw} needs
+\gls{xml} files which are hardware dependent.
+Within the \gls{hal}, the Stream manager and the Route manager are aware of
+which \gls{xml} files should be loaded. At startup, they provide the
+accurate \gls{xml} files to their corresponding \gls{pfw} instance.
+\gls{android}'s build system knows which platform we are building.
+So, for each platform, we can build a different binary which points towards the correct \gls{xml} files
 
-An external requirement was to be able to have one single binary. With this
+An external requirement was to be able to have one single binary which works on each platform. With this
 requirement, the solution explained before does not work anymore.
 
-The Route and Stream managers had to have a bit more intelligence. In
+The Route and Stream managers have to be a bit smarter. In
 order to detect what the current sound card is, we can read from \emph{/proc/asound} entries.
 The current implementation relies on the content of \emph{/proc/asound/cards}.
 This is just a proof of concept to show to clients that we are able to support multiple hardware
@@ -127,9 +129,9 @@ red(invalid) area and performs the following checks on them:
     \item[Bound check] The \gls{pfw} should throw an error if we
         attempt to set an out-of-bound value.
     \item[Sanity check] If we manage to set the value, The \gls{pfw} should not modify too much
-        the value. It can only change by a quantum.
-    \item[Consistency check] The \gls{pfw} should accept the value he sent us previously.
-    \item[Bijectivity check] The \gls{pfw} should return us the same value we provided him at the Consistency check.
+        the value. It can change by half a quantum at maximum.
+    \item[Consistency check] The \gls{pfw} should accept the value it sent previously.
+    \item[Bijectivity check] The \gls{pfw} should return the same value we provided it at the Consistency check.
 \end{description}
 
 For a given value, the following test (view figure \ref{fig:fixedPointTest}) scenario is launched:
@@ -138,7 +140,7 @@ For a given value, the following test (view figure \ref{fig:fixedPointTest}) sce
 \end{figureGraphics}
 
 \subsubsection{Rework the internal mechanism}
-After that the test suite was implemented, it was time to rework the internal
+After the test suite was implemented, it was time to rework the internal
 mechanism of the \gls{pfw}.
 
 The \gls{pfw} can export parameters towards a file. Fixed
@@ -154,10 +156,9 @@ point parameters can be exported as well.
 The fix I proposed was to replace the computation of displayable digits by something
 easier, which is the \emph{Fractional part} of the fixed point number.
 
-The example in listing \ref {lst:fixedPointProblem} illustrates a bound error error, and the output in the corrected version.
+The example in listing \ref {lst:fixedPointProblem} illustrates a bound error check, and the output in the corrected version.
 
 \begin{code}[language=bash, caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
-####################
 #  broken version  #
 ####################
 $ pfw setParameter /Example/fixedPoint/q2.3 3.875
@@ -169,7 +170,6 @@ $ pfw setParameter /Example/fixedPoint/q2.3 3.9
 # [-4, 3.875] for FixedPointParameter /Test/test/q2.3
 # ^ this is even weirder
 
-###################
 #  fixed version  #
 ###################
 $ pfw setParameter /Example/fixedPoint/q2.3 3.875
@@ -186,8 +186,8 @@ is useful to use the same device for corporate and private purposes.
 Besided, in some developing countries phone carriers do not cover the whole country. The habitants of those
 countries need several phone carriers to use their smartphone smoothly.
 For those purposes, the platform must support two modems.
-Within the Intel Audio \gls{hal}, we are handling voice processing algorithms via the modem.
-Naturally, we have a \gls{pfw} plugin to handle the modem. This plugin was not supporting multiple modems.
+Within the Intel Audio \gls{hal}, we are handling some voice processing algorithms via the modem.
+Naturally, we have a \gls{pfw} plugin to abstract the modem. This plugin was not supporting multiple modems.
 
 I had to add \emph{modem instance awareness} to the plugin. With the current implementation, it
 is possible to have multiple Structure files, each describing a modem. This would theoretically allow
@@ -203,7 +203,7 @@ the community to use the \gls{pfw}.
 Around this activity, I covered several topics:
 \begin{description}
     \item[Communicating, Documentating] the \gls{pfw} components.
-    \item[Push, clean, enchance] the code to make it sure no proprietary
+    \item[Push, clean, enchance] the code to make sure no proprietary
         elements are made public.
 \end{description}
 
@@ -224,9 +224,9 @@ tutorials:
         is a step-by-step guide about how to get the \gls{pfw}'s sources,
         build it and install it as a standalone on Ubuntu.
     \item[Run a simple example]
-        is a howto about running the \gls{pfw} command-line interface,
+        is a how-to about running the \gls{pfw} command-line interface,
         such as \lstinline{remote-process} and \lstinline {test-platform}.  In
-        this howto, the configuration and setting files are provided so that
+        this how-to, the configuration and setting files are provided so that
         the user can focus on the results. The example covers music play-list
         changing based on a user's mood.
     \item[An introduction to the .pfw language]\label{desc:pfw-language}
@@ -271,7 +271,7 @@ optional arguments:
 \subsection{Branch sync process}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
 it is quite difficult to keep the two repositories in sync.
-On figure \ref{fig:branch-process} we can see how we manage to synchronize the different code.
+On figure \ref{fig:branch-process} we can see how we plan to synchronize the different code.
 
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
     \includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
@@ -280,20 +280,20 @@ On figure \ref{fig:branch-process} we can see how we manage to synchronize the d
 
 % {{{2
 \subsection{Alsa plugin refactoring}
-The Alsa plugin is used to handle Alsa (for desktop mostly) or TinyAlsa (for boards mostly) subsystems.
-For our internal uses, we have patched some \gls{aosp} projects.
-This allows us to support different controls.
-That control support was also visible in the Alsa \gls{pfw} plugin. Since
+The Alsa plugin is used to handle \gls{alsa} (for desktop mostly) or TinyAlsa (for embedded \gls{android} devices mostly) subsystems.
+For our internal uses, we have patched some \gls{aosp} projects such as TinyAlsa which allows us to support proprietary controls.
+The support of such controls was also implemented in the \gls{alsa} \gls{pfw} plugin. Since
 we want to open-source the plugin, those proprietary features should be removed.
 
 During the removal of those proprietary features, we also simplified the plugin
 architecture by merging the controls and the mixer code.
 This results in a far simpler design.
+TODO detail.
 
 % {{{2
 \subsection{Code alignment}
 
-When I had to update the different components on \gls{GitHub}, there were some problems:
+When I had to update the different components on \gls{GitHub}, there were some issues:
 Our internal version and the \gls{GitHub} one had diverged.
 On figure \ref{fig:diverged}, we can see an overview of the branch state before I reworked them.
 
@@ -301,7 +301,7 @@ On figure \ref{fig:diverged}, we can see an overview of the branch state before 
     \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
 \end{figureGraphics}
 Since all the components I uploaded on \gls{GitHub} had modifications which weren't present
-in the internal source tree, I encountered the divergence problem for each project I
+in the internal source tree, I encountered the divergence issue for each project I
 synchronized with \gls{GitHub} (Core, Alsa and Filesystem).
 
 This was a very good exercise to improve my \gls{git} skills!

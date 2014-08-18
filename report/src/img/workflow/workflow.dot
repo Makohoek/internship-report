@@ -35,7 +35,7 @@ start [shape=ellipse, label="Todo"];
 end [shape=ellipse, label="Done"];
 
 dev [label="Development"];
-integrated [label="Ready to be integrated"];
+integrated [label="Merged"];
 
 start -> dev
 
@@ -43,12 +43,12 @@ dev -> review [label="submit patch"];
 
 review [shape=diamond, label="Review ?"];
 
-review -> dev [label="Need rework"];
+review -> dev [label="Rework\nrequired"];
 review -> preint [label="Validated"];
 
-preint [shape=diamond, label="Integration ?"]
+preint [shape=diamond, label="Gatekeeping ?"]
 
-preint -> dev [label="Found regression"];
+preint -> dev [label="Regression found"];
 preint -> integrated [label="Validated"];
 
 integrated -> end
