@@ -107,6 +107,7 @@ take an example to illustrate the purpose of the test suite.
 Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
 \emph{Fractional part} is $3$. We can compute some specific values for that number:
 
+TODO: explain Quantum
 \begin{description}
     \item[Quantum] $2^{-3} = 0.125$
     \item[UpperBound] $2^2 - 0.125 = 3.875$
@@ -162,7 +163,7 @@ The example in listing \ref {lst:fixedPointProblem} illustrates a bound error er
 $ pfw setParameter /Example/fixedPoint/q2.3 3.875
 # Done
 $ pfw getParameter /Example/fixedPoint/q2.3
-# 3.9 <= this is not expected!
+# 3.9 <= this is not expected, since 3.875 is encodable!
 $ pfw setParameter /Example/fixedPoint/q2.3 3.9
 # Value 3.9 standing out of admitted real range
 # [-4, 3.875] for FixedPointParameter /Test/test/q2.3
