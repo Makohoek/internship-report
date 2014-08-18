@@ -179,7 +179,11 @@ $ pfw getParameter /Example/fixedPoint/q2.3
 
 % {{{2
 \subsection{Multiple modem support}
-With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This implies that the platform must support two modems.
+With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This case
+is useful to use the same device for corporate and private purposes.
+Besided, in some developing countries phone carriers do not cover the whole country. The habitants of those
+countries need several phone carriers to use their smartphone smoothly.
+For those purposes, the platform must support two modems.
 Within the Intel Audio \gls{hal}, we are handling voice processing algorithms via the modem.
 Naturally, we have a \gls{pfw} plugin to handle the modem. This plugin was not supporting multiple modems.
 
