@@ -38,6 +38,9 @@
 %\usepackage[left=3cm,right=3cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{geometry}
 
+%% Remove odd parindent for second and later paragraphs
+\setlength{\parindent}{0cm} % Default is 15pt.
+
 
 %%%%%%%%%%%%%%
 % new colors %
@@ -87,7 +90,7 @@
 %%%%%%%%%%%%%%%%%%%%
 \lstset{
     basicstyle=\ttfamily\small,
-    language=bash,
+    language=C,
     frame=lines,
     sensitive=true
     tabsize=2,
@@ -117,6 +120,15 @@ sensitive=false,
 morecomment=[l]{\#},
 morestring=[b]",
 }
+
+% Code listing without page break
+\lstnewenvironment{code}[1][]%
+{
+    \noindent
+    \minipage{\linewidth}
+    \vspace{0.5\baselineskip}
+        \lstset{#1}}
+{\endminipage}
 
 %%%%%%%%%%%%%%%%%%%%
 % caption settings %

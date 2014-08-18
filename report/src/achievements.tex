@@ -1,9 +1,7 @@
 \chapter{Contributions}\label{chap:contributions}
 
-\begin{sectionIntro}
-    All the work I have done during this internship is related
-    to the \gls{pfw}, which was briefly presented in section \ref{sec:parameter-framework}.
-\end{sectionIntro}
+All the work I have done during this internship is related to the \gls{pfw},
+which was briefly presented in section \ref{sec:parameter-framework}.
 
 % {{{1
 \section{Parameter-framework core enhancements}
@@ -36,14 +34,14 @@ In order to do that we use \gls{xsd} files, which are describing what the conten
 
 Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
 
-\begin{lstlisting}[language=XML, caption=XSD rules for an Integer parameter, label=lst:xsd]
+\begin{code}[language=XML, caption=XSD rules for an Integer parameter, label=lst:xsd]
 <xs:attributeGroup name="IntegerParameterAttributes">
     <xs:attribute name="Size" type="SizeType" use="required"/>
     <xs:attribute name="Min" type="xs:integer" use="optional"/>
     <xs:attribute name="Max" type="xs:integer" use="optional"/>
     <xs:attribute name="Signed" type="xs:boolean" use="optional" default="false"/>
 </xs:attributeGroup>
-\end{lstlisting}
+\end{code}
 
 In this code, we see that the \gls{xsd} is \emph{requiring} that we specify the \emph{Size} attribute.
 
@@ -156,7 +154,8 @@ The fix I proposed was to replace the computation of displayable digits by somet
 easier, which is the \emph{Fractional part} of the fixed point number.
 
 The example in listing \ref {lst:fixedPointProblem} illustrates a bound error error, and the output in the corrected version.
-\begin{lstlisting}[caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
+
+\begin{code}[language=bash, caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
 ####################
 #  broken version  #
 ####################
@@ -176,12 +175,16 @@ $ pfw setParameter /Example/fixedPoint/q2.3 3.875
 # Done
 $ pfw getParameter /Example/fixedPoint/q2.3
 # 3.875
-\end{lstlisting}
+\end{code}
 
 
 % {{{2
 \subsection{Multiple modem support}
-With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This implies that the platform must support two modems.
+With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This case
+is useful to use the same device for corporate and private purposes.
+Besided, in some developing countries phone carriers do not cover the whole country. The habitants of those
+countries need several phone carriers to use their smartphone smoothly.
+For those purposes, the platform must support two modems.
 Within the Intel Audio \gls{hal}, we are handling voice processing algorithms via the modem.
 Naturally, we have a \gls{pfw} plugin to handle the modem. This plugin was not supporting multiple modems.
 
@@ -246,7 +249,7 @@ work to check all those files manually.
 I wrote an internal tool \gls{python} which performs the license check semi-automatically.
 The script usage is quite straightforward and showed in listing \ref{code:license}.
 
-\begin{lstlisting}[language=bash, caption=License checker usage, label=code:license]
+\begin{code}[language=bash, caption=License checker usage, label=code:license]
 usage: license_updater.py [-h] [--cpp | --mk] license root_location
 
 Scans recursively trough directories to find source code which should be
@@ -260,7 +263,7 @@ optional arguments:
     -h, --help     show this help message and exit
     --cpp          (default) scan for C++ files: ('h', 'c', 'hpp', 'cpp')
     --mk           scan for Android make files: .mk
-\end{lstlisting}
+\end{code}
 
 
 % {{{2

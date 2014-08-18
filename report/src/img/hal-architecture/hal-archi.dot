@@ -55,7 +55,7 @@ graph hierarchy
 
   subgraph clusterDrivers{
     label="Kernel";
-    TinyAlsa [label="TinyAlsa driver"];
+    TinyAlsa [label="ALSA driver"];
     bgcolor="#dc322f";
     fontcolor="#ffffff";
   }
