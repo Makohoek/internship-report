@@ -155,11 +155,18 @@ On listing \ref{lst:pfwsettings} we can see an example of setting file.
 Domain:
     Conf: SpeakerWithEchoCancel
         OutputDevice Is Speaker
-        Component: audio/microphone/
+        Component: audio/speaker/
             echo_cancellation/enable = true
             configuration/gain = 2
-            configuration/coefficient = 3 # arbitrary values
-# -- snippet --
+            configuration/coefficient = 3
+        # -- snippet --
+    Conf: HeadsetWithEchoCancel
+        OutputDevice Is Headset
+        Component: audio/headset/
+            echo_cancellation/enable = true
+            configuration/gain = 3
+            configuration/coefficient = 4 # arbitrary values
+        # -- snippet --
 \end{code}
 
 \subsubsection{Extensibility}
@@ -193,6 +200,8 @@ most of developers of our team are working remotely, via ssh.
 The server we are connecting to is far more powerful than the desktops we use.
 With it 32 cores and it's 2 TeraBytes of SSD, compilation time was far less time-consuming
 than compiling locally!
+This server also helps to have the same developer environment to avoid
+time-consuming installations on local machines.
 
 I also worked on that server. This constraints to use command line programs only.
 During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
@@ -204,11 +213,17 @@ On the figure \ref{fig:setup} below, there is a screenshot of my development set
 
 When the code is ready, I pushed it via \gls{git} on \gls{gerrit} to be reviewed.
 
+\subsection{Git}
+\gls{git} is a distributed revision control system initially designed for kernel
+development. Given that fact, it can be used in environment which have large
+code bases, such as \gls{android}. We use \gls{git} on daily basis at Intel for the
+code delivered to customers and for the internal tools.
+
 \subsection{Code quality}
 Code quality matters. Clean code eases maintenance and is less error-prone.
-Those facts are driving the team that I integrated at Intel. Naturally, all the
+Those facts are driving the team that I worked with at Intel. Naturally, all the
 patches I have delivered during my internship have been reviewed and meet the
-expected quality.
+expected quality. Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
 
 I have done some code review myself during this internship. It helps a lot to
 understand how other people work. Viewing other peoples code also makes me come
