@@ -58,23 +58,26 @@ Figure \ref{fig:build-process-reworked} shows the final implementation and where
     \includegraphics[height=0.5\textheight]{./src/img/build-generation-after.pdf}
 \end{figureGraphics}
 
+TODO: detail, explain how it works
+
 
 % {{{2
 \subsection{Multi-variant initial support}
+TODO: reword this whole section
 As seen in section \ref{sec:parameter-framework} the \gls{pfw} needs
 \gls{xml} files which are hardware dependent.
 Within the \gls{hal}, the Stream manager and the Route manager are aware of
 which \gls{xml} files should be loaded. At startup, they provide the
 accurate \gls{xml} files to their corresponding \gls{pfw} instance.
 \gls{android}'s build system knows which platform we are building.
-So, for each platform, we can build a different binary which points towards the correct \gls{xml} files
+So, for each platform, we build a different binary which points towards the correct \gls{xml} files.
 
 An external requirement was to be able to have one single binary which works on each platform. With this
 requirement, the solution explained before does not work anymore.
 
-The Route and Stream managers have to be a bit smarter. In
-order to detect what the current sound card is, we can read from \emph{/proc/asound} entries.
-The current implementation relies on the content of \emph{/proc/asound/cards}.
+The Route and Stream managers need to be smarter. In
+order to detect what the current sound card is, we can read from \lstinline{/proc/asound} entries.
+The current implementation relies on the content of \lstinline{/proc/asound/cards}.
 This is just a proof of concept to show to clients that we are able to support multiple hardware
 with one single binary.
 
@@ -91,13 +94,13 @@ The \gls{pfw} has several kinds of parameters:
     \item ...
 \end{itemize}
 
-Fixed point numbers are useful for representing fractional numbers. Their
+Fixed point numbers are useful for representing real numbers. Their
 usage is appropriate when the processor does not haves a floating point unit
 or when there is a performance gain by using them. Usually, fixed points are
 represented by $Qn.m$ format, where $n$ is the \emph{Integral part} and $m$ the
 \emph{Fractional part}.
 
-The implementation of fixed point numbers in the \gls{pfw} had some
+The implementation of fixed point numbers in the \gls{pfw} has some
 corner cases which were not correctly handled. Round issues appeared when we
 were writing to a configuration file or displaying user input. To
 support the expected behavior for those cases, I changed the implementation, and
@@ -113,11 +116,11 @@ Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
 \emph{Fractional part} is $3$. We can compute some specific values for that number:
 
 TODO: explain Quantum
-\begin{description}
-    \item[Quantum] $2^{-3} = 0.125$
-    \item[UpperBound] $2^2 - 0.125 = 3.875$
-    \item[LowerBound] $-2^2 = -4$
-\end{description}
+\begin{itemize}
+    \item Quantum $2^{-3} = 0.125$
+    \item UpperBound $2^2 - 0.125 = 3.875$
+    \item LowerBound $-2^2 = -4$
+\end{itemize}
 
 Those values can be represented as following on figure \ref{fig:fixedPointValues}. Note that
 this figure is not represented in real scale.
@@ -125,9 +128,14 @@ this figure is not represented in real scale.
     \includegraphics[width=\textwidth]{./src/img/fixedPoint.pdf}
 \end{figureGraphics}
 
-
 The test suite computes some values within the green(valid) area and the
-red(invalid) area and performs the following checks on them:
+red(invalid) area and performs the checks illustrated on figure \ref{fig:fixedPointTest} below.
+
+\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
+    \includegraphics[height=0.6\textheight]{./src/img/fixedPointProcess.pdf}
+\end{figureGraphics}
+
+Below is a small description of the tests:
 \begin{description}
     \item[Bound check] The \gls{pfw} should throw an error if we
         attempt to set an out-of-bound value.
@@ -137,16 +145,11 @@ red(invalid) area and performs the following checks on them:
     \item[Bijectivity check] The \gls{pfw} should return the same value we provided it at the Consistency check.
 \end{description}
 
-For a given value, the following test (view figure \ref{fig:fixedPointTest}) scenario is launched:
-\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
-    \includegraphics[height=0.6\textheight]{./src/img/fixedPointProcess.pdf}
-\end{figureGraphics}
-
 \subsubsection{Rework the internal mechanism}
-After the test suite was implemented, it was time to rework the internal
+It was time to rework the internal
 mechanism of the \gls{pfw}.
 
-The \gls{pfw} can export parameters towards a file. Fixed
+The \gls{pfw} can export parameters to a file. Fixed
 point parameters can be exported as well.
 \begin{itemize}
     \item When exporting them, the \gls{pfw} converts the value from
@@ -154,7 +157,8 @@ point parameters can be exported as well.
         easier to read.
     \item By converting that number, it also computes the amount of digits
         to use for display, or writing towards a file. This can result in
-        \emph{rounding issues}, due to limitation of the \gls{cpp} method.
+        \emph{rounding issues}, due to limitation of the \lstinline{setPrecision} \gls{cpp} method.
+        TODO detail what were the issues (rounding to upper value, etc)
 \end{itemize}
 The fix I proposed was to replace the computation of displayable digits by something
 easier, which is the \emph{Fractional part} of the fixed point number.
@@ -189,12 +193,14 @@ is useful to use the same device for corporate and private purposes.
 Besided, in some developing countries phone carriers do not cover the whole country. The habitants of those
 countries need several phone carriers to use their smartphone smoothly.
 For those purposes, the platform must support two modems.
-Within the Intel Audio \gls{hal}, we are handling some voice processing algorithms via the modem.
-Naturally, we have a \gls{pfw} plugin to abstract the modem. This plugin was not supporting multiple modems.
+Within the Intel Audio \gls{hal}, we are handling some voice processing algorithms from the signal coming from the modem.
+Naturally, we have a \gls{pfw} plugin to abstract the modem. This plugin did not support multiple modems.
 
 I had to add \emph{modem instance awareness} to the plugin. With the current implementation, it
 is possible to have multiple Structure files, each describing a modem. This would theoretically allow
-to support as much modems as we want.
+to support as many modems as we want.
+
+TODO explain a bit more.
 
 % {{{1
 \section{Open-sourcing on GitHub}
@@ -211,9 +217,9 @@ Around this activity, I covered several topics:
 \end{description}
 
 % {{{2
-\subsection{Parameter-framework newcomer documentation}\label{sec:tutorials}
+\subsection{Parameter-framework newcomer's documentation}\label{sec:tutorials}
 
-At the start of my internship, I had to check out the \gls{pfw}'s
+At the start of my internship, I had to inspect the \gls{pfw}'s
 source code without any documentation. The idea was to have a fresh look at
 this piece of software to determine if it was open-source ready, straightforward
 to use, for someone who is unfamiliar with it.
@@ -243,14 +249,14 @@ on \gls{GitHub}.
 
 % {{{2
 \subsection{Parameter-framework's intellectual property}
-Intellectual property is very important at Intel. The \gls{pfw} is released in
+Intellectual property is very important at Intel. The \gls{pfw} is released under
 BSD license. All the source files must contain the correct BSD license header according
 to Intel's open-source policy.
 
 \subsubsection{license checker}
 Since there are 279 source files released currently on \gls{GitHub}, it seems a lot of
 work to check all those files manually.
-I wrote an internal tool \gls{python} which performs the license check semi-automatically.
+I wrote an internal tool in \gls{python} which performs the license check semi-automatically.
 The script usage is quite straightforward and showed in listing \ref{code:license}.
 
 \begin{code}[language=bash, caption=License checker usage, label=code:license]
@@ -273,7 +279,7 @@ optional arguments:
 % {{{2
 \subsection{Branch sync process}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
-it is quite difficult to keep the two repositories in sync.
+it is quite difficult to keep both repositories in sync.
 On figure \ref{fig:branch-process} we can see how we plan to synchronize the different code.
 
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
@@ -284,13 +290,13 @@ On figure \ref{fig:branch-process} we can see how we plan to synchronize the dif
 % {{{2
 \subsection{Alsa plugin refactoring}
 The Alsa plugin is used to handle \gls{alsa} (for desktop mostly) or TinyAlsa (for embedded \gls{android} devices mostly) subsystems.
-For our internal uses, we have patched some \gls{aosp} projects such as TinyAlsa which allows us to support proprietary controls.
+For our internal uses, we patched some \gls{aosp} projects such as TinyAlsa which allows us to support proprietary controls.
 The support of such controls was also implemented in the \gls{alsa} \gls{pfw} plugin. Since
 we want to open-source the plugin, those proprietary features should be removed.
 
-During the removal of those proprietary features, we also simplified the plugin
-architecture by merging the controls and the mixer code.
-This results in a far simpler design.
+During the removal of those special controls, we also simplified the plugin
+architecture by merging the controls and the mixer code. TODO removing templates.
+The result is a far simpler design.
 TODO detail.
 
 % {{{2
@@ -307,7 +313,7 @@ Since all the components I uploaded on \gls{GitHub} had modifications which were
 in the internal source tree, I encountered the divergence issue for each project I
 synchronized with \gls{GitHub} (Core, Alsa and Filesystem).
 
-This was a very good exercise to improve my \gls{git} skills!
+This was a very good exercise to improve my \gls{git} skill.
 
 \subsection{Core upload}
 The \gls{pfw} core is quite a big project, with about 30 000 lines of code.
@@ -327,7 +333,7 @@ The file system plugin is used for global access to the filesystem. This can be 
 use \emph{/proc} entries for instance. I used this plugin as example in the rookie
 documentation I wrote as described in section \ref{sec:tutorials}.
 
-I also worked on an other example: \emph{controlling leds} via the filesystem
+I also worked on an other example: \emph{controlling LEDS} via the filesystem
 plugin on a Raspberry Pi.  This example was easy enough to be integrated into
 the online documentation of the filesystem plugin, on \gls{GitHub}.
 
