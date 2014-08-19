@@ -198,11 +198,12 @@ as Camera, or Bluetooth.
 
 \subsection{Topic of my internship}
 I worked within the Intel Audio development team, as an \emph{agile
-software developer}. The team is customers oriented, using \gls{scrum}
+software developer}. The team is customer oriented, using \gls{scrum}
 methodology (see chapter \ref{chap:organisation}). My tasks
 within the team were focused around enhancing and open-sourcing the \gls{pfw} on
-\gls{GitHub}\footnote{\url{www.github.com/01org/parameter-framework}} to give the team some
+\gls{GitHub}\footnote{see \ref{chap:annex}} to give the team some
 visibility and advertise its work.
+TODO explain this
 
 \section{Workflow and environment}
 In this section, we will cover my daily workflow. This helps
@@ -216,15 +217,18 @@ This workflow is the same for every developer of the team. It is
 detailed in the sub sections below.
 
 \subsection{Development}
-Since compiling the Android source tree requires a lot of computing power,
-most of developers of our team are working remotely, via ssh.
+Android source tree contains more than 700 projects. They have their own build system
+based on \lstinline{Android.mk} files. Each time that a project has to be rebuild from scratch (for example after a  \lstinline{make clean} command) all
+the 700 projects of the Android source tree are scanned for dependencies. This requires a lot of computing power.
+Given that fact, most of developers of our team are working remotely, via ssh on a powerful server.
 The server we are connecting to is far more powerful than the desktops we use.
-With it 32 cores and it's 2 TeraBytes of SSD, compilation time was far less time-consuming
-than compiling locally!
+With its 32 cores and its 2 TeraBytes of SSD, compilation time was far less time-consuming
+than compiling on my local machine (about 10 times faster).
 This server also helps to have the same developer environment to avoid
 time-consuming installations on local machines.
 
-Working remotely on that server constraints developers to use command line programs only.
+Working remotely on that server constraints developers to use command line programs only because
+launching a graphical session for each user would require too much computing power.
 During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
 On the figure \ref{fig:setup} below, there is a screenshot of my development setup at Intel.
 
@@ -232,7 +236,7 @@ On the figure \ref{fig:setup} below, there is a screenshot of my development set
 \includegraphics[width=\textwidth]{./src/img/setup.pdf}
 \end{figureGraphics}
 
-When the code is ready, I pushed it via \gls{git} on \gls{gerrit} to be reviewed.
+When the code is ready, I push it via \gls{git} on \gls{gerrit} to be reviewed.
 
 \subsection{Git}
 \gls{git} is a distributed revision control system initially designed for kernel
@@ -243,15 +247,27 @@ code delivered to customers and for the internal tools.
 \subsection{Code quality}
 Code quality matters. Clean code eases maintenance and is less error-prone.
 Those facts are driving the team that I worked with at Intel. Naturally, all the
-patches I have delivered during my internship have been reviewed and meet the
-expected quality. Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
+patches I have delivered during my internship have been reviewed and met the
+expected quality.
+
+Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
+It is based on a notation system with inline comments and its usage is pretty straightforward.
+Its interface is showed on figure \ref{fig:gerrit} below.
+
+\begin{figureGraphics}{Gerrit code review}{fig:gerrit}
+    \includegraphics[width=\textwidth]{./src/img/gerrit.png}
+\end{figureGraphics}
 
 I have done some code review myself during this internship. It helps a lot to
 understand how other people work. Viewing other peoples code also makes me come
-up with new ideas to improve my own work.
+up with new ideas to improve my own work in several aspects such as better naming,
+more modularity, cleaner design.
 
 \subsection{Submission to gatekeeping team}
-After the code is ready and validated by the development team, it is submitted towards the gatekeeping team.
-They are responsible for testing complicated uses cases and they ensure there is no regression nor sound side effects
+After code review and a few reworks, the code is validated by the development team.
+The super reviewer gives the developer the permission to submit his work to the gatekeeping team.
+They are responsible for testing complex uses cases and they ensure there is no regression nor side effects
 due to the modifications the development team made.
+A lot of automatic and manual tests scenarios are ran which cover \emph{voice call}, \emph{voip call}, \emph{media playback}
+and more. Of course, more complex tests are done depending on the functionality which is developed.
 

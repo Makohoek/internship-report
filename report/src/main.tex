@@ -177,10 +177,6 @@ morestring=[b]",
 \bibliographystyle{alpha}
 
 
-%#############################################################################%
-% End of preamble                                                             %
-%#############################################################################%
-
 \begin{document}
 \input{./src/title.tex}
 \newpage
@@ -196,11 +192,22 @@ morestring=[b]",
 \input{./src/toc.tex}
 \newpage
 
+\phantomsection
+\hypersetup{linkcolor=defaultFontColor}
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\hypersetup{linkcolor=blue}
+\newpage
+
 \input{./src/introduction.tex}
 \input{./src/context.tex} % WHERE I DID the work, and on what
 \input{./src/organisation.tex} % HOW I PLANNED the work
 \input{./src/achievements.tex} % WHAT I CREATED at work
 \input{./src/conclusion.tex} % WHAT I have learned
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Annex}
+\input{./src/annex.tex} % additional content
 
 %\bibliography{./src/biblio}
 %\input{./src/annexes.tex}

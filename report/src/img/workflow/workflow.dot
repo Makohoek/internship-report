@@ -34,10 +34,13 @@ digraph hierarchy
 start [shape=ellipse, label="Todo"];
 end [shape=ellipse, label="Done"];
 
+design [label="Design"];
 dev [label="Development"];
 integrated [label="Merged"];
 
-start -> dev
+start -> design
+design -> dev
+dev -> design
 
 dev -> review [label="submit patch"];
 
