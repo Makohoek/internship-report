@@ -7,15 +7,16 @@ which was briefly presented in section \ref{sec:parameter-framework}.
 \section{Parameter-framework core enhancements}
 
 % {{{2
-\subsection{Enabling XML validation at build time}
+\subsection{XML validation at build time}
 \subsubsection{Build process}
+FIXME FIXME forward reference, this is no good.
 The pfw language as described in \ref{desc:pfw-language} is used for rule based
 description. Those are translated into \gls{xml} files during the build via a
 specific make target.  In order to generate those \gls{xml} files, we also need
 the information of the Structure files, which are written by the integration
 engineers.
 
-To generate those files, we rely on a toolset we call \emph{XmlGenerator}.
+To generate those files, we rely on a toolset we call \emph{HostDomainGenerator}.
 The figure \ref{fig:build-process} shows how it works:
 
 \begin{figureGraphics}{Xml generation build process}{fig:build-process}
@@ -26,11 +27,12 @@ But there were some limitations. Since the writing of the \gls{xml} structure fi
 \emph{no guarantee} that their files were semantically correct.
 Since no check was done during the build-process, the generator could write erroneous files because it supposes that
 the Structure files are \emph{correct}. An example can be that someone forgot to specify the \emph{size} property of a parameter.
-This lead to \emph{run-time errors} and \emph{undefined behaviour} because we are basically allocating zero memory for that parameter.
+This leads to \emph{run-time errors} and \emph{undefined behaviour} because we are basically allocating zero memory for that parameter.
+TODO REXPLAIN.
 
 \subsubsection{Schemas}
-To avoid strange run-time errors to bad generated files, we must make it impossible to generate erroneous files.
-In order to do that we use \gls{xsd} files, which are describing what the content of an .xml element \emph{should be}.
+To avoid run-time errors to bad generated files, we must make it impossible to generate erroneous files.
+We can use \gls{xsd} files to describe rules about the content of an .xml element.
 
 Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
 
@@ -46,8 +48,9 @@ Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
 In this code, we see that the \gls{xsd} is \emph{requiring} that we specify the \emph{Size} attribute.
 
 \subsubsection{Xml checker}
+
 We decided to integrate an automatic \gls{xsd} check at build time. In order to do so, I started writing a \gls{python} script
-to integrate with the XmlGenerator tool. Since we wanted a more robust solution, It was finally done within the \gls{pfw} itself.
+to integrate with the HostDomainGenerator tool. Since we wanted a more robust solution, It was finally done within the \gls{pfw} itself.
 
 Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
 
