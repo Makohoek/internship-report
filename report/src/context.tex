@@ -1,4 +1,4 @@
-\chapter{Environment}\label{chap:context}
+\chapter{Environment and context}\label{chap:context}
 
 \begin{sectionIntro}
     This chapter will describe essential facts about my internship, such as
@@ -49,7 +49,6 @@ Some key figures of Intel:
 \item One of the top ten Linux \gls{kernel} contributors.
 \end{itemize}
 
-
 \subsection{Intel Audio feature team in Toulouse}
 The team I worked with is the Audio feature team, in Toulouse.
 They are responsible for the Audio \gls{hal} which is the interface between the
@@ -60,7 +59,8 @@ as the \emph{Motorola Razr I} from figure \ref{fig:razri}.
 
 Their custom \gls{hal} is based around the \gls{pfw}, which will be described in the section \ref{sec:parameter-framework}.
 
-\subsection{Topic of my internship}
+
+\section{Topic of my internship}
 I worked within the Intel Audio development team, as an \emph{agile
 software developer}. The team is customer oriented, using \gls{scrum}
 methodology (see chapter \ref{chap:organisation}). My tasks
@@ -68,14 +68,14 @@ within the team were focused around open-sourcing the \gls{pfw} on
 \gls{GitHub}\footnote{the links are in the annex at page \pageref{chap:annex}}
 
 
-\subsubsection{Why open-sourcing the Parameter-framework}
+\subsection{Why open-sourcing the Parameter-framework}
 At the moment there is no standardization (such as POSIX for operating systems) in middleware. Due to the lack
 of standards, each company is reinventing their own solution for handling middleware problems in their own way.
 The \gls{pfw} which is the solution developed by the Intel Audio team is \emph{generic}, \emph{efficient} and \emph{scalable} enough to become a standard.
 With this ambition in mind, the Intel Audio team decided to open-source the core component of their Audio \gls{hal}, the \gls{pfw}.
 The component is hosted on \gls{GitHub} which is the most popular code hosting site in the world.
 
-\subsubsection{My role regarding open-sourcing}
+\subsection{My role regarding open-sourcing}
 In order to open-source such a complex component as the \gls{pfw}, the Intel Audio team needed to evaluate if the code was ready.
 The code requires to be easy-to-understand so that the open-source community is willing to adopt it.
 Since I never worked with that component, I took a fresh look at the code. I had to try to \emph{understand the code} and the
@@ -88,6 +88,7 @@ My role was to setup and execute that synchronization process to avoid costly an
 How this was done will be detailed later in section \ref{sec:syncProcess}.
 
 
+
 \section{Android}
 During my internship, I worked on the \gls{android} platform. This operating
 system has a complex software stack which goes from the Linux \gls{kernel} to
@@ -95,14 +96,29 @@ applications such as \emph{Gmail}. This section gives an overview of the Android
 stack to show on which components I worked.
 
 \subsection{Global Android architecture}
+Android is a complex system, having more than 1 billion active users.
+It is structured in different levels:
 
-The figure \ref{fig:archi} shows the Audio \gls{hal} which is between the
-Linux \gls{kernel} and the libraries layers.
+\begin{description}
+    \item[Applications] such as Gmail, which are seen by the end-user
+    \item[Applications Framework] which is used by the applications, this is written in Java.
+    \item[Libraries] which is composed of the Dalvik virtual machine and other C/\gls{cpp} frameworks.
+    \item[Hardware Abstraction Layer] which a part of the middleware stack that ties together the libraries
+        and the \gls{kernel}. I worked in this section of the \gls{android} stack.
+    \item[Linux kernel] which contains the drivers and provides the user-space functionalities for the
+        middleware stack.
+\end{description}
+
+The figure \ref{fig:archi} shows android software stack and highlights the
+part I worked on during my internship, which is the Audio \gls{hal}.
+
 \begin{figureGraphics}{Global Android architecture}{fig:archi}
     \includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
 \end{figureGraphics}
 
-Within the Audio feature team in Toulouse, we are mainly focused around the Audio \gls{hal}.
+The Audio \gls{hal} is also one of the primary concerns of the Audio team in Toulouse and will be detailed
+in next section
+
 
 \subsection{Intel Audio HAL}
 Intel's Audio \gls{hal} for Android platforms is based on a generic, plugin-based solution: the \gls{pfw}.
@@ -136,11 +152,25 @@ The \gls{pfw} is a way to fulfill those requirements.
 
 \section{Parameter-framework}
 \label{sec:parameter-framework}
+In this section we will have an overview of the \gls{pfw}, which is the core component of my internship.
+
+The \gls{pfw} is a plugin-based and rule-based framework for handling parameters. This means that you can:
+
+\begin{itemize}
+    \item Describe your system's structure and its parameters (in XML) - aka. \emph{What}
+    \item Write (in \gls{cpp}) or reuse a backend (aka. plugin) for accessing the parameters that you just described - aka. \emph{How} (Structure)
+    \item Define (in \gls{xml} or in a domain-specific-language) conditions/rules upon which a given parameter must take a given value - aka. \emph{When} (Settings)
+\end{itemize}
+
+With this concepts, we can cover all the requirements we have for creating a scalable \gls{hal}.
+Now we are going to have a look at the motivation behind the creation of this framework.
+
+\subsection{Motivation}
 During a phone call, the smartphone isn't just transmitting the sound received from the microphone. Various algorithms are
 applied on the audio signal which is transmitted and received.
-On figure \ref{fig:audioArch} below we have an example of an audio architecture which shows the components involved.
+Figure \ref{fig:audioArch} below shows an example of an audio architecture which shows the components involved.
 
-\begin{figureGraphics}{Audio architecture of pandaboard}{fig:audioArch}
+\begin{figureGraphics}{Audio architecture of a pandaboard}{fig:audioArch}
     \includegraphics[height=0.5\textheight]{./src/img/Audio_arch2.jpg}
 \end{figureGraphics}
 
@@ -151,7 +181,7 @@ The sound goes:
     \item Towards the \emph{Phoenix codec} to send the audio signal towards the headset.
 \end{itemize}
 
-Those algorithms have a lot of parameters, which can change depending on the use case: whether we are in a phone call,
+Those algorithms have a lot of parameters, which can change depending on the use case for e.g. whether we are in a phone call,
 or listening to some music. Furthermore, those parameters are \emph{often hardware dependent}.
 
 The \gls{pfw} was designed to manage easily those multiple parameters in a scalable way.
@@ -232,7 +262,7 @@ Domain:
 
 \subsubsection{Extensibility}
 Since the \gls{pfw} is \emph{plugin-based}, it is easy to extend its functionality to other usages than Audio, such
-as Camera, or Bluetooth.
+as Camera, or Bluetooth. I contributed on the filesystem plugin for example, which can be used to handle \lstinline{/proc/} entries.
 
 
 \section{Workflow and environment}
@@ -244,7 +274,7 @@ to understand how I proceeded during my whole internship.
 \end{figureGraphics}
 
 This workflow is the same for every developer of the team. It is
-detailed in the sub sections below.
+detailed in the subsections below.
 
 \subsection{Development}
 Android source tree contains more than 700 projects. They have their own build system
