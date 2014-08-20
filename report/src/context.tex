@@ -59,7 +59,34 @@ The Intel Audio \gls{hal} is present in every \gls{android} device from 2011 or 
 as the \emph{Motorola Razr I} from figure \ref{fig:razri}.
 
 Their custom \gls{hal} is based around the \gls{pfw}, which will be described in the section \ref{sec:parameter-framework}.
-TODO reorga the sections after this one.
+
+\subsection{Topic of my internship}
+I worked within the Intel Audio development team, as an \emph{agile
+software developer}. The team is customer oriented, using \gls{scrum}
+methodology (see chapter \ref{chap:organisation}). My tasks
+within the team were focused around open-sourcing the \gls{pfw} on
+\gls{GitHub}\footnote{the links are in the annex at page \pageref{chap:annex}}
+
+
+\subsubsection{Why open-sourcing the Parameter-framework}
+At the moment there is no standardization (such as POSIX for operating systems) in middleware. Due to the lack
+of standards, each company is reinventing their own solution for handling middleware problems in their own way.
+The \gls{pfw} which is the solution developed by the Intel Audio team is \emph{generic}, \emph{efficient} and \emph{scalable} enough to become a standard.
+With this ambition in mind, the Intel Audio team decided to open-source the core component of their Audio \gls{hal}, the \gls{pfw}.
+The component is hosted on \gls{GitHub} which is the most popular code hosting site in the world.
+
+\subsubsection{My role regarding open-sourcing}
+In order to open-source such a complex component as the \gls{pfw}, the Intel Audio team needed to evaluate if the code was ready.
+The code requires to be easy-to-understand so that the open-source community is willing to adopt it.
+Since I never worked with that component, I took a fresh look at the code. I had to try to \emph{understand the code} and the
+\emph{concepts} (explained at section \ref{sec:parameter-framework}) of the \gls{pfw} without any documentation.
+
+At the same time, internal developments were also made on this component, but on a different version of it.
+This implies that there are two code repositories of the same component: the \emph{internal} one and the \emph{open-source} one.
+Keeping the two code repositories synchronized is very important because each divergence has a huge maintenance impact.
+My role was to setup and execute that synchronization process to avoid costly and painful future maintenance.
+How this was done will be detailed later in section \ref{sec:syncProcess}.
+
 
 \section{Android}
 During my internship, I worked on the \gls{android} platform. This operating
@@ -105,6 +132,7 @@ Some requirements of the Intel Audio \gls{hal}:
 \end{itemize}
 
 The \gls{pfw} is a way to fulfill those requirements.
+
 
 \section{Parameter-framework}
 \label{sec:parameter-framework}
@@ -206,15 +234,6 @@ Domain:
 Since the \gls{pfw} is \emph{plugin-based}, it is easy to extend its functionality to other usages than Audio, such
 as Camera, or Bluetooth.
 
-
-\subsection{Topic of my internship}
-I worked within the Intel Audio development team, as an \emph{agile
-software developer}. The team is customer oriented, using \gls{scrum}
-methodology (see chapter \ref{chap:organisation}). My tasks
-within the team were focused around enhancing and open-sourcing the \gls{pfw} on
-\gls{GitHub}\footnote{see \ref{chap:annex}} to give the team some
-visibility and advertise its work.
-TODO explain this
 
 \section{Workflow and environment}
 In this section, we will cover my daily workflow. This helps
