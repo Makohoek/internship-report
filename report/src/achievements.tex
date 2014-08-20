@@ -31,7 +31,7 @@ This leads to \emph{run-time errors} and \emph{undefined behaviour} because we a
 TODO REXPLAIN.
 
 \subsubsection{Schemas}
-To avoid run-time errors to bad generated files, we must make it impossible to generate erroneous files.
+To avoid run-time errors due to badly generated files, we must make it impossible to generate erroneous files.
 We can use \gls{xsd} files to describe rules about the content of an .xml element.
 
 Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
@@ -50,7 +50,7 @@ In this code, we see that the \gls{xsd} is \emph{requiring} that we specify the 
 \subsubsection{Xml checker}
 
 We decided to integrate an automatic \gls{xsd} check at build time. In order to do so, I started writing a \gls{python} script
-to integrate with the HostDomainGenerator tool. Since we wanted a more robust solution, It was finally done within the \gls{pfw} itself.
+to integrate with the HostDomainGenerator tool. Since we wanted a more robust solution, it was finally done within the \gls{pfw} itself.
 
 Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
 
@@ -333,7 +333,7 @@ The file system plugin is used for global access to the filesystem. This can be 
 use \emph{/proc} entries for instance. I used this plugin as example in the rookie
 documentation I wrote as described in section \ref{sec:tutorials}.
 
-I also worked on an other example: \emph{controlling LEDS} via the filesystem
+I also worked on an other example: \emph{controlling lEDS} via the filesystem
 plugin on a Raspberry Pi.  This example was easy enough to be integrated into
 the online documentation of the filesystem plugin, on \gls{GitHub}.
 
