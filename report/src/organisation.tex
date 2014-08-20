@@ -2,7 +2,7 @@
 
 \section{Planning}
 \subsection{Discovering the code}
-At the first work week, I dug into the Parameter-framework's code. I had no
+During the first work week, I dug into the Parameter-framework's code. I had no
 documentation at all, just the code on \gls{GitHub}. The absence of help was done on
 purpose: the team needed an external point of view on the source code. I had
 to understand the powerful concepts of the Parameter-framework just by reading
@@ -13,8 +13,9 @@ I started to submit code quite early (the second week), with \gls{pullrequests} 
 \subsection{Joining forces with the scrum team}
 After three weeks, I requested to join a \gls{scrum} team so that I could experience
 Intel's way of working with \gls{scrum}!
-The rest of my internship I was considered as an \emph{agile developer}, completely member of the team.
-In section \ref{sec:agile}, I describe a bit more the agile methodology.
+For the rest of my internship I was an \emph{agile developer} just like the other members of the team.
+In section \ref{sec:agile}, I describe a bit more agile methodology and the contributions I made to improve
+the \gls{scrum} process.
 
 \subsection{Gantt chart}
 Since we are working agile, I did not had a detailed planning at the begin of my internship.
@@ -79,13 +80,36 @@ This can be found in chapter \ref{chap:contributions}.
 
 \section{Agile methodology}\label{sec:agile}
 
-In the team I was working, we were organized around Agile software
-development. This way of working promotes incremental results and adaptive planning.
-There are several implementations of Agile methods. In our team we were using \gls{scrum}.
+At Intel, most development teams are shifting towards agile software development.
+This approach promotes incremental results and adaptive planning.
 
-In order to understand how I worked during my internship, some key concepts of \gls{scrum} must be described.
+My team proceeds this way for about 8 months and still learning a lot about it.
+Since I had some previous experience in agile software development, I contributed quite a lot
+to the processes and the \gls{scrum} practices of the team.
+There are several implementations of agile methods. In our team we were using \gls{scrum}, which is the most popular at this day.
+
+\subsection{Agile Manifesto}
+Agile methodology is a set of software development methods which guides a team to work in a different way.
+The Agile Manifesto written by Kent Beck describes this approach:
+
+\begin{figureGraphics}{Agile Manifesto by Kent Beck}{quote:agile}
+\begin{quotation}
+    We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
+    \begin{description}
+        \item[Individuals and interactions] over Processes and tools
+        \item[Working software] over Comprehensive documentation
+        \item[Customer collaboration] over Contract negotiation
+        \item[Responding to change] over Following a plan
+    \end{description}
+    That is, while there is value in the items on the right, we value the items on the left more.
+\end{quotation}
+\end{figureGraphics}
+
+If those guidelines are followed
+TODO
 
 \subsection{Key concepts}
+In order to understand how I worked during my internship, some key concepts of \gls{scrum} must be described.
 
 \subsubsection{Story}\label{sec:story}
 A story is a \emph{business-oriented}, short description of a client's need.
@@ -122,16 +146,17 @@ Within the team, some members have a particular role:
         He determines the priority of each story (see \ref{sec:story}) the
         team is working on. His input usually comes from clients. He is the
         business-oriented person in the team. His decisions have an impact on
-        the results a \gls{scrum} team delivers. Usually, he is not
+        the product a \gls{scrum} team delivers. Usually, he is not
         a part of the \gls{scrum} team.
     \item[The scrum master]
         ensures that every team member is correctly focused on his story. He
-        is keeping track of the progress of each member and should alert the
+        keeps track of the progress of each member and alerts the
         Product owner when some impediments appear (bad time estimate of a
         story, blocking facts due to hardware, ...).
 \end{description}
 
 Note that in our team, the Product owner and the \gls{scrum} master were also contributing to the team as software engineers.
+This is usually not the case since the two described roles are full-time jobs.
 
 \subsection{Events}
 In \gls{scrum}, there are several events occurring during a sprint.
@@ -152,18 +177,20 @@ Note that this should not take longer than 15 minutes.
 
 
 \subsubsection{Planning poker}
-During planning poker sessions, we have to estimate how much time each story takes. In order to do a correct estimate,
-the product owner is explaining what the exact requirements are. After that, each member of the team should guess
-how much "story points" (which can sometimes be approximated to an uninterrupted day of work) the story should take to be done.
-This is done in the form of a vote, with poker session cards.
+During planning poker sessions, we have to estimate how much time each story
+would take to be done. In order to give a correct estimate, the product owner is
+explaining what the exact requirements are. After that, each member of the team
+should guess how much "story points" (which can sometimes be approximated to an
+uninterrupted day of work) the story would take to be done. This takes place in the
+form of a vote with poker session cards.
 
 \begin{figureGraphics}{Planning poker cards}{fig:poker}
-\includegraphics[width=\textwidth]{./src/img/poker.jpg}
+    \includegraphics[width=\textwidth]{./src/img/poker.jpg}
 \end{figureGraphics}
 
-After arriving at a team consensus, the story is considered \emph{planned}. This
-is very useful so that the Product owner can group multiple stories which have
-to be done in a sprint.
+After arriving at a team consensus, the story is considered \emph{estimated}. This
+is very useful so that the Product owner can prioritize the stories which have
+been estimated. Rearranging a set of stories is named \emph{backlog grooming}.
 
 
 \subsubsection{Demos}
@@ -174,11 +201,26 @@ the integration team and the architect team.
 Only the work which was \emph{done} during the last sprint is showed off during that presentation.
 Work considered done is something which is \emph{shippable} and provide \emph{added value} for the customer.
 
-This presentation is important to show the contributions that the team has made.
-I participated in every Demo since I was fully member of the \gls{scrum} team.
+This presentation is important to show the contributions that the team made.
+I participated in every Demo and even showed some products since I was member of the \gls{scrum} team.
 
 \subsubsection{Retrospectives}
 After the Demo, the team has a look back at how the last sprint happened. This short meeting is made
-to find out what the team did wrong last sprint, but also to highlight what the team did right!
+to find out what the team did wrong last sprint, but also to highlight what the team did right.
 It is frequent to see little psychological games during the retrospective, which makes all members more
-eager to participate.
+eager to participate. One of the team's favorite examples, that I introduced, is the \emph{mad, sad, glad} game.
+
+The \emph{mad, sad, glad} game happens as following:
+\begin{itemize}
+    \item Every team member takes 6 sticky notes
+    \item For each sticky note, he must put a feeling or little sentence about
+        the last sprint.
+    \item Then he must put the sticky note in one of the 3 three categories: \emph{mad, sad, glad} illustrated in
+        figure \ref{fig:msg}.
+    \item At the end, every member must have put 2 sticky notes in each category and some items are discussed.
+\end{itemize}
+
+\begin{figureGraphics}{Mad, Sad, Glad illustration}{fig:msg}
+    \includegraphics[height=0.2\textheight]{./src/img/mgs.png}
+\end{figureGraphics}
+This exercise is very popular amongst the team and we are doing it almost at every retrospective since I've introduced it.

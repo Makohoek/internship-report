@@ -36,7 +36,7 @@ digraph hierarchy
   structure[label=".xml Structure files"];
 
   subgraph clusterVHal{
-    label="XmlGenerator";
+    label="HostDomainGenerator";
     parsingScript[label=".pfw parsing script"];
     parsingScript -> pfw [label="commands"];
     pfw[label="Parameter-framework"];

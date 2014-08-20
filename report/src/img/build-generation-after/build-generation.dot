@@ -40,7 +40,7 @@ digraph hierarchy
 
   subgraph clusterVHal{
     edge[dir=forward, arrowtail=open, color="#ffffff"]
-    label="XmlGenerator";
+    label="HostDomainGenerator";
     parsingScript[label=".pfw parsing script"];
     parsingScript -> pfw [label="commands"];
     parsingScript -> pfw [label="Schema files"];

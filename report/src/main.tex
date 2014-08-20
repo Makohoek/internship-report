@@ -166,7 +166,7 @@ morestring=[b]",
 %%%%%%%%%%%%%%%%%%%%%%%%
 % custom environnments %
 %%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{sectionIntro}{\textsf}{\newline}
+\newenvironment{sectionIntro}{}{\newline}
 \newenvironment{figureGraphics}[2]
 {\begin{figure}[h!] \caption{#1} \label{#2} \centering}%
 {\color{base03}\hrule\end{figure}\FloatBarrier}
@@ -176,10 +176,6 @@ morestring=[b]",
 %%%%%%%%%%
 \bibliographystyle{alpha}
 
-
-%#############################################################################%
-% End of preamble                                                             %
-%#############################################################################%
 
 \begin{document}
 \input{./src/title.tex}
@@ -196,11 +192,22 @@ morestring=[b]",
 \input{./src/toc.tex}
 \newpage
 
+\phantomsection
+\hypersetup{linkcolor=defaultFontColor}
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\hypersetup{linkcolor=blue}
+\newpage
+
 \input{./src/introduction.tex}
 \input{./src/context.tex} % WHERE I DID the work, and on what
 \input{./src/organisation.tex} % HOW I PLANNED the work
 \input{./src/achievements.tex} % WHAT I CREATED at work
 \input{./src/conclusion.tex} % WHAT I have learned
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Annex}
+\input{./src/annex.tex} % additional content
 
 %\bibliography{./src/biblio}
 %\input{./src/annexes.tex}

@@ -47,17 +47,18 @@ Some key figures of Intel:
 \subsection{Intel Audio feature team in Toulouse}
 The team I worked with is the Audio feature team, in Toulouse.
 They are responsible for the Audio \gls{hal} and the interface between the
-librairies and the \gls{android} \gls{kernel}.
+libraries and the \gls{android} \gls{kernel}.
 
 
 \section{Android}
-During my internship, I worked on the \gls{android} platform.
-Let's have an overview of the \gls{android} architecture to understand where
-the Audio \gls{hal} is placed within this platform.
+During my internship, I worked on the \gls{android} platform. This operating
+system has a complex software stack which goes from the Linux \gls{kernel} to
+applications such as \emph{Gmail}. This section gives an overview of the Android
+stack to show on which components I worked.
 
 \subsection{Global Android architecture}
 
-On the figure \ref{fig:archi}, we can see the Audio \gls{hal} between the
+The figure \ref{fig:archi} shows the Audio \gls{hal} which is between the
 Linux \gls{kernel} and the libraries layers.
 \begin{figureGraphics}{Global Android architecture}{fig:archi}
 \includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
@@ -66,16 +67,23 @@ Linux \gls{kernel} and the libraries layers.
 Within the Audio feature team in Toulouse, we are mainly focused around the Audio \gls{hal}.
 
 \subsection{Intel Audio HAL}
-Intel's Audio \gls{hal} for Android platforms is based around a generic, plugin-based solution: the \gls{pfw}.
+Intel's Audio \gls{hal} for Android platforms is based on a generic, plugin-based solution: the \gls{pfw}.
 It runs in the \emph{userland}, which is easier to maintain than kernel-space code.
-Since this solution is plugin-based, it is easy to extend to add more subsystems if needed.
+Since this solution is plugin-based, it is easy to extend and add more subsystems if needed.
 
 There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal} below.
 \begin{figureGraphics}{Simplified view of Intel Audio HAL}{fig:hal}
-\includegraphics[height=0.5\textheight]{./src/img/hal-architecture.pdf}
+    \includegraphics[height=0.5\textheight]{./src/img/hal-architecture.pdf}
 \end{figureGraphics}
-Two different instances of \gls{pfw} are used to communicate between the
-different managers used in the \gls{hal}.
+Two different instances of \gls{pfw} exist in the Intel Audio \gls{hal}:
+\begin{description}
+    \item[The route] \gls{pfw} communicates with the \emph{Stream Manager} and the \emph{Route Manager}.
+        This side is responsible for translating events which come from upper layers into \emph{routes}, which
+        is the concept understandable by the route manager.
+    \item[The audio] \gls{pfw} communicates with the \emph{Route Manager} and the \gls{alsa} driver.
+        This side talks to the drivers in order to set the different mixers in the correct state. For example,
+        changing the gain of a mixer.
+\end{description}
 
 Some requirements of the Intel Audio \gls{hal}:
 \begin{itemize}
@@ -91,10 +99,23 @@ The \gls{pfw} is a way to fulfill those requirements.
 \label{sec:parameter-framework}
 During a phone call, the smartphone isn't just transmitting the sound received from the microphone. Various algorithms are
 enabled on the audio signal which is transmitted and received.
+On figure \ref{fig:audioArch} below we have an example of an audio architecture which shows the components involved.
+
+\begin{figureGraphics}{Audio architecture of pandaboard}{fig:audioArch}
+    \includegraphics[height=0.5\textheight]{./src/img/Audio_arch2.jpg}
+\end{figureGraphics}
+
+The sound goes:
+\begin{itemize}
+    \item Trough the \emph{voice modem}
+    \item Via the \emph{Audio Back End} where some voice processing algorithms (such as noise reduction) are applied
+    \item Towards the \emph{Phoenix codec} to send the audio signal towards the headset.
+\end{itemize}
+
 Those algorithms have a lot of parameters, which can change depending on the use case: whether we are in a phone call,
 or listing to some music. Furthermore, those parameters are \emph{often hardware dependent}.
 
-The \gls{pfw} was born to manage easily those multiple parameters in a scalable way.
+The \gls{pfw} was designed to manage easily those multiple parameters in a scalable way.
 
 \subsection{Some concepts}
 In this section we are going to discover the concepts which make the
@@ -145,11 +166,12 @@ describing the tree from figure \ref{fig:pfwtree}.
 \subsubsection{Settings}
 The \gls{pfw} is also able to change multiple parameters without any manual action, depending on the context.
 The context is defined using a set of criteria. Those criteria are variables which can take a set of defined values.
-For example, a criteria called \emph{Output Device} can take several values such as \emph{Speaker} or \emph{Headset}.
+For example, a criterion called \emph{Output Device} can take several values such as \emph{Speaker} or \emph{Headset}.
 
 Depending on the value of those criteria, the \gls{pfw} can automatically apply a set of values towards
 multiple parameters.
-On listing \ref{lst:pfwsettings} we can see an example of setting file.
+On listing \ref{lst:pfwsettings} we can see an example of setting file, written in a special language
+which is translated into \gls{xml} by our build system.
 
 \begin{code}[language=pfwLang, caption=Settings file example, label=lst:pfwsettings]
 Domain:
@@ -176,11 +198,12 @@ as Camera, or Bluetooth.
 
 \subsection{Topic of my internship}
 I worked within the Intel Audio development team, as an \emph{agile
-software developer}. The team is customers oriented, using \gls{scrum}
+software developer}. The team is customer oriented, using \gls{scrum}
 methodology (see chapter \ref{chap:organisation}). My tasks
 within the team were focused around enhancing and open-sourcing the \gls{pfw} on
-\gls{GitHub}\footnote{\url{www.github.com/01org/parameter-framework}} to give the team some
+\gls{GitHub}\footnote{see \ref{chap:annex}} to give the team some
 visibility and advertise its work.
+TODO explain this
 
 \section{Workflow and environment}
 In this section, we will cover my daily workflow. This helps
@@ -194,15 +217,18 @@ This workflow is the same for every developer of the team. It is
 detailed in the sub sections below.
 
 \subsection{Development}
-Since compiling the Android source tree requires a lot of computing power,
-most of developers of our team are working remotely, via ssh.
+Android source tree contains more than 700 projects. They have their own build system
+based on \lstinline{Android.mk} files. Each time that a project has to be rebuild from scratch (for example after a  \lstinline{make clean} command) all
+the 700 projects of the Android source tree are scanned for dependencies. This requires a lot of computing power.
+Given that fact, most of developers of our team are working remotely, via ssh on a powerful server.
 The server we are connecting to is far more powerful than the desktops we use.
-With it 32 cores and it's 2 TeraBytes of SSD, compilation time was far less time-consuming
-than compiling locally!
+With its 32 cores and its 2 TeraBytes of SSD, compilation time was far less time-consuming
+than compiling on my local machine (about 10 times faster).
 This server also helps to have the same developer environment to avoid
 time-consuming installations on local machines.
 
-Working remotely on that server constraints developers to use command line programs only.
+Working remotely on that server constraints developers to use command line programs only because
+launching a graphical session for each user would require too much computing power.
 During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
 On the figure \ref{fig:setup} below, there is a screenshot of my development setup at Intel.
 
@@ -210,7 +236,7 @@ On the figure \ref{fig:setup} below, there is a screenshot of my development set
 \includegraphics[width=\textwidth]{./src/img/setup.pdf}
 \end{figureGraphics}
 
-When the code is ready, I pushed it via \gls{git} on \gls{gerrit} to be reviewed.
+When the code is ready, I push it via \gls{git} on \gls{gerrit} to be reviewed.
 
 \subsection{Git}
 \gls{git} is a distributed revision control system initially designed for kernel
@@ -221,15 +247,27 @@ code delivered to customers and for the internal tools.
 \subsection{Code quality}
 Code quality matters. Clean code eases maintenance and is less error-prone.
 Those facts are driving the team that I worked with at Intel. Naturally, all the
-patches I have delivered during my internship have been reviewed and meet the
-expected quality. Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
+patches I have delivered during my internship have been reviewed and met the
+expected quality.
+
+Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
+It is based on a notation system with inline comments and its usage is pretty straightforward.
+Its interface is showed on figure \ref{fig:gerrit} below.
+
+\begin{figureGraphics}{Gerrit code review}{fig:gerrit}
+    \includegraphics[width=\textwidth]{./src/img/gerrit.png}
+\end{figureGraphics}
 
 I have done some code review myself during this internship. It helps a lot to
 understand how other people work. Viewing other peoples code also makes me come
-up with new ideas to improve my own work.
+up with new ideas to improve my own work in several aspects such as better naming,
+more modularity, cleaner design.
 
 \subsection{Submission to gatekeeping team}
-After the code is ready and validated by the development team, it is submitted towards the gatekeeping team.
-They are responsible for testing complicated uses cases and they ensure there is no regression nor sound side effects
+After code review and a few reworks, the code is validated by the development team.
+The super reviewer gives the developer the permission to submit his work to the gatekeeping team.
+They are responsible for testing complex uses cases and they ensure there is no regression nor side effects
 due to the modifications the development team made.
+A lot of automatic and manual tests scenarios are ran which cover \emph{voice call}, \emph{voip call}, \emph{media playback}
+and more. Of course, more complex tests are done depending on the functionality which is developed.
 
