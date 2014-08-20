@@ -1,5 +1,75 @@
 \chapter{Working context}\label{chap:organisation}
 
+In this chapter, we will see how I worked during my internship
+
+\section{Workflow and environment}
+In this section, we will cover my daily workflow. This helps
+to understand how I proceeded during my whole internship.
+
+\begin{figureGraphics}{Developer workflow}{fig:workflow}
+    \includegraphics[height=0.6\textheight]{./src/img/workflow.pdf}
+\end{figureGraphics}
+
+This workflow is the same for every developer of the team. It is
+detailed in the subsections below.
+
+\subsection{Development}
+Android source tree contains more than 700 projects. They have their own build system
+based on \lstinline{Android.mk} files. Each time that a project has to be rebuild from scratch (for example after a  \lstinline{make clean} command) all
+the 700 projects of the Android source tree are scanned for dependencies. This requires a lot of computing power.
+Given that fact, most of developers of our team are working on a remote server, via ssh.
+The server we are connecting to is far more powerful than the desktops we use.
+With its 32 cores and its 2 TeraBytes of SSD, compilation time was far less time-consuming
+than compiling on my local machine (about 10 times faster).
+This server also helps to have the same developer environment to avoid
+time-consuming installations on local machines.
+
+Working remotely on that server restrict developers to use command line programs only because
+launching a graphical session for each user would require too much computing power.
+During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
+On the figure \ref{fig:setup} below, there is a screenshot of my development setup at Intel.
+
+\begin{figureGraphics}{Development setup with vim and tmux}{fig:setup}
+\includegraphics[width=\textwidth]{./src/img/setup.pdf}
+\end{figureGraphics}
+
+When the code is ready, I push it via \gls{git} on \gls{gerrit} to be reviewed.
+
+\subsection{Git}
+\gls{git} is a distributed revision control system initially designed for kernel
+development. Given that fact, it can be used in environment which have large
+code bases, such as \gls{android}. We use \gls{git} on daily basis at Intel for the
+code delivered to customers and for the internal tools.
+
+\subsection{Code quality}
+Code quality matters. Clean code eases maintenance and is less error-prone.
+Those facts are driving the team that I worked with at Intel. Naturally, all the
+patches I have delivered during my internship have been reviewed and met the
+expected quality.
+
+Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
+It is based on a notation system with inline comments and its usage is pretty straightforward.
+Its interface is showed on figure \ref{fig:gerrit} below.
+
+\begin{figureGraphics}{Gerrit code review}{fig:gerrit}
+    \includegraphics[width=\textwidth]{./src/img/gerrit.png}
+\end{figureGraphics}
+
+I have done some code review myself during this internship. It helps a lot to
+understand how other people work. Viewing other peoples code also makes me come
+up with new ideas to improve my own work in several aspects such as better naming,
+more modularity, cleaner design.
+
+\subsection{Submission to gatekeeping team}
+After code review and a few reworks, the code is validated by the development team.
+The super reviewer gives the developer the permission to submit his work to the gatekeeping team.
+They are responsible for testing complex use cases and they ensure there is no regression nor side effects
+due to the modifications the development team made.
+A lot of automatic and manual tests scenarios are ran which cover \emph{voice call}, \emph{voip call}, \emph{media playback}
+and more. Of course, more complex tests are done depending on the functionality which is developed.
+
+
+
 \section{Planning}
 \subsection{Discovering the code}
 During the first work week, I dug into the Parameter-framework's code. I had no
@@ -201,7 +271,7 @@ the integration team and the architect team.
 Only the work which was \emph{done} during the last sprint is shown off during that presentation.
 Work considered done is something which is \emph{shippable} and provide \emph{added value} for the customer.
 
-This presentation is important to demonstrate the contributions that the team made.
+This presentation is important to show the contributions that the team made.
 I participated in every Demo and even showed some products since I was member of the \gls{scrum} team.
 
 \subsubsection{Retrospectives}
