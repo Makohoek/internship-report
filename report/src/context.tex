@@ -2,14 +2,14 @@
 
 \begin{sectionIntro}
     This chapter will describe essential facts about my internship, such as
-    which company I did my internship in and on what did I worked.
+    which company I did my internship at and what I worked on.
 \end{sectionIntro}
 
 \section{Company}
 
 \subsection{Celad}
 Celad is an IT consulting company with about 800 employees. It was created in Toulouse
-and it's headquarters are still in Toulouse.
+and its headquarters are still in Toulouse.
 The major activities of Celad cover:
 \begin{description}
     \item [Information systems] such as solutions for E-banking, E-business, mobile applications.
@@ -98,7 +98,7 @@ The \gls{pfw} is a way to fulfill those requirements.
 \section{Parameter-framework}
 \label{sec:parameter-framework}
 During a phone call, the smartphone isn't just transmitting the sound received from the microphone. Various algorithms are
-enabled on the audio signal which is transmitted and received.
+applied on the audio signal which is transmitted and received.
 On figure \ref{fig:audioArch} below we have an example of an audio architecture which shows the components involved.
 
 \begin{figureGraphics}{Audio architecture of pandaboard}{fig:audioArch}
@@ -113,7 +113,7 @@ The sound goes:
 \end{itemize}
 
 Those algorithms have a lot of parameters, which can change depending on the use case: whether we are in a phone call,
-or listing to some music. Furthermore, those parameters are \emph{often hardware dependent}.
+or listening to some music. Furthermore, those parameters are \emph{often hardware dependent}.
 
 The \gls{pfw} was designed to manage easily those multiple parameters in a scalable way.
 
@@ -192,7 +192,7 @@ Domain:
 \end{code}
 
 \subsubsection{Extensibility}
-Since the \gls{pfw} is \emph{plugin-based}, it is easy to extend it's functionality to other usages than Audio, such
+Since the \gls{pfw} is \emph{plugin-based}, it is easy to extend its functionality to other usages than Audio, such
 as Camera, or Bluetooth.
 
 
@@ -220,14 +220,14 @@ detailed in the sub sections below.
 Android source tree contains more than 700 projects. They have their own build system
 based on \lstinline{Android.mk} files. Each time that a project has to be rebuild from scratch (for example after a  \lstinline{make clean} command) all
 the 700 projects of the Android source tree are scanned for dependencies. This requires a lot of computing power.
-Given that fact, most of developers of our team are working remotely, via ssh on a powerful server.
+Given that fact, most of developers of our team are working on a remote server, via ssh.
 The server we are connecting to is far more powerful than the desktops we use.
 With its 32 cores and its 2 TeraBytes of SSD, compilation time was far less time-consuming
 than compiling on my local machine (about 10 times faster).
 This server also helps to have the same developer environment to avoid
 time-consuming installations on local machines.
 
-Working remotely on that server constraints developers to use command line programs only because
+Working remotely on that server restrict developers to use command line programs only because
 launching a graphical session for each user would require too much computing power.
 During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
 On the figure \ref{fig:setup} below, there is a screenshot of my development setup at Intel.
@@ -266,7 +266,7 @@ more modularity, cleaner design.
 \subsection{Submission to gatekeeping team}
 After code review and a few reworks, the code is validated by the development team.
 The super reviewer gives the developer the permission to submit his work to the gatekeeping team.
-They are responsible for testing complex uses cases and they ensure there is no regression nor side effects
+They are responsible for testing complex use cases and they ensure there is no regression nor side effects
 due to the modifications the development team made.
 A lot of automatic and manual tests scenarios are ran which cover \emph{voice call}, \emph{voip call}, \emph{media playback}
 and more. Of course, more complex tests are done depending on the functionality which is developed.
