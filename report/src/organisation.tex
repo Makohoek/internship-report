@@ -177,8 +177,8 @@ The Agile Manifesto written by Kent Beck describes this approach:
 \end{quotation}
 \end{figureGraphics}
 
-If those guidelines are followed
-TODO
+Those guidelines are the core of agile development and should always been respected to fully profit of the
+agile advantages.
 
 \subsection{Key concepts}
 In order to understand how I worked during my internship, some key concepts of \gls{scrum} must be described.
@@ -188,13 +188,22 @@ A story is a \emph{business-oriented}, short description of a client's need.
 Most of the time, it is divided into several tasks so that the developers
 can take small steps to complete the story. A story is usually printed or
 written on sticky note. Those notes are grouped on a story board (see figure
-\ref{fig:storyboard}). When a developer starts to work on a new Story, he takes
-the sticky note and moves it on the board.
+\ref{fig:storyboard}). When a developer starts to work on a new story, he takes
+the sticky note and moves it on the board to the \emph{checked out} column.
 
 \begin{figureGraphics}{A story board}{fig:storyboard}
     \includegraphics[width=\textwidth]{./src/img/taskboard.jpg}
 \end{figureGraphics}
 
+Usually, a story is written in a special form:
+\begin{itemize}
+    \item As an \emph{actor(people who is using this feature)}
+    \item I want \emph{action} (what will happen but \emph{not how})
+    \item So that \emph{achievement} (what is the purpose of the feature)
+\end{itemize}
+This was not done within the team when I arrived. Since this format is standard and encourages
+well-described, easy-to-achieve user stories, I encouraged the team to write them this way.
+We tried one sprint to write only stories in this format and since then we have adopted this standard.
 
 \subsubsection{Sprints}\label{sec:sprint}
 Sprints are short development cycles, usually from one to four weeks. We were
@@ -245,8 +254,8 @@ During that time, each member of the team answers quickly the three following qu
 \end{itemize}
 
 This meeting is very useful, it helps tackle early problems and can assist the \gls{scrum} master to detect delays in delivering.
-Note that this should not take longer than 15 minutes.
-
+Note that this should not take longer than 15 minutes. This time span is very difficult to respect and the team was learning about that too.
+Before I joined the scrum the daily \gls{scrum} took about 30 minutes or more. Now we are never taking more than 15minutes, focusing on the essentials.
 
 \subsubsection{Planning poker}
 During planning poker sessions, we have to estimate how much time each story
@@ -273,7 +282,10 @@ the integration team and the architect team.
 Only the work which was \emph{done} during the last sprint is shown off during that presentation.
 Work considered done is something which is \emph{shippable} and provide \emph{added value} for the customer.
 
-This presentation is important to show the contributions that the team made.
+This presentation is important to show the contributions that the team made. When I arrived in the team, the
+demos were a bit too long and far too technical. I contributed into changing that. Our demos are more
+\emph{business oriented} and focused on the client's needs. The demo time has gone from one our and a half to less than an our.
+This helps us keeping things short and keeping off-topics away from the meeting.
 I participated in every Demo and even showed some products since I was member of the \gls{scrum} team.
 
 \subsubsection{Retrospectives}
