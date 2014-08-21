@@ -337,21 +337,22 @@ I had to add \emph{modem instance awareness} to the plugin so that Intel could s
 \subsubsection{Plugins}
 Given the fact that there are multiple modems protocols available on the market, there are also multiple \gls{pfw} plugins,
 one for each modem family.
-So I had to modify \emph{each plugin} to handle modem instance awareness. This would result in a lot of duplicated code and waste of time.
+I had to modify \emph{each plugin} to handle modem instance awareness. That awareness comes from \gls{xml} attributes which are
+retrieved in the plugin's code.
+I cannot detail the implementation itself because it is composed of confidential information.
 
 \subsubsection{Outcome}
-TODO explain a bit more.
 
-
-With the current implementation, it
-is possible to have multiple structure files, each describing a modem. This would theoretically allow
+With the current implementation, it is possible to have multiple structure files, each describing a modem. This would theoretically allow
 to support as many modems as we want.
 
-Supporting multiple modems was a big team effort. I had to collaborate a lot with coworkers and other \gls{scrum} teams to be
-sure that we deliver on time. In the end, we did deliver on time a beautiful piece of code.
+Supporting multiple modems was a big team effort. It took more than 200 patchs to be completely implemented.
+I had to collaborate a lot with coworkers and other \gls{scrum} teams to be sure that we deliver something consistent.
+In the end, we did deliver on time the expected results
 
 
 % {{{1 OPEN SOURCING
+TODO tout la section
 \section{Open-sourcing on GitHub}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
 our team decided to release the source-code on \gls{GitHub}.
