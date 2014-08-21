@@ -14,10 +14,10 @@ I had two major directions during my internship:
         \end{figureGraphics}
 \end{itemize}
 
-% {{{1
+% {{{1 CLIENT FEATURES
 \section{New features for Intel and its customers}
 
-% {{{2
+% {{{2 Xml validation at build time
 \subsection{XML validation at build time}
 
 For our Intel Audio \gls{hal}, we have a lot of structure files. More than one hundred.
@@ -121,7 +121,7 @@ In a matter of two weeks, the integration team was able to clean up more than 50
 Moreover, it is impossible nowadays to let new validation errors go trough, since the system would not build.
 
 
-% {{{2
+% {{{2 Multivariance
 \subsection{Multi-variant initial support}
 \subsubsection{Context}
 Intel has a various number of platforms for smarphones and tablets, which have different hardware specifications.
@@ -150,7 +150,7 @@ This is viable since there are less than five hardware variances at most for eac
 This is just a proof of concept to show to customers that we are able to support multiple hardware variants with one single package.
 
 
-% {{{2
+% {{{2 Fixed point param
 \subsection{Fixed point parameter enhancements}
 The \gls{pfw} has several kinds of parameters:
 \begin{itemize}
@@ -254,7 +254,7 @@ $ pfw getParameter /Example/fixedPoint/q2.3
 \end{code}
 
 
-% {{{2
+% {{{2 Multi modem
 \subsection{Multiple modem support}
 With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This case
 is useful to use the same device for corporate and private purposes.
@@ -270,7 +270,7 @@ to support as many modems as we want.
 
 TODO explain a bit more.
 
-% {{{1
+% {{{1 OPEN SOURCING
 \section{Open-sourcing on GitHub}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
 our team decided to release the source-code on \gls{GitHub}.
