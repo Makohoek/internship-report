@@ -178,8 +178,8 @@ Fixed point number have their own type, called \emph{FixedPointParameters}. Of c
         In fact, \lstinline{setPrecision()} is \emph{rounding up} instead of \emph{truncating} the last digit of a floating point number.
         For instance:
         \begin{itemize}
-            \item \lstinline[language=C++]{cout << setPrecision(3) << 3.14159265} returns $3.14$
-            \item \lstinline[language=C++]{cout << setPrecision(5) << 3.14159265} returns $3.1416$
+            \item \lstinline[language=C++]{cout << setPrecision(3) << 3.14159265} returns $3.14$.
+            \item \lstinline[language=C++]{cout << setPrecision(5) << 3.14159265} returns $3.1416$ instead of $3.1415$.
         \end{itemize}
         It is not possible to change the \emph{rounding} behavior to \emph{truncating} behavior because
         \lstinline{setPrecision()} relies on the \lstinline{fesetround()} methods which is only available in the \gls{cpp} 11 norm.
@@ -241,7 +241,7 @@ The test suite uses two types of data to handle its test:
 
 Figure \ref{fig:fixedPointTest} below illustrates the flow of the two types of tested data.
 
-\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
+\begin{figureGraphics}{fixed point test suite}{fig:fixedpointtest}
     \includegraphics[height=0.6\textheight]{./src/img/fixedPointProcess.pdf}
 \end{figureGraphics}
 
@@ -256,17 +256,74 @@ The checks are done as following:
 \end{description}
 
 \subsubsection{The solution}
-The fix I proposed was to replace the computation of displayable digits by something
-easier, which is the \emph{Fractional part} of the fixed point number.
+The fix I proposed was to replace the calculation of the amount of displayed digits.
+Since it had problems with rounding, why not show all digits at the end of the number?
 
+The \emph{fractional part} of a $Qn.m$ number is always a multiple of its quantum. This is related to
+the internal representation of fixed point numbers. Since a quantum is always a number in the form of $2^{-m}$, we can
+assume that the quantum's last digit will aways be a $5$, for $m > 0$.
 
-\subsubsection{Rework the internal mechanism}
-It was time to rework the internal
-mechanism of the \gls{pfw}.
+Figure \ref{fig:quantums} below shows some possible quantum values, where $m$ is the \emph{fractional part} of a $Qn.m$:
+
+\begin{figureGraphics}{Quantum values}{fig:quantums}
+    $
+    \begin{array}{c|c}
+        m & Quantum = 2^{-m} \\
+        \hline
+        1 & 0.500000 \\
+        \hline
+        2 & 0.250000 \\
+        \hline
+        3 & 0.125000 \\
+        \hline
+        4 & 0.062500 \\
+        \hline
+        5 & 0.031250 \\
+        \hline
+        6 & 0.015625
+    \end{array}
+    \vspace{0.3cm}
+    $
+\end{figureGraphics}
+
+Since we assume that the quantum will always finish with a $5$, we can limits ourselves with displaying until that last digit.
+It happens that that last digit is always the $m^th$ digit after the comma.
+So we just need to call \lstinline{setPrecision(m)} with $m$ as \emph{fractional part} of a $Qn.m$.
+Listing \ref{lst:resultFixedPoint} shows the correct interaction with the \gls{pfw} command-line interface.
+
+\begin{code}[language=bash, caption=$Q.2.3$ correct set and get, label=lst:resultFixedPoint]
+# Let's set the maximum allowed value
+$ pfw setParameter /Example/fixedPoint/q2.3 3.875
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.875
+# ^ Ok, correct behavior
+
+# Let's try to set a different value:
+$ pfw setParameter /Example/fixedPoint/q2.3 3.8
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.750
+# ^ Ok, this is acceptable since 3.8 is not encodable.
+
+# Let's try to set a erronous value:
+$ pfw setParameter /Example/fixedPoint/q2.3 3.9
+# Value 3.9 standing out of admitted real range
+# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
+# ^ This also correct
+\end{code}
+
+\subsubsection{Outcome}
+
+The current implementation is used at daily basis by multiple tools.
+More than \emph{80 structure files} which are also for Intel's customers are compatible with this solution.
+This was a complex issue that caused the team a few weeks of effort and I am proud that my answer has been the
+correct one to this problem.
 
 
 % {{{2 Multi modem
 \subsection{Multiple modem support}
+\subsubsection{Context}
 With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This case
 is useful to use the same device for corporate and private purposes.
 Besided, in some developing countries phone carriers do not cover the whole country. The habitants of those
@@ -275,11 +332,24 @@ For those purposes, the platform must support two modems.
 Within the Intel Audio \gls{hal}, we are handling some voice processing algorithms from the signal coming from the modem.
 Naturally, we have a \gls{pfw} plugin to abstract the modem. This plugin did not support multiple modems.
 
-I had to add \emph{modem instance awareness} to the plugin. With the current implementation, it
+I had to add \emph{modem instance awareness} to the plugin so that Intel could ship devices with multiple modems.
+
+\subsubsection{Plugins}
+Given the fact that there are multiple modems protocols available on the market, there are also multiple \gls{pfw} plugins,
+one for each modem family.
+So I had to modify \emph{each plugin} to handle modem instance awareness. This would result in a lot of duplicated code and waste of time.
+
+\subsubsection{Outcome}
+TODO explain a bit more.
+
+
+With the current implementation, it
 is possible to have multiple structure files, each describing a modem. This would theoretically allow
 to support as many modems as we want.
 
-TODO explain a bit more.
+Supporting multiple modems was a big team effort. I had to collaborate a lot with coworkers and other \gls{scrum} teams to be
+sure that we deliver on time. In the end, we did deliver on time a beautiful piece of code.
+
 
 % {{{1 OPEN SOURCING
 \section{Open-sourcing on GitHub}
