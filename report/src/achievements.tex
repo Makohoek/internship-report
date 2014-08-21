@@ -123,23 +123,31 @@ Moreover, it is impossible nowadays to let new validation errors go trough, sinc
 
 % {{{2
 \subsection{Multi-variant initial support}
-TODO: reword this whole section
-As seen in section \ref{sec:parameter-framework} the \gls{pfw} needs
-\gls{xml} files which are hardware dependent.
-Within the \gls{hal}, the Stream manager and the Route manager are aware of
-which \gls{xml} files should be loaded. At startup, they provide the
-accurate \gls{xml} files to their corresponding \gls{pfw} instance.
-\gls{android}'s build system knows which platform we are building.
-So, for each platform, we build a different binary which points towards the correct \gls{xml} files.
+\subsubsection{Context}
+Intel has a various number of platforms for smarphones and tablets, which have different hardware specifications.
+Every platform also haves minor hardware variances.
+For example, there is a platform with two hardware variants: the audio architecture is not the same.
+The architecture can for instance differ in a codec. Each of those different combinations is called a \emph{variant}.
 
-An external requirement was to be able to have one single binary which works on each platform. With this
-requirement, the solution explained before does not work anymore.
+An customer's requirement was to be able to have one single package for the Intel Audio \gls{hal} which works on every variant.
+With this concern in mind, we had to rework the \gls{hal} a bit.
+In fact, as seen in section \ref{sec:parameter-framework}, the \gls{pfw} needs \gls{xml} files which are hardware dependent.
 
-The Route and Stream managers need to be smarter. In
-order to detect what the current sound card is, we can read from \lstinline{/proc/asound} entries.
+Within the our build system, we are aware of which \gls{xml} files should be loaded, since that depends the variant we are building.
+So, for each variant, we build a different package which includes the correct \gls{xml} files.
+This had to be reworked into a single package.
+
+\subsubsection{Implementation}
+For an initial step, we decided to include every \gls{xml} file for all the possible variants.
+The problem is that at run-time, the Stream manager (which is in the \gls{hal}) has \emph{no idea} about which configuration file
+it should load for his \gls{pfw} instance.
+
+The Stream manager need to be smarter. In order to detect what the current sound card is, we can read from \lstinline{/proc/asound} entries.
 The current implementation relies on the content of \lstinline{/proc/asound/cards}.
-This is just a proof of concept to show to clients that we are able to support multiple hardware
-with one single binary.
+We have a map in the Stream manager which has as key the \emph{sound card name} and as value the \gls{xml} file which should be loaded.
+This is viable since there are less than five hardware variances at most for each platform.
+
+This is just a proof of concept to show to customers that we are able to support multiple hardware variants with one single package.
 
 
 % {{{2
