@@ -2,17 +2,74 @@
 
 All the work I have done during this internship is related to the \gls{pfw},
 which was briefly presented in section \ref{sec:parameter-framework}.
-
-% 80 patchs contribués pour les clients.
+I had two major directions during my internship:
+\begin{itemize}
+    \item Delivering new features for Intel and its customers.
+        I have submitted more than \emph{80 patchs} to the Intel codebase, which are now used by its customers.
+    \item Open-source the \gls{pfw} to give it some weight in the middleware community.
+        For doing that, I had to change some code within the \gls{pfw}.
+        Today, I am in the top five contributors on GitHub as shown on figure \ref{fig:githubContrib} below (My nickname is \emph{Makohoek}).
+        \begin{figureGraphics}{Top contributors on the Parameter-framework core}{fig:githubContrib}
+            \includegraphics[width=\textwidth]{./src/img/statsGitHub.png}
+        \end{figureGraphics}
+\end{itemize}
 
 % {{{1
-\section{Parameter-framework core enhancements}
+\section{New features for Intel and its customers}
 
 % {{{2
 \subsection{XML validation at build time}
+
+For our Intel Audio \gls{hal}, we have a lot of structure files. More than one hundred.
+There a more than 40 000 lines of \gls{xml} structure files.
+The writing of those structure files is done by human beings. Given the fact
+that humans can make mistakes, there is \emph{no guarantee} that those structure files are semantically correct.
+Furthermore, the \gls{pfw} expects that the files which are given no not contain any mistake.
+
+An example can be that someone forgot to specify the \emph{size} attribute of a parameter.
+In that case, the default size is $0$. If we are computing a result as showed in figure \ref{fig:runtimeerror}
+
+\begin{figureGraphics}{Error example due to a bad parameter size}{fig:runtimeerror}
+    $result = \dfrac{a*k}{size}$
+    \vspace{0.3cm}
+\end{figureGraphics}
+
+We have a run-time error due to bad configuration. This kind of problems should be detected when we are building our system,
+not when we are testing it.
+In the next sections we will see how to detect those problems at build time.
+
+
+\subsubsection{A language for validating XML files}
+
+To validate \gls{xml} files, we use \gls{xsd} files.
+Those are describing what is allowed/prohibited within an \gls{xml} element. For example, the \emph{size} attribute is
+\emph{mandatory} for an Integer parameter.
+Listing \ref{lst:xsd} shows a snippet illustrating that example \gls{xsd} file:
+
+\begin{code}[language=XML, caption=XSD rules for an Integer parameter, label=lst:xsd]
+<xs:attributeGroup name="IntegerParameterAttributes">
+    <xs:attribute name="Size" type="SizeType" use="required"/>
+    <xs:attribute name="Min" type="xs:integer" use="optional"/>
+    <xs:attribute name="Max" type="xs:integer" use="optional"/>
+    <xs:attribute name="Signed" type="xs:boolean" use="optional" default="false"/>
+</xs:attributeGroup>
+\end{code}
+
+With that knowledge in mind, I decided to write a \gls{python} tool to detect the possible errors in the existing structure files.
+
+\subsubsection{A tool to validate XML}
+To validate \gls{xml} with \gls{xsd} files, several tools exists already. The most widely used on linux is the \lstinline{xmllint} utility.
+This works very well but is limited to one file per usage. The script I wrote in \gls{python} was able to have two directories as input and check
+recursively every file.
+This tool highlighted that there were more than 500 errors within the hundred files.
+
+The problem with this \gls{python} script is that it did not use standard \gls{python} libraries.
+We needed a more robust solution which was integrated into the build system without using external libraries.
+
 \subsubsection{Build process}
-FIXME FIXME forward reference, this is no good.
-The pfw language as described in \ref{desc:pfw-language} is used for rule based
+To understand how the robust solution is implemented, we need to have a look at the build process around the \gls{pfw}.
+
+The pfw language, which was shown in \ref{lst:pfwsettings} is used for rule based
 description. Those are translated into \gls{xml} files during the build via a
 specific make target.  In order to generate those \gls{xml} files, we also need
 the information of the Structure files, which are written by the integration
@@ -24,30 +81,6 @@ The figure \ref{fig:build-process} shows how it works:
 \begin{figureGraphics}{Xml generation build process}{fig:build-process}
     \includegraphics[height=0.4\textheight]{./src/img/build-generation.pdf}
 \end{figureGraphics}
-
-But there were some limitations. Since the writing of the \gls{xml} structure files is done by human beings, there was
-\emph{no guarantee} that their files were semantically correct.
-Since no check was done during the build-process, the generator could write erroneous files because it supposes that
-the Structure files are \emph{correct}. An example can be that someone forgot to specify the \emph{size} property of a parameter.
-This leads to \emph{run-time errors} and \emph{undefined behaviour} because we are basically allocating zero memory for that parameter.
-TODO REXPLAIN.
-
-\subsubsection{Schemas}
-To avoid run-time errors due to badly generated files, we must make it impossible to generate erroneous files.
-We can use \gls{xsd} files to describe rules about the content of an .xml element.
-
-Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
-
-\begin{code}[language=XML, caption=XSD rules for an Integer parameter, label=lst:xsd]
-<xs:attributeGroup name="IntegerParameterAttributes">
-    <xs:attribute name="Size" type="SizeType" use="required"/>
-    <xs:attribute name="Min" type="xs:integer" use="optional"/>
-    <xs:attribute name="Max" type="xs:integer" use="optional"/>
-    <xs:attribute name="Signed" type="xs:boolean" use="optional" default="false"/>
-</xs:attributeGroup>
-\end{code}
-
-In this code, we see that the \gls{xsd} is \emph{requiring} that we specify the \emph{Size} attribute.
 
 \subsubsection{Xml checker}
 
