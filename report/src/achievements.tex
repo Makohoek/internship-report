@@ -27,17 +27,18 @@ that humans can make mistakes, there is \emph{no guarantee} that those structure
 Furthermore, the \gls{pfw} expects that the files which are given no not contain any mistake.
 
 An example can be that someone forgot to specify the \emph{size} attribute of a parameter.
-In that case, the default size is $0$. If we are computing a result as showed in figure \ref{fig:runtimeerror}
+In that case, the default size is $0$. Let's imagine we are computing a result as showed in figure \ref{fig:runtimeerror}.
 
 \begin{figureGraphics}{Error example due to a bad parameter size}{fig:runtimeerror}
     $result = \dfrac{a*k}{size}$
     \vspace{0.3cm}
 \end{figureGraphics}
 
-We have a run-time error due to bad configuration. This kind of problems should be detected when we are building our system,
-not when we are testing it.
-In the next sections we will see how to detect those problems at build time.
+In that case we have a run-time error due to a \emph{division by zero}. This is only one possible consequence of bad structure files.
+This kind of problem should be detected when we are building our system, not at run-time. Having those problems at
+run-time is far too time-consuming and thus far too expensive.
 
+In the next sections we will see how to detect those problems at build time.
 
 \subsubsection{A language for validating XML files}
 
@@ -61,19 +62,20 @@ With that knowledge in mind, I decided to write a \gls{python} tool to detect th
 To validate \gls{xml} with \gls{xsd} files, several tools exists already. The most widely used on linux is the \lstinline{xmllint} utility.
 This works very well but is limited to one file per usage. The script I wrote in \gls{python} was able to have two directories as input and check
 recursively every file.
-This tool highlighted that there were more than 500 errors within the hundred files.
+This tool highlighted that there were more than \emph{500 errors} within the hundred files.
 
-The problem with this \gls{python} script is that it did not use standard \gls{python} libraries.
+The problem with this \gls{python} script is that it did \emph{not use standard} \gls{python} libraries.
 We needed a more robust solution which was integrated into the build system without using external libraries.
 
 \subsubsection{Build process}
 To understand how the robust solution is implemented, we need to have a look at the build process around the \gls{pfw}.
 
-The pfw language, which was shown in \ref{lst:pfwsettings} is used for rule based
+During the build process, we are translating settings files from a special format (which was shown in \ref{lst:pfwsettings}) into \gls{xml}.
+That special format, which is called \emph{.pfw language}, is used for rule based
 description. Those are translated into \gls{xml} files during the build via a
 specific make target.  In order to generate those \gls{xml} files, we also need
-the information of the Structure files, which are written by the integration
-engineers.
+the information of the structure files, which are written by the integration
+engineers as described in previous subsection.
 
 To generate those files, we rely on a toolset we call \emph{HostDomainGenerator}.
 The figure \ref{fig:build-process} shows how it works:
@@ -82,18 +84,41 @@ The figure \ref{fig:build-process} shows how it works:
     \includegraphics[height=0.4\textheight]{./src/img/build-generation.pdf}
 \end{figureGraphics}
 
+\begin{itemize}
+    \item The \emph{.pfw} files are parsed via a set of scripts and translated into \gls{pfw} commands.
+    \item Those commands are sent to a special \gls{pfw} instance which was started for this purpose only.
+    \item After that, the \gls{pfw} exports the rules which were created previously and dumps it into a settings \gls{xml} file.
+    \item Those \emph{settings} and \emph{structure} files are then stored on the smartphone or the tablet in \lstinline{/etc/}.
+\end{itemize}
+
+In this build process, we have to display errors when detecting \gls{xml} files which are not compliant with the rules from the
+\gls{xsd} files.
+
 \subsubsection{Xml checker}
 
-We decided to integrate an automatic \gls{xsd} check at build time. In order to do so, I started writing a \gls{python} script
-to integrate with the HostDomainGenerator tool. Since we wanted a more robust solution, it was finally done within the \gls{pfw} itself.
+Since we wanted a more robust solution, it was finally done within the \gls{pfw} itself.
+In fact, the parameter-framework already had some code to check \gls{xml} validity. It was not
+finished and I had to complete it.
 
-Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
+When that was done, I had to integrate the feature within the \lstinline{HostDomainGenerator} tool.
+Figure \ref{fig:build-process-reworked} shows the final implementation.
 
-\begin{figureGraphics}{Xml generation build process with XSD check}{fig:build-process-reworked}
+\begin{figureGraphics}{Xml generation build process with validity check}{fig:build-process-reworked}
     \includegraphics[height=0.5\textheight]{./src/img/build-generation-after.pdf}
 \end{figureGraphics}
 
-TODO: detail, explain how it works
+With the difference to the solution showed in figure \ref{fig:build-process}, here we:
+\begin{itemize}
+    \item Give \gls{xsd} files towards the \lstinline{hostDomainGenerator} tool.
+    \item Those are forwarded to the \gls{pfw}, which validates the \emph{structure} files before receiving the special commands.
+    \item If the checks fail, it aborts the build.
+    \item Otherwise, it receives dumps the \emph{settings} file as usual.
+\end{itemize}
+
+\subsubsection{Outcome}
+In the end, this solution is widely used at Intel now. Every error described by the \gls{xsd} rules are removed.
+In a matter of two weeks, the integration team was able to clean up more than 500 errors from the \gls{xml} structure files.
+Moreover, it is impossible nowadays to let new validation errors go trough, since the system would not build.
 
 
 % {{{2
@@ -232,7 +257,7 @@ Within the Intel Audio \gls{hal}, we are handling some voice processing algorith
 Naturally, we have a \gls{pfw} plugin to abstract the modem. This plugin did not support multiple modems.
 
 I had to add \emph{modem instance awareness} to the plugin. With the current implementation, it
-is possible to have multiple Structure files, each describing a modem. This would theoretically allow
+is possible to have multiple structure files, each describing a modem. This would theoretically allow
 to support as many modems as we want.
 
 TODO explain a bit more.
