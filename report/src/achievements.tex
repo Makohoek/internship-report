@@ -151,17 +151,9 @@ This is just a proof of concept to show to customers that we are able to support
 
 
 % {{{2 Fixed point param
-\subsection{Fixed point parameter enhancements}
-The \gls{pfw} has several kinds of parameters:
-\begin{itemize}
-    \item IntegerParameter
-    \item BooleanParameter
-    \item FixedPointParameter
-    \item StringParameter
-    \item EnumParameter
-    \item ...
-\end{itemize}
-
+\subsection{Fixed point parameter improvements}
+% What are fixed points
+% Problem
 Fixed point numbers are useful for representing real numbers. Their
 usage is appropriate when the processor does not haves a floating point unit
 or when there is a performance gain by using them. Usually, fixed points are
@@ -174,36 +166,86 @@ were writing to a configuration file or displaying user input. To
 support the expected behavior for those cases, I changed the implementation, and
 wrote tests for it.
 
-\subsubsection{Test suite in Python}
+\subsubsection{The problem}
+The \gls{pfw} can export parameters to a file. It has several parameter types.
+Fixed point number have their own type, called \emph{FixedPointParameters}. Of course, they can be exported as well.
+\begin{itemize}
+    \item When exporting a \lstinline{FixedPointParameter} to a file, the \gls{pfw} converts the value from
+        its internal representation towards a floating point number, because that is
+        easier to read.
+    \item By converting that number, it also computes the amount of digits needed to display (or write) that number.
+        This results in \emph{rounding issues}, due to limitation of the \lstinline{setPrecision()} \gls{cpp} method.
+        In fact, \lstinline{setPrecision()} is \emph{rounding up} instead of \emph{truncating} the last digit of a floating point number.
+        For instance:
+        \begin{itemize}
+            \item \lstinline[language=C++]{cout << setPrecision(3) << 3.14159265} returns $3.14$
+            \item \lstinline[language=C++]{cout << setPrecision(5) << 3.14159265} returns $3.1416$
+        \end{itemize}
+        It is not possible to change the \emph{rounding} behavior to \emph{truncating} behavior because
+        \lstinline{setPrecision()} relies on the \lstinline{fesetround()} methods which is only available in the \gls{cpp} 11 norm.
+\end{itemize}
+In the next section we will study an example showing the issue.
 
-In order to verify that the new implementation was correct, I wrote a test suite
-in \gls{python}. That test suite performs several checks on each fixed point. Let's
-take an example to illustrate the purpose of the test suite.
+\subsubsection{An example of the issue}
 
 Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
-\emph{Fractional part} is $3$. We can compute some specific values for that number:
+\emph{Fractional part} is $3$.
+Since we have a fractional part of $3$ bits, the minimal step between two numbers coded in $Q2.3$ is
+$2^{-3}$. This minimal step is called the \emph{Quantum}.
 
-TODO: explain Quantum
-\begin{itemize}
-    \item Quantum $2^{-3} = 0.125$
-    \item UpperBound $2^2 - 0.125 = 3.875$
-    \item LowerBound $-2^2 = -4$
-\end{itemize}
-
-Those values can be represented as following on figure \ref{fig:fixedPointValues}. Note that
+Some special values can be represented for a $Q2.3$ number. Figure \ref{fig:fixedPointValues} below shows those values. Note that
 this figure is not represented in real scale.
 \begin{figureGraphics}{Fixed point special values}{fig:fixedPointValues}
     \includegraphics[width=\textwidth]{./src/img/fixedPoint.pdf}
 \end{figureGraphics}
 
-The test suite computes some values within the green(valid) area and the
-red(invalid) area and performs the checks illustrated on figure \ref{fig:fixedPointTest} below.
+\begin{itemize}
+    \item The Quantum $2^{-3} = 0.125$
+    \item UpperBound $2^2 - Quantum = 3.875$
+        This implies that it should be \emph{impossible} to set a number which is \emph{bigger} than $3.875$.
+    \item The LowerBound is $-2^2 = -4$.
+        This implies that it should be \emph{impossible} to set a number which is \emph{smaller} than $-4$.
+\end{itemize}
+
+With those values, we can illustrate the issue.
+Listing \ref {lst:fixedPointProblem} below exposes the problem.
+
+\begin{code}[language=bash, caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
+# Let's set the maximum allowed value
+$ pfw setParameter /Example/fixedPoint/q2.3 3.875
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.9
+# ^ this is not expected,
+# ^ since 3.875 is an encodable number for Q2.3!
+
+# Ok, let's try to set the number the pfw gave us:
+$ pfw setParameter /Example/fixedPoint/q2.3 3.9
+# Value 3.9 standing out of admitted real range
+# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
+# ^ We are NOT able to set something the pfw gave us!
+\end{code}
+
+
+\subsubsection{A test suite to describe valid behavior}
+
+In order to verify that the new implementation would be correct, I wrote a test suite
+in \gls{python}. That test suite performs several checks on each fixed point. Let's
+take the previous example to illustrate the mechanics of the test suite.
+
+The test suite uses two types of data to handle its test:
+\begin{description}
+    \item[Out-of-bound values] which should be \emph{refused} by the \gls{pfw}.
+    \item[Inner bounds values] which should be \emph{accepted} by the \gls{pfw}.
+\end{description}
+
+Figure \ref{fig:fixedPointTest} below illustrates the flow of the two types of tested data.
 
 \begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
     \includegraphics[height=0.6\textheight]{./src/img/fixedPointProcess.pdf}
 \end{figureGraphics}
 
-Below is a small description of the tests:
+The checks are done as following:
 \begin{description}
     \item[Bound check] The \gls{pfw} should throw an error if we
         attempt to set an out-of-bound value.
@@ -213,45 +255,14 @@ Below is a small description of the tests:
     \item[Bijectivity check] The \gls{pfw} should return the same value we provided it at the Consistency check.
 \end{description}
 
-\subsubsection{Rework the internal mechanism}
-It was time to rework the internal
-mechanism of the \gls{pfw}.
-
-The \gls{pfw} can export parameters to a file. Fixed
-point parameters can be exported as well.
-\begin{itemize}
-    \item When exporting them, the \gls{pfw} converts the value from
-        its internal representation towards a floating point number, because that is
-        easier to read.
-    \item By converting that number, it also computes the amount of digits
-        to use for display, or writing towards a file. This can result in
-        \emph{rounding issues}, due to limitation of the \lstinline{setPrecision} \gls{cpp} method.
-        TODO detail what were the issues (rounding to upper value, etc)
-\end{itemize}
+\subsubsection{The solution}
 The fix I proposed was to replace the computation of displayable digits by something
 easier, which is the \emph{Fractional part} of the fixed point number.
 
-The example in listing \ref {lst:fixedPointProblem} illustrates a bound error check, and the output in the corrected version.
 
-\begin{code}[language=bash, caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
-#  broken version  #
-####################
-$ pfw setParameter /Example/fixedPoint/q2.3 3.875
-# Done
-$ pfw getParameter /Example/fixedPoint/q2.3
-# 3.9 <= this is not expected, since 3.875 is encodable!
-$ pfw setParameter /Example/fixedPoint/q2.3 3.9
-# Value 3.9 standing out of admitted real range
-# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
-# ^ this is even weirder
-
-#  fixed version  #
-###################
-$ pfw setParameter /Example/fixedPoint/q2.3 3.875
-# Done
-$ pfw getParameter /Example/fixedPoint/q2.3
-# 3.875
-\end{code}
+\subsubsection{Rework the internal mechanism}
+It was time to rework the internal
+mechanism of the \gls{pfw}.
 
 
 % {{{2 Multi modem
