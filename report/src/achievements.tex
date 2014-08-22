@@ -365,13 +365,18 @@ In this section, I will cover everything which was done around open-sourcing the
 As described in section \ref{sec:whyOpensourcing}, this component is a generic solution for handling middleware problematics in
 a scalable way.
 
+\subsection{Introduction}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
 our team decided to release the source-code on \gls{GitHub}.
 \gls{GitHub} is the biggest code hosting site in the world. It favors social software development, with a commenting system
 to share knowledge about code.
+Intel has a special organization on \gls{GitHub} which is used to group all its open-source projects. This group is called \emph{01org}. I
+joined it as soon as I started contributing on the \gls{pfw}.
+In parallel with this group, Intel has also a dedicated website with various information about their projects. This website, which can be
+visited at \url{https://01.org/} is part of the Intel's open-source technology center.
 
-This should favor external contributions via \gls{pullrequests} and motivate
-the community to use the \gls{pfw}.
+Hosting the \gls{pfw} within \emph{01org} should give some visibility and motivate
+the community to use the \gls{pfw}. But in order to open-source the \gls{pfw}, a lot of things had to be done.
 
 Around this activity, I covered several topics:
 \begin{description}
@@ -452,8 +457,12 @@ optional arguments:
     --mk           scan for Android make files: .mk
 \end{code}
 
+With this tool, it took less than half day of work to change the 270 involved files.
+
 
 % {{{2
+\subsection{Alignment}
+
 \subsection{Branch sync process}\label{sec:syncProcess}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
 it is quite difficult to keep both repositories in sync.
