@@ -5,7 +5,7 @@ which was briefly presented in section \ref{sec:parameter-framework}.
 I had two major directions during my internship:
 \begin{itemize}
     \item Delivering new features for Intel and its customers.
-        I have submitted more than \emph{80 patchs} to the Intel codebase, which are now used by its customers.
+        I have submitted more than \emph{80 patches} to the Intel codebase, which are now used by its customers.
     \item Open-source the \gls{pfw} to give it some weight in the middleware community.
         For doing that, I had to change some code within the \gls{pfw}.
         Today, I am in the top five contributors on GitHub as shown on figure \ref{fig:githubContrib} below (My nickname is \emph{Makohoek}).
@@ -16,6 +16,10 @@ I had two major directions during my internship:
 
 % {{{1 CLIENT FEATURES
 \section{New features for Intel and its customers}
+
+In this section, I will detail the different problems I solved for Intel and its customers.
+The code I delivered is currently used by several customers and respects high software quality standards
+as described in section \ref{sec:quality}
 
 % {{{2 Xml validation at build time
 \subsection{XML validation at build time}
@@ -339,7 +343,7 @@ Given the fact that there are multiple modems protocols available on the market,
 one for each modem family.
 I had to modify \emph{each plugin} to handle modem instance awareness. That awareness comes from \gls{xml} attributes which are
 retrieved in the plugin's code.
-I cannot detail the implementation itself because it is composed of confidential information.
+The implementation will not be detailed because it is confidential.
 
 \subsubsection{Outcome}
 
@@ -351,30 +355,40 @@ I had to collaborate a lot with coworkers and other \gls{scrum} teams to be sure
 In the end, we did deliver on time the expected results
 
 
+\newpage
+
+
 % {{{1 OPEN SOURCING
-TODO tout la section
 \section{Open-sourcing on GitHub}
+
+In this section, I will cover everything which was done around open-sourcing the \gls{pfw}.
+As described in section \ref{sec:whyOpensourcing}, this component is a generic solution for handling middleware problematics in
+a scalable way.
+
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
 our team decided to release the source-code on \gls{GitHub}.
+\gls{GitHub} is the biggest code hosting site in the world. It favors social software development, with a commenting system
+to share knowledge about code.
+
 This should favor external contributions via \gls{pullrequests} and motivate
 the community to use the \gls{pfw}.
 
 Around this activity, I covered several topics:
 \begin{description}
     \item[Communicating, Documentating] the \gls{pfw} components.
-    \item[Push, clean, enchance] the code to make sure no proprietary
+    \item[Push, clean, enchance, align] the code to make sure no proprietary
         elements are made public.
 \end{description}
 
-% {{{2
+% {{{2 documentation
 \subsection{Parameter-framework newcomer's documentation}\label{sec:tutorials}
 
 At the start of my internship, I had to inspect the \gls{pfw}'s
 source code without any documentation. The idea was to have a fresh look at
-this piece of software to determine if it was open-source ready, straightforward
-to use, for someone who is unfamiliar with it.
+this piece of software to determine if it was open-source ready and straightforward
+to use for someone who is unfamiliar with it.
 
-While doing that, I struggled a bit with the basic usage of the framework. The
+While doing that, I struggled a bit with some basic concepts of the framework. The
 team decided that it would be nice to have some newcomer tutorials and examples,
 for an easier adoption of the open-source community. So I wrote several
 tutorials:
@@ -391,22 +405,35 @@ tutorials:
     \item[An introduction to the .pfw language]\label{desc:pfw-language}
         is a tutorial about the .pfw language. This language was
         created to simplify the writing of settings files for the
-        \gls{pfw}. Those files are then converted into \gls{xml}, which is
-        the only language the \gls{pfw} understands.
+        \gls{pfw}. Those files are then converted by \lstinline{hostDomainGenerator} into \gls{xml}, which is
+        the only language the \gls{pfw} understands. This tutorial is not online for the moment.
 \end{description}
 These tutorials have been written in \gls{markdown}, the standard format used
 on \gls{GitHub}.
+They are currently online on the wiki page\footnote{see annex on page \pageref{chap:annex}}.
 
-% {{{2
+Figure \ref{fig:tutos} shows the rendering of a tutorial on the wiki.
+\begin{figureGraphics}{Tutorial preview from the core wiki}{fig:tutos}
+    \includegraphics[height=0.5\textheight]{./src/img/tutos.pdf}
+\end{figureGraphics}
+
+At the moment, this documentation is used by other teams which need to train themselves on the \gls{pfw}.
+There are more than \emph{450 lines} of text in these tutorials.
+
+
+% {{{2 ip plan
 \subsection{Parameter-framework's intellectual property}
-Intellectual property is very important at Intel. The \gls{pfw} is released under
-BSD license. All the source files must contain the correct BSD license header according
-to Intel's open-source policy.
+Before the code of the \gls{pfw} could be open-sourced, it had to be compliant with Intel's open-source policy.
+Intellectual property is highly valuated at Intel. The \gls{pfw} needed to be released under
+BSD license.
+For that purpose, all the source files must contain the correct \emph{BSD license header}.
+However, there are more than \emph{270 source files} which needed to be released on \gls{GitHub}.
+Changing all those files by hand seems very time consuming, so I requested if a helper tool exists for that matter.
 
 \subsubsection{license checker}
-Since there are 279 source files released currently on \gls{GitHub}, it seems a lot of
-work to check all those files manually.
-I wrote an internal tool in \gls{python} which performs the license check semi-automatically.
+According to the team, there was no helper for changing software licenses easily.
+Given the fact that I did not want to change 270 files by hand, I
+wrote an internal tool in \gls{python} which performs the license check semi-automatically.
 The script usage is quite straightforward and showed in listing \ref{code:license}.
 
 \begin{code}[language=bash, caption=License checker usage, label=code:license]
