@@ -2,39 +2,54 @@
 
 All the work I have done during this internship is related to the \gls{pfw},
 which was briefly presented in section \ref{sec:parameter-framework}.
+I had two major directions during my internship:
+\begin{itemize}
+    \item Delivering new features for Intel and its customers.
+        I have submitted more than \emph{80 patches} to the Intel codebase, which are now used by its customers.
+    \item Open-source the \gls{pfw} to give it some weight in the middleware community.
+        For doing that, I had to change some code within the \gls{pfw}.
+        Today, I am in the top five contributors on GitHub as shown on figure \ref{fig:githubContrib} below (My nickname is \emph{Makohoek}).
+        \begin{figureGraphics}{Top contributors on the Parameter-framework core}{fig:githubContrib}
+            \includegraphics[width=\textwidth]{./src/img/statsGitHub.png}
+        \end{figureGraphics}
+\end{itemize}
 
-% {{{1
-\section{Parameter-framework core enhancements}
+% {{{1 CLIENT FEATURES
+\section{New features for Intel and its customers}
 
-% {{{2
+In this section, I will detail the different problems I solved for Intel and its customers.
+The code I delivered is currently used by several customers and respects high software quality standards
+as described in section \ref{sec:quality}
+
+% {{{2 Xml validation at build time
 \subsection{XML validation at build time}
-\subsubsection{Build process}
-FIXME FIXME forward reference, this is no good.
-The pfw language as described in \ref{desc:pfw-language} is used for rule based
-description. Those are translated into \gls{xml} files during the build via a
-specific make target.  In order to generate those \gls{xml} files, we also need
-the information of the Structure files, which are written by the integration
-engineers.
 
-To generate those files, we rely on a toolset we call \emph{HostDomainGenerator}.
-The figure \ref{fig:build-process} shows how it works:
+For our Intel Audio \gls{hal}, we have a lot of structure files. More than one hundred.
+There a more than 40 000 lines of \gls{xml} structure files.
+The writing of those structure files is done by human beings. Given the fact
+that humans can make mistakes, there is \emph{no guarantee} that those structure files are semantically correct.
+Furthermore, the \gls{pfw} expects that the files which are given no not contain any mistake.
 
-\begin{figureGraphics}{Xml generation build process}{fig:build-process}
-    \includegraphics[height=0.4\textheight]{./src/img/build-generation.pdf}
+An example can be that someone forgot to specify the \emph{size} attribute of a parameter.
+In that case, the default size is $0$. Let's imagine we are computing a result as showed in figure \ref{fig:runtimeerror}.
+
+\begin{figureGraphics}{Error example due to a bad parameter size}{fig:runtimeerror}
+    $result = \dfrac{a*k}{size}$
+    \vspace{0.3cm}
 \end{figureGraphics}
 
-But there were some limitations. Since the writing of the \gls{xml} structure files is done by human beings, there was
-\emph{no guarantee} that their files were semantically correct.
-Since no check was done during the build-process, the generator could write erroneous files because it supposes that
-the Structure files are \emph{correct}. An example can be that someone forgot to specify the \emph{size} property of a parameter.
-This leads to \emph{run-time errors} and \emph{undefined behaviour} because we are basically allocating zero memory for that parameter.
-TODO REXPLAIN.
+In that case we have a run-time error due to a \emph{division by zero}. This is only one possible consequence of bad structure files.
+This kind of problem should be detected when we are building our system, not at run-time. Having those problems at
+run-time is far too time-consuming and thus far too expensive.
 
-\subsubsection{Schemas}
-To avoid run-time errors due to badly generated files, we must make it impossible to generate erroneous files.
-We can use \gls{xsd} files to describe rules about the content of an .xml element.
+In the next sections we will see how to detect those problems at build time.
 
-Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
+\subsubsection{A language for validating XML files}
+
+To validate \gls{xml} files, we use \gls{xsd} files.
+Those are describing what is allowed/prohibited within an \gls{xml} element. For example, the \emph{size} attribute is
+\emph{mandatory} for an Integer parameter.
+Listing \ref{lst:xsd} shows a snippet illustrating that example \gls{xsd} file:
 
 \begin{code}[language=XML, caption=XSD rules for an Integer parameter, label=lst:xsd]
 <xs:attributeGroup name="IntegerParameterAttributes">
@@ -45,55 +60,104 @@ Listing \ref{lst:xsd} shows a snippet example of an \gls{xsd} file:
 </xs:attributeGroup>
 \end{code}
 
-In this code, we see that the \gls{xsd} is \emph{requiring} that we specify the \emph{Size} attribute.
+With that knowledge in mind, I decided to write a \gls{python} tool to detect the possible errors in the existing structure files.
+
+\subsubsection{A tool to validate XML}
+To validate \gls{xml} with \gls{xsd} files, several tools exists already. The most widely used on linux is the \lstinline{xmllint} utility.
+This works very well but is limited to one file per usage. The script I wrote in \gls{python} was able to have two directories as input and check
+recursively every file.
+This tool highlighted that there were more than \emph{500 errors} within the hundred files.
+
+The problem with this \gls{python} script is that it did \emph{not use standard} \gls{python} libraries.
+We needed a more robust solution which was integrated into the build system without using external libraries.
+
+\subsubsection{Build process}
+To understand how the robust solution is implemented, we need to have a look at the build process around the \gls{pfw}.
+
+During the build process, we are translating settings files from a special format (which was shown in \ref{lst:pfwsettings}) into \gls{xml}.
+That special format, which is called \emph{.pfw language}, is used for rule based
+description. Those are translated into \gls{xml} files during the build via a
+specific make target.  In order to generate those \gls{xml} files, we also need
+the information of the structure files, which are written by the integration
+engineers as described in previous subsection.
+
+To generate those files, we rely on a toolset we call \emph{HostDomainGenerator}.
+The figure \ref{fig:build-process} shows how it works:
+
+\begin{figureGraphics}{Xml generation build process}{fig:build-process}
+    \includegraphics[height=0.4\textheight]{./src/img/build-generation.pdf}
+\end{figureGraphics}
+
+\begin{itemize}
+    \item The \emph{.pfw} files are parsed via a set of scripts and translated into \gls{pfw} commands.
+    \item Those commands are sent to a special \gls{pfw} instance which was started for this purpose only.
+    \item After that, the \gls{pfw} exports the rules which were created previously and dumps it into a settings \gls{xml} file.
+    \item Those \emph{settings} and \emph{structure} files are then stored on the smartphone or the tablet in \lstinline{/etc/}.
+\end{itemize}
+
+In this build process, we have to display errors when detecting \gls{xml} files which are not compliant with the rules from the
+\gls{xsd} files.
 
 \subsubsection{Xml checker}
 
-We decided to integrate an automatic \gls{xsd} check at build time. In order to do so, I started writing a \gls{python} script
-to integrate with the HostDomainGenerator tool. Since we wanted a more robust solution, it was finally done within the \gls{pfw} itself.
+Since we wanted a more robust solution, it was finally done within the \gls{pfw} itself.
+In fact, the parameter-framework already had some code to check \gls{xml} validity. It was not
+finished and I had to complete it.
 
-Figure \ref{fig:build-process-reworked} shows the final implementation and where we check the structure validity.
+When that was done, I had to integrate the feature within the \lstinline{HostDomainGenerator} tool.
+Figure \ref{fig:build-process-reworked} shows the final implementation.
 
-\begin{figureGraphics}{Xml generation build process with XSD check}{fig:build-process-reworked}
+\begin{figureGraphics}{Xml generation build process with validity check}{fig:build-process-reworked}
     \includegraphics[height=0.5\textheight]{./src/img/build-generation-after.pdf}
 \end{figureGraphics}
 
-TODO: detail, explain how it works
-
-
-% {{{2
-\subsection{Multi-variant initial support}
-TODO: reword this whole section
-As seen in section \ref{sec:parameter-framework} the \gls{pfw} needs
-\gls{xml} files which are hardware dependent.
-Within the \gls{hal}, the Stream manager and the Route manager are aware of
-which \gls{xml} files should be loaded. At startup, they provide the
-accurate \gls{xml} files to their corresponding \gls{pfw} instance.
-\gls{android}'s build system knows which platform we are building.
-So, for each platform, we build a different binary which points towards the correct \gls{xml} files.
-
-An external requirement was to be able to have one single binary which works on each platform. With this
-requirement, the solution explained before does not work anymore.
-
-The Route and Stream managers need to be smarter. In
-order to detect what the current sound card is, we can read from \lstinline{/proc/asound} entries.
-The current implementation relies on the content of \lstinline{/proc/asound/cards}.
-This is just a proof of concept to show to clients that we are able to support multiple hardware
-with one single binary.
-
-
-% {{{2
-\subsection{Fixed point parameter enhancements}
-The \gls{pfw} has several kinds of parameters:
+With the difference to the solution showed in figure \ref{fig:build-process}, here we:
 \begin{itemize}
-    \item IntegerParameter
-    \item BooleanParameter
-    \item FixedPointParameter
-    \item StringParameter
-    \item EnumParameter
-    \item ...
+    \item Give \gls{xsd} files towards the \lstinline{hostDomainGenerator} tool.
+    \item Those are forwarded to the \gls{pfw}, which validates the \emph{structure} files before receiving the special commands.
+    \item If the checks fail, it aborts the build.
+    \item Otherwise, it receives dumps the \emph{settings} file as usual.
 \end{itemize}
 
+\subsubsection{Outcome}
+In the end, this solution is widely used at Intel now. Every error described by the \gls{xsd} rules are removed.
+In a matter of two weeks, the integration team was able to clean up more than 500 errors from the \gls{xml} structure files.
+Moreover, it is impossible nowadays to let new validation errors go trough, since the system would not build.
+
+
+% {{{2 Multivariance
+\subsection{Multi-variant initial support}
+\subsubsection{Context}
+Intel has a various number of platforms for smarphones and tablets, which have different hardware specifications.
+Every platform also haves minor hardware variances.
+For example, there is a platform with two hardware variants: the audio architecture is not the same.
+The architecture can for instance differ in a codec. Each of those different combinations is called a \emph{variant}.
+
+An customer's requirement was to be able to have one single package for the Intel Audio \gls{hal} which works on every variant.
+With this concern in mind, we had to rework the \gls{hal} a bit.
+In fact, as seen in section \ref{sec:parameter-framework}, the \gls{pfw} needs \gls{xml} files which are hardware dependent.
+
+Within the our build system, we are aware of which \gls{xml} files should be loaded, since that depends the variant we are building.
+So, for each variant, we build a different package which includes the correct \gls{xml} files.
+This had to be reworked into a single package.
+
+\subsubsection{Implementation}
+For an initial step, we decided to include every \gls{xml} file for all the possible variants.
+The problem is that at run-time, the Stream manager (which is in the \gls{hal}) has \emph{no idea} about which configuration file
+it should load for his \gls{pfw} instance.
+
+The Stream manager need to be smarter. In order to detect what the current sound card is, we can read from \lstinline{/proc/asound} entries.
+The current implementation relies on the content of \lstinline{/proc/asound/cards}.
+We have a map in the Stream manager which has as key the \emph{sound card name} and as value the \gls{xml} file which should be loaded.
+This is viable since there are less than five hardware variances at most for each platform.
+
+This is just a proof of concept to show to customers that we are able to support multiple hardware variants with one single package.
+
+
+% {{{2 Fixed point param
+\subsection{Fixed point parameter improvements}
+% What are fixed points
+% Problem
 Fixed point numbers are useful for representing real numbers. Their
 usage is appropriate when the processor does not haves a floating point unit
 or when there is a performance gain by using them. Usually, fixed points are
@@ -106,36 +170,86 @@ were writing to a configuration file or displaying user input. To
 support the expected behavior for those cases, I changed the implementation, and
 wrote tests for it.
 
-\subsubsection{Test suite in Python}
+\subsubsection{The problem}
+The \gls{pfw} can export parameters to a file. It has several parameter types.
+Fixed point number have their own type, called \emph{FixedPointParameters}. Of course, they can be exported as well.
+\begin{itemize}
+    \item When exporting a \lstinline{FixedPointParameter} to a file, the \gls{pfw} converts the value from
+        its internal representation towards a floating point number, because that is
+        easier to read.
+    \item By converting that number, it also computes the amount of digits needed to display (or write) that number.
+        This results in \emph{rounding issues}, due to limitation of the \lstinline{setPrecision()} \gls{cpp} method.
+        In fact, \lstinline{setPrecision()} is \emph{rounding up} instead of \emph{truncating} the last digit of a floating point number.
+        For instance:
+        \begin{itemize}
+            \item \lstinline[language=C++]{cout << setPrecision(3) << 3.14159265} returns $3.14$.
+            \item \lstinline[language=C++]{cout << setPrecision(5) << 3.14159265} returns $3.1416$ instead of $3.1415$.
+        \end{itemize}
+        It is not possible to change the \emph{rounding} behavior to \emph{truncating} behavior because
+        \lstinline{setPrecision()} relies on the \lstinline{fesetround()} methods which is only available in the \gls{cpp} 11 norm.
+\end{itemize}
+In the next section we will study an example showing the issue.
 
-In order to verify that the new implementation was correct, I wrote a test suite
-in \gls{python}. That test suite performs several checks on each fixed point. Let's
-take an example to illustrate the purpose of the test suite.
+\subsubsection{An example of the issue}
 
 Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
-\emph{Fractional part} is $3$. We can compute some specific values for that number:
+\emph{Fractional part} is $3$.
+Since we have a fractional part of $3$ bits, the minimal step between two numbers coded in $Q2.3$ is
+$2^{-3}$. This minimal step is called the \emph{Quantum}.
 
-TODO: explain Quantum
-\begin{itemize}
-    \item Quantum $2^{-3} = 0.125$
-    \item UpperBound $2^2 - 0.125 = 3.875$
-    \item LowerBound $-2^2 = -4$
-\end{itemize}
-
-Those values can be represented as following on figure \ref{fig:fixedPointValues}. Note that
+Some special values can be represented for a $Q2.3$ number. Figure \ref{fig:fixedPointValues} below shows those values. Note that
 this figure is not represented in real scale.
 \begin{figureGraphics}{Fixed point special values}{fig:fixedPointValues}
     \includegraphics[width=\textwidth]{./src/img/fixedPoint.pdf}
 \end{figureGraphics}
 
-The test suite computes some values within the green(valid) area and the
-red(invalid) area and performs the checks illustrated on figure \ref{fig:fixedPointTest} below.
+\begin{itemize}
+    \item The Quantum $2^{-3} = 0.125$
+    \item UpperBound $2^2 - Quantum = 3.875$
+        This implies that it should be \emph{impossible} to set a number which is \emph{bigger} than $3.875$.
+    \item The LowerBound is $-2^2 = -4$.
+        This implies that it should be \emph{impossible} to set a number which is \emph{smaller} than $-4$.
+\end{itemize}
 
-\begin{figureGraphics}{Fixed point test suite}{fig:fixedPointTest}
+With those values, we can illustrate the issue.
+Listing \ref {lst:fixedPointProblem} below exposes the problem.
+
+\begin{code}[language=bash, caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
+# Let's set the maximum allowed value
+$ pfw setParameter /Example/fixedPoint/q2.3 3.875
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.9
+# ^ this is not expected,
+# ^ since 3.875 is an encodable number for Q2.3!
+
+# Ok, let's try to set the number the pfw gave us:
+$ pfw setParameter /Example/fixedPoint/q2.3 3.9
+# Value 3.9 standing out of admitted real range
+# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
+# ^ We are NOT able to set something the pfw gave us!
+\end{code}
+
+
+\subsubsection{A test suite to describe valid behavior}
+
+In order to verify that the new implementation would be correct, I wrote a test suite
+in \gls{python}. That test suite performs several checks on each fixed point. Let's
+take the previous example to illustrate the mechanics of the test suite.
+
+The test suite uses two types of data to handle its test:
+\begin{description}
+    \item[Out-of-bound values] which should be \emph{refused} by the \gls{pfw}.
+    \item[Inner bounds values] which should be \emph{accepted} by the \gls{pfw}.
+\end{description}
+
+Figure \ref{fig:fixedPointTest} below illustrates the flow of the two types of tested data.
+
+\begin{figureGraphics}{fixed point test suite}{fig:fixedpointtest}
     \includegraphics[height=0.6\textheight]{./src/img/fixedPointProcess.pdf}
 \end{figureGraphics}
 
-Below is a small description of the tests:
+The checks are done as following:
 \begin{description}
     \item[Bound check] The \gls{pfw} should throw an error if we
         attempt to set an out-of-bound value.
@@ -145,49 +259,75 @@ Below is a small description of the tests:
     \item[Bijectivity check] The \gls{pfw} should return the same value we provided it at the Consistency check.
 \end{description}
 
-\subsubsection{Rework the internal mechanism}
-It was time to rework the internal
-mechanism of the \gls{pfw}.
+\subsubsection{The solution}
+The fix I proposed was to replace the calculation of the amount of displayed digits.
+Since it had problems with rounding, why not show all digits at the end of the number?
 
-The \gls{pfw} can export parameters to a file. Fixed
-point parameters can be exported as well.
-\begin{itemize}
-    \item When exporting them, the \gls{pfw} converts the value from
-        its internal representation towards a floating point number, because that is
-        easier to read.
-    \item By converting that number, it also computes the amount of digits
-        to use for display, or writing towards a file. This can result in
-        \emph{rounding issues}, due to limitation of the \lstinline{setPrecision} \gls{cpp} method.
-        TODO detail what were the issues (rounding to upper value, etc)
-\end{itemize}
-The fix I proposed was to replace the computation of displayable digits by something
-easier, which is the \emph{Fractional part} of the fixed point number.
+The \emph{fractional part} of a $Qn.m$ number is always a multiple of its quantum. This is related to
+the internal representation of fixed point numbers. Since a quantum is always a number in the form of $2^{-m}$, we can
+assume that the quantum's last digit will aways be a $5$, for $m > 0$.
 
-The example in listing \ref {lst:fixedPointProblem} illustrates a bound error check, and the output in the corrected version.
+Figure \ref{fig:quantums} below shows some possible quantum values, where $m$ is the \emph{fractional part} of a $Qn.m$:
 
-\begin{code}[language=bash, caption=$Q.2.3$ rounding issue example, label=lst:fixedPointProblem]
-#  broken version  #
-####################
-$ pfw setParameter /Example/fixedPoint/q2.3 3.875
-# Done
-$ pfw getParameter /Example/fixedPoint/q2.3
-# 3.9 <= this is not expected, since 3.875 is encodable!
-$ pfw setParameter /Example/fixedPoint/q2.3 3.9
-# Value 3.9 standing out of admitted real range
-# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
-# ^ this is even weirder
+\begin{figureGraphics}{Quantum values}{fig:quantums}
+    $
+    \begin{array}{c|c}
+        m & Quantum = 2^{-m} \\
+        \hline
+        1 & 0.500000 \\
+        \hline
+        2 & 0.250000 \\
+        \hline
+        3 & 0.125000 \\
+        \hline
+        4 & 0.062500 \\
+        \hline
+        5 & 0.031250 \\
+        \hline
+        6 & 0.015625
+    \end{array}
+    \vspace{0.3cm}
+    $
+\end{figureGraphics}
 
-#  fixed version  #
-###################
+Since we assume that the quantum will always finish with a $5$, we can limits ourselves with displaying until that last digit.
+It happens that that last digit is always the $m^th$ digit after the comma.
+So we just need to call \lstinline{setPrecision(m)} with $m$ as \emph{fractional part} of a $Qn.m$.
+Listing \ref{lst:resultFixedPoint} shows the correct interaction with the \gls{pfw} command-line interface.
+
+\begin{code}[language=bash, caption=$Q.2.3$ correct set and get, label=lst:resultFixedPoint]
+# Let's set the maximum allowed value
 $ pfw setParameter /Example/fixedPoint/q2.3 3.875
 # Done
 $ pfw getParameter /Example/fixedPoint/q2.3
 # 3.875
+# ^ Ok, correct behavior
+
+# Let's try to set a different value:
+$ pfw setParameter /Example/fixedPoint/q2.3 3.8
+# Done
+$ pfw getParameter /Example/fixedPoint/q2.3
+# 3.750
+# ^ Ok, this is acceptable since 3.8 is not encodable.
+
+# Let's try to set a erronous value:
+$ pfw setParameter /Example/fixedPoint/q2.3 3.9
+# Value 3.9 standing out of admitted real range
+# [-4, 3.875] for FixedPointParameter /Test/test/q2.3
+# ^ This also correct
 \end{code}
 
+\subsubsection{Outcome}
 
-% {{{2
+The current implementation is used at daily basis by multiple tools.
+More than \emph{80 structure files} which are also for Intel's customers are compatible with this solution.
+This was a complex issue that caused the team a few weeks of effort and I am proud that my answer has been the
+correct one to this problem.
+
+
+% {{{2 Multi modem
 \subsection{Multiple modem support}
+\subsubsection{Context}
 With the \emph{bring your own device} trends, more and more smartphones support dual simcards. This case
 is useful to use the same device for corporate and private purposes.
 Besided, in some developing countries phone carriers do not cover the whole country. The habitants of those
@@ -196,35 +336,64 @@ For those purposes, the platform must support two modems.
 Within the Intel Audio \gls{hal}, we are handling some voice processing algorithms from the signal coming from the modem.
 Naturally, we have a \gls{pfw} plugin to abstract the modem. This plugin did not support multiple modems.
 
-I had to add \emph{modem instance awareness} to the plugin. With the current implementation, it
-is possible to have multiple Structure files, each describing a modem. This would theoretically allow
+I had to add \emph{modem instance awareness} to the plugin so that Intel could ship devices with multiple modems.
+
+\subsubsection{Plugins}
+Given the fact that there are multiple modems protocols available on the market, there are also multiple \gls{pfw} plugins,
+one for each modem family.
+I had to modify \emph{each plugin} to handle modem instance awareness. That awareness comes from \gls{xml} attributes which are
+retrieved in the plugin's code.
+The implementation will not be detailed because it is confidential.
+
+\subsubsection{Outcome}
+
+With the current implementation, it is possible to have multiple structure files, each describing a modem. This would theoretically allow
 to support as many modems as we want.
 
-TODO explain a bit more.
+Supporting multiple modems was a big team effort. It took more than 200 patchs to be completely implemented.
+I had to collaborate a lot with coworkers and other \gls{scrum} teams to be sure that we deliver something consistent.
+In the end, we did deliver on time the expected results
 
-% {{{1
+
+\newpage
+
+
+% {{{1 OPEN SOURCING
 \section{Open-sourcing on GitHub}
+
+In this section, I will cover everything which was done around open-sourcing the \gls{pfw}.
+As described in section \ref{sec:whyOpensourcing}, this component is a generic solution for handling middleware problematics in
+a scalable way.
+
+\subsection{Introduction}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
 our team decided to release the source-code on \gls{GitHub}.
-This should favor external contributions via \gls{pullrequests} and motivate
-the community to use the \gls{pfw}.
+\gls{GitHub} is the biggest code hosting site in the world. It favors social software development, with a commenting system
+to share knowledge about code.
+Intel has a special organization on \gls{GitHub} which is used to group all its open-source projects. This group is called \emph{01org}. I
+joined it as soon as I started contributing on the \gls{pfw}.
+In parallel with this group, Intel has also a dedicated website with various information about their projects. This website, which can be
+visited at \url{https://01.org/} is part of the Intel's open-source technology center.
+
+Hosting the \gls{pfw} within \emph{01org} should give some visibility and motivate
+the community to use the \gls{pfw}. But in order to open-source the \gls{pfw}, a lot of things had to be done.
 
 Around this activity, I covered several topics:
 \begin{description}
     \item[Communicating, Documentating] the \gls{pfw} components.
-    \item[Push, clean, enchance] the code to make sure no proprietary
+    \item[Push, clean, enchance, align] the code to make sure no proprietary
         elements are made public.
 \end{description}
 
-% {{{2
+% {{{2 documentation
 \subsection{Parameter-framework newcomer's documentation}\label{sec:tutorials}
 
 At the start of my internship, I had to inspect the \gls{pfw}'s
 source code without any documentation. The idea was to have a fresh look at
-this piece of software to determine if it was open-source ready, straightforward
-to use, for someone who is unfamiliar with it.
+this piece of software to determine if it was open-source ready and straightforward
+to use for someone who is unfamiliar with it.
 
-While doing that, I struggled a bit with the basic usage of the framework. The
+While doing that, I struggled a bit with some basic concepts of the framework. The
 team decided that it would be nice to have some newcomer tutorials and examples,
 for an easier adoption of the open-source community. So I wrote several
 tutorials:
@@ -241,22 +410,35 @@ tutorials:
     \item[An introduction to the .pfw language]\label{desc:pfw-language}
         is a tutorial about the .pfw language. This language was
         created to simplify the writing of settings files for the
-        \gls{pfw}. Those files are then converted into \gls{xml}, which is
-        the only language the \gls{pfw} understands.
+        \gls{pfw}. Those files are then converted by \lstinline{hostDomainGenerator} into \gls{xml}, which is
+        the only language the \gls{pfw} understands. This tutorial is not online for the moment.
 \end{description}
 These tutorials have been written in \gls{markdown}, the standard format used
 on \gls{GitHub}.
+They are currently online on the wiki page\footnote{see annex on page \pageref{chap:annex}}.
 
-% {{{2
+Figure \ref{fig:tutos} shows the rendering of a tutorial on the wiki.
+\begin{figureGraphics}{Tutorial preview from the core wiki}{fig:tutos}
+    \includegraphics[height=0.5\textheight]{./src/img/tutos.pdf}
+\end{figureGraphics}
+
+At the moment, this documentation is used by other teams which need to train themselves on the \gls{pfw}.
+There are more than \emph{450 lines} of text in these tutorials.
+
+
+% {{{2 ip plan
 \subsection{Parameter-framework's intellectual property}
-Intellectual property is very important at Intel. The \gls{pfw} is released under
-BSD license. All the source files must contain the correct BSD license header according
-to Intel's open-source policy.
+Before the code of the \gls{pfw} could be open-sourced, it had to be compliant with Intel's open-source policy.
+Intellectual property is highly valuated at Intel. The \gls{pfw} needed to be released under
+BSD license.
+For that purpose, all the source files must contain the correct \emph{BSD license header}.
+However, there are more than \emph{270 source files} which needed to be released on \gls{GitHub}.
+Changing all those files by hand seems very time consuming, so I requested if a helper tool exists for that matter.
 
 \subsubsection{license checker}
-Since there are 279 source files released currently on \gls{GitHub}, it seems a lot of
-work to check all those files manually.
-I wrote an internal tool in \gls{python} which performs the license check semi-automatically.
+According to the team, there was no helper for changing software licenses easily.
+Given the fact that I did not want to change 270 files by hand, I
+wrote an internal tool in \gls{python} which performs the license check semi-automatically.
 The script usage is quite straightforward and showed in listing \ref{code:license}.
 
 \begin{code}[language=bash, caption=License checker usage, label=code:license]
@@ -275,9 +457,23 @@ optional arguments:
     --mk           scan for Android make files: .mk
 \end{code}
 
+With this tool, it took less than half day of work to change the 270 involved files.
 
-% {{{2
-\subsection{Branch sync process}
+
+% {{{2 Align
+\subsection{Code alignment}
+On of the major problematics of open-sourcing a component is the way to version its source code.
+The \gls{pfw} can receive contributions from several places:
+\begin{description}
+    \item[External contributions] can be done via \gls{GitHub}. The contributor forks the project, makes his development in a feature
+        branch and then submits a pull request to the maintainer team which are members of the \emph{01org} organization.
+    \item[Internal patches] are still done by Intel employees which need to add new features to the \gls{pfw}.
+\end{description}
+The difficulty is to maintain two \gls{git} repositories with the same code base. When receiving contributions on one code base, they
+have to be ported to the other one. This should be done \emph{as soon as possible}. If that is not the case it would imply maintaining two different
+code bases which is very expensive.
+
+\subsection{Branch sync process}\label{sec:syncProcess}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
 it is quite difficult to keep both repositories in sync.
 On figure \ref{fig:branch-process} we can see how we plan to synchronize the different code.
@@ -285,37 +481,21 @@ On figure \ref{fig:branch-process} we can see how we plan to synchronize the dif
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
     \includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
 \end{figureGraphics}
+At the end of every sprint, we are re-aligning the internal source tree with the one in \gls{GitHub}.
+External contributions go trough a special feature branch, which is tested with the gatekeeping mechanism described in section \ref{sec:gatekeeping}.
+If every test passes, the code is merged into Intel's codebase.
 
-
-% {{{2
-\subsection{Alsa plugin refactoring}
-The Alsa plugin is used to handle \gls{alsa} (for desktop mostly) or TinyAlsa (for embedded \gls{android} devices mostly) subsystems.
-For our internal uses, we patched some \gls{aosp} projects such as TinyAlsa which allows us to support proprietary controls.
-The support of such controls was also implemented in the \gls{alsa} \gls{pfw} plugin. Since
-we want to open-source the plugin, those proprietary features should be removed.
-
-During the removal of those special controls, we also simplified the plugin
-architecture by merging the controls and the mixer code. TODO removing templates.
-The result is a far simpler design.
-TODO detail.
-
-% {{{2
-\subsection{Code alignment}
-
-When I had to update the different components on \gls{GitHub}, there were some issues:
-Our internal version and the \gls{GitHub} one had diverged.
-On figure \ref{fig:diverged}, we can see an overview of the branch state before I reworked them.
-
-\begin{figureGraphics}{Repository divergence}{fig:diverged}
-    \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
-\end{figureGraphics}
-Since all the components I uploaded on \gls{GitHub} had modifications which weren't present
-in the internal source tree, I encountered the divergence issue for each project I
-synchronized with \gls{GitHub} (Core, Alsa and Filesystem).
+I worked on three different projects to set up this branch process:
+\begin{itemize}
+    \item The core component of the \gls{pfw}.
+    \item The \gls{alsa} plugin.
+    \item The filesystem plugin.
+\end{itemize}
 
 This was a very good exercise to improve my \gls{git} skill.
 
-\subsection{Core upload}
+% {{{2 core align
+\subsection{Core alignment}
 The \gls{pfw} core is quite a big project, with about 30 000 lines of code.
 Align the internal tree and the \gls{GitHub} version of this project required quite some work.
 Some extra requirements apply on open-source projects, such as being compilable in a vanilla \gls{aosp} environment.
@@ -326,8 +506,8 @@ on the projects I had to open-source.
 
 The \gls{pfw} core is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework}}
 
-% {{{2
-\subsection{Filesystem plugin upload}
+% {{{2 fs plugin
+\subsection{Filesystem plugin alignment}
 
 The file system plugin is used for global access to the filesystem. This can be to
 use \emph{/proc} entries for instance. I used this plugin as example in the rookie
@@ -339,9 +519,24 @@ the online documentation of the filesystem plugin, on \gls{GitHub}.
 
 The filesystem plugin is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework-plugins-filesystem/}}
 
-% {{{2
-\subsection{Alsa plugin upload}
+% {{{2 alsa plugin
+\subsection{Alsa plugin alignment}
 
+The \gls{alsa} plugin is used to handle \gls{alsa} (for desktop mostly) or TinyAlsa (for embedded \gls{android} devices mostly) subsystems.
+For our internal uses, we patched some \gls{aosp} projects such as TinyAlsa which allows us to support proprietary controls.
+The support of such controls was also implemented in the \gls{alsa} \gls{pfw} plugin. Since
+we want to open-source the plugin, those proprietary features needed to be removed.
+
+\subsubsection{Plugin refactoring}
+The \gls{alsa} plugin used to be divided in two separate plugins: one for \gls{alsa} \emph{controls} and one for \gls{alsa} mixers.
+This required the user to include them both if they need to use an \gls{alsa} subsystem since those plugins did not work as
+standalone.
+
+We decided to do a pair programming refactoring job to merge the two parts into one consistent plugin.
+This allowed us to remove all the \emph{template} usage in the \gls{cpp} code.
+The result is a far simpler and more elegant design which could be uploaded to \gls{GitHub}.
+
+\subsubsection{Align on GitHub}
 The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
 on a linux desktop environement to handle \gls{alsa} mixers.
 

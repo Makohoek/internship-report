@@ -1,4 +1,4 @@
-\chapter{Environment}\label{chap:context}
+\chapter{Environment and context}\label{chap:context}
 
 \begin{sectionIntro}
     This chapter will describe essential facts about my internship, such as
@@ -25,6 +25,12 @@ silicon innovation since.
 Following a strategy to extend the Intel Architecture to new market segments,
 they are delivering smartphones and tablets powered by Intel chipsets.
 
+On figure \ref{fig:razri} below there is a picture of a smartphone with Intel inside.
+
+\begin{figureGraphics}{Motorola Razr I with Intel inside}{fig:razri}
+    \includegraphics[width=\textwidth]{./src/img/razri.jpg}
+\end{figureGraphics}
+
 Some key figures of Intel:
 \begin{itemize}
 \item Leading manufacturer of computer, networking and communications
@@ -43,11 +49,44 @@ Some key figures of Intel:
 \item One of the top ten Linux \gls{kernel} contributors.
 \end{itemize}
 
-
 \subsection{Intel Audio feature team in Toulouse}
 The team I worked with is the Audio feature team, in Toulouse.
-They are responsible for the Audio \gls{hal} and the interface between the
-libraries and the \gls{android} \gls{kernel}.
+They are responsible for the Audio \gls{hal} which is the interface between the
+libraries and the \gls{android} \gls{kernel}. Intel made a custom Audio \gls{hal} to
+replace \gls{android} default's one with their own one, which provides a lot more features.
+The Intel Audio \gls{hal} is present in every \gls{android} device from 2011 or later with Intel inside, such
+as the \emph{Motorola Razr I} from figure \ref{fig:razri}.
+
+Their custom \gls{hal} is based around the \gls{pfw}, which will be described in the section \ref{sec:parameter-framework}.
+
+
+\section{Topic of my internship}
+I worked within the Intel Audio development team, as an \emph{agile
+software developer}. The team is customer oriented, using \gls{scrum}
+methodology (see chapter \ref{chap:organisation}). My tasks
+within the team were focused around open-sourcing the \gls{pfw} on
+\gls{GitHub}\footnote{the links are in the annex at page \pageref{chap:annex}}
+
+
+\subsection{Why open-sourcing the Parameter-framework}\label{sec:whyOpensourcing}
+At the moment there is no standardization (such as POSIX for operating systems) in middleware. Due to the lack
+of standards, each company is reinventing their own solution for handling middleware problems in their own way.
+The \gls{pfw} which is the solution developed by the Intel Audio team is \emph{generic}, \emph{efficient} and \emph{scalable} enough to become a standard.
+With this ambition in mind, the Intel Audio team decided to open-source the core component of their Audio \gls{hal}, the \gls{pfw}.
+The component is hosted on \gls{GitHub} which is the most popular code hosting site in the world.
+
+\subsection{My role regarding open-sourcing}
+In order to open-source such a complex component as the \gls{pfw}, the Intel Audio team needed to evaluate if the code was ready.
+The code requires to be easy-to-understand so that the open-source community is willing to adopt it.
+Since I never worked with that component, I took a fresh look at the code. I had to try to \emph{understand the code} and the
+\emph{concepts} (explained at section \ref{sec:parameter-framework}) of the \gls{pfw} without any documentation.
+
+At the same time, internal developments were also made on this component, but on a different version of it.
+This implies that there are two code repositories of the same component: the \emph{internal} one and the \emph{open-source} one.
+Keeping the two code repositories synchronized is very important because each divergence has a huge maintenance impact.
+My role was to setup and execute that synchronization process to avoid costly and painful future maintenance.
+How this was done will be detailed later in section \ref{sec:syncProcess}.
+
 
 
 \section{Android}
@@ -57,14 +96,29 @@ applications such as \emph{Gmail}. This section gives an overview of the Android
 stack to show on which components I worked.
 
 \subsection{Global Android architecture}
+Android is a complex system, having more than 1 billion active users.
+It is structured in different levels:
 
-The figure \ref{fig:archi} shows the Audio \gls{hal} which is between the
-Linux \gls{kernel} and the libraries layers.
+\begin{description}
+    \item[Applications] such as Gmail, which are seen by the end-user
+    \item[Applications Framework] which is used by the applications, this is written in Java.
+    \item[Libraries] which is composed of the Dalvik virtual machine and other C/\gls{cpp} frameworks.
+    \item[Hardware Abstraction Layer] which a part of the middleware stack that ties together the libraries
+        and the \gls{kernel}. I worked in this section of the \gls{android} stack.
+    \item[Linux kernel] which contains the drivers and provides the user-space functionalities for the
+        middleware stack.
+\end{description}
+
+The figure \ref{fig:archi} shows android software stack and highlights the
+part I worked on during my internship, which is the Audio \gls{hal}.
+
 \begin{figureGraphics}{Global Android architecture}{fig:archi}
-\includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
+    \includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
 \end{figureGraphics}
 
-Within the Audio feature team in Toulouse, we are mainly focused around the Audio \gls{hal}.
+The Audio \gls{hal} is also one of the primary concerns of the Audio team in Toulouse and will be detailed
+in next section
+
 
 \subsection{Intel Audio HAL}
 Intel's Audio \gls{hal} for Android platforms is based on a generic, plugin-based solution: the \gls{pfw}.
@@ -95,13 +149,28 @@ Some requirements of the Intel Audio \gls{hal}:
 
 The \gls{pfw} is a way to fulfill those requirements.
 
+
 \section{Parameter-framework}
 \label{sec:parameter-framework}
+In this section we will have an overview of the \gls{pfw}, which is the core component of my internship.
+
+The \gls{pfw} is a plugin-based and rule-based framework for handling parameters. This means that you can:
+
+\begin{itemize}
+    \item Describe your system's structure and its parameters (in XML) - aka. \emph{What}
+    \item Write (in \gls{cpp}) or reuse a backend (aka. plugin) for accessing the parameters that you just described - aka. \emph{How} (Structure)
+    \item Define (in \gls{xml} or in a domain-specific-language) conditions/rules upon which a given parameter must take a given value - aka. \emph{When} (Settings)
+\end{itemize}
+
+With this concepts, we can cover all the requirements we have for creating a scalable \gls{hal}.
+Now we are going to have a look at the motivation behind the creation of this framework.
+
+\subsection{Motivation}
 During a phone call, the smartphone isn't just transmitting the sound received from the microphone. Various algorithms are
 applied on the audio signal which is transmitted and received.
-On figure \ref{fig:audioArch} below we have an example of an audio architecture which shows the components involved.
+Figure \ref{fig:audioArch} below shows an example of an audio architecture which shows the components involved.
 
-\begin{figureGraphics}{Audio architecture of pandaboard}{fig:audioArch}
+\begin{figureGraphics}{Audio architecture of a pandaboard}{fig:audioArch}
     \includegraphics[height=0.5\textheight]{./src/img/Audio_arch2.jpg}
 \end{figureGraphics}
 
@@ -112,7 +181,7 @@ The sound goes:
     \item Towards the \emph{Phoenix codec} to send the audio signal towards the headset.
 \end{itemize}
 
-Those algorithms have a lot of parameters, which can change depending on the use case: whether we are in a phone call,
+Those algorithms have a lot of parameters, which can change depending on the use case for e.g. whether we are in a phone call,
 or listening to some music. Furthermore, those parameters are \emph{often hardware dependent}.
 
 The \gls{pfw} was designed to manage easily those multiple parameters in a scalable way.
@@ -193,81 +262,4 @@ Domain:
 
 \subsubsection{Extensibility}
 Since the \gls{pfw} is \emph{plugin-based}, it is easy to extend its functionality to other usages than Audio, such
-as Camera, or Bluetooth.
-
-
-\subsection{Topic of my internship}
-I worked within the Intel Audio development team, as an \emph{agile
-software developer}. The team is customer oriented, using \gls{scrum}
-methodology (see chapter \ref{chap:organisation}). My tasks
-within the team were focused around enhancing and open-sourcing the \gls{pfw} on
-\gls{GitHub}\footnote{see \ref{chap:annex}} to give the team some
-visibility and advertise its work.
-TODO explain this
-
-\section{Workflow and environment}
-In this section, we will cover my daily workflow. This helps
-to understand how I proceeded during my whole internship.
-
-\begin{figureGraphics}{Developer workflow}{fig:workflow}
-    \includegraphics[height=0.6\textheight]{./src/img/workflow.pdf}
-\end{figureGraphics}
-
-This workflow is the same for every developer of the team. It is
-detailed in the sub sections below.
-
-\subsection{Development}
-Android source tree contains more than 700 projects. They have their own build system
-based on \lstinline{Android.mk} files. Each time that a project has to be rebuild from scratch (for example after a  \lstinline{make clean} command) all
-the 700 projects of the Android source tree are scanned for dependencies. This requires a lot of computing power.
-Given that fact, most of developers of our team are working on a remote server, via ssh.
-The server we are connecting to is far more powerful than the desktops we use.
-With its 32 cores and its 2 TeraBytes of SSD, compilation time was far less time-consuming
-than compiling on my local machine (about 10 times faster).
-This server also helps to have the same developer environment to avoid
-time-consuming installations on local machines.
-
-Working remotely on that server restrict developers to use command line programs only because
-launching a graphical session for each user would require too much computing power.
-During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
-On the figure \ref{fig:setup} below, there is a screenshot of my development setup at Intel.
-
-\begin{figureGraphics}{Development setup with vim and tmux}{fig:setup}
-\includegraphics[width=\textwidth]{./src/img/setup.pdf}
-\end{figureGraphics}
-
-When the code is ready, I push it via \gls{git} on \gls{gerrit} to be reviewed.
-
-\subsection{Git}
-\gls{git} is a distributed revision control system initially designed for kernel
-development. Given that fact, it can be used in environment which have large
-code bases, such as \gls{android}. We use \gls{git} on daily basis at Intel for the
-code delivered to customers and for the internal tools.
-
-\subsection{Code quality}
-Code quality matters. Clean code eases maintenance and is less error-prone.
-Those facts are driving the team that I worked with at Intel. Naturally, all the
-patches I have delivered during my internship have been reviewed and met the
-expected quality.
-
-Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
-It is based on a notation system with inline comments and its usage is pretty straightforward.
-Its interface is showed on figure \ref{fig:gerrit} below.
-
-\begin{figureGraphics}{Gerrit code review}{fig:gerrit}
-    \includegraphics[width=\textwidth]{./src/img/gerrit.png}
-\end{figureGraphics}
-
-I have done some code review myself during this internship. It helps a lot to
-understand how other people work. Viewing other peoples code also makes me come
-up with new ideas to improve my own work in several aspects such as better naming,
-more modularity, cleaner design.
-
-\subsection{Submission to gatekeeping team}
-After code review and a few reworks, the code is validated by the development team.
-The super reviewer gives the developer the permission to submit his work to the gatekeeping team.
-They are responsible for testing complex use cases and they ensure there is no regression nor side effects
-due to the modifications the development team made.
-A lot of automatic and manual tests scenarios are ran which cover \emph{voice call}, \emph{voip call}, \emph{media playback}
-and more. Of course, more complex tests are done depending on the functionality which is developed.
-
+as Camera, or Bluetooth. I contributed on the filesystem plugin for example, which can be used to handle \lstinline{/proc/} entries.
