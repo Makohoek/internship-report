@@ -460,8 +460,18 @@ optional arguments:
 With this tool, it took less than half day of work to change the 270 involved files.
 
 
-% {{{2
-\subsection{Alignment}
+% {{{2 Align
+\subsection{Code alignment}
+On of the major problematics of open-sourcing a component is the way to version its source code.
+The \gls{pfw} can receive contributions from several places:
+\begin{description}
+    \item[External contributions] can be done via \gls{GitHub}. The contributor forks the project, makes his development in a feature
+        branch and then submits a pull request to the maintainer team which are members of the \emph{01org} organization.
+    \item[Internal patches] are still done by Intel employees which need to add new features to the \gls{pfw}.
+\end{description}
+The difficulty is to maintain two \gls{git} repositories with the same code base. When receiving contributions on one code base, they
+have to be ported to the other one. This should be done \emph{as soon as possible}. If that is not the case it would imply maintaining two different
+code bases which is very expensive.
 
 \subsection{Branch sync process}\label{sec:syncProcess}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
@@ -471,37 +481,21 @@ On figure \ref{fig:branch-process} we can see how we plan to synchronize the dif
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
     \includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
 \end{figureGraphics}
+At the end of every sprint, we are re-aligning the internal source tree with the one in \gls{GitHub}.
+External contributions go trough a special feature branch, which is tested with the gatekeeping mechanism described in section \ref{sec:gatekeeping}.
+If every test passes, the code is merged into Intel's codebase.
 
-
-% {{{2
-\subsection{Alsa plugin refactoring}
-The Alsa plugin is used to handle \gls{alsa} (for desktop mostly) or TinyAlsa (for embedded \gls{android} devices mostly) subsystems.
-For our internal uses, we patched some \gls{aosp} projects such as TinyAlsa which allows us to support proprietary controls.
-The support of such controls was also implemented in the \gls{alsa} \gls{pfw} plugin. Since
-we want to open-source the plugin, those proprietary features should be removed.
-
-During the removal of those special controls, we also simplified the plugin
-architecture by merging the controls and the mixer code. TODO removing templates.
-The result is a far simpler design.
-TODO detail.
-
-% {{{2
-\subsection{Code alignment}
-
-When I had to update the different components on \gls{GitHub}, there were some issues:
-Our internal version and the \gls{GitHub} one had diverged.
-On figure \ref{fig:diverged}, we can see an overview of the branch state before I reworked them.
-
-\begin{figureGraphics}{Repository divergence}{fig:diverged}
-    \includegraphics[width=\textwidth]{./src/img/branch-divergence.pdf}
-\end{figureGraphics}
-Since all the components I uploaded on \gls{GitHub} had modifications which weren't present
-in the internal source tree, I encountered the divergence issue for each project I
-synchronized with \gls{GitHub} (Core, Alsa and Filesystem).
+I worked on three different projects to set up this branch process:
+\begin{itemize}
+    \item The core component of the \gls{pfw}.
+    \item The \gls{alsa} plugin.
+    \item The filesystem plugin.
+\end{itemize}
 
 This was a very good exercise to improve my \gls{git} skill.
 
-\subsection{Core upload}
+% {{{2 core align
+\subsection{Core alignment}
 The \gls{pfw} core is quite a big project, with about 30 000 lines of code.
 Align the internal tree and the \gls{GitHub} version of this project required quite some work.
 Some extra requirements apply on open-source projects, such as being compilable in a vanilla \gls{aosp} environment.
@@ -512,8 +506,8 @@ on the projects I had to open-source.
 
 The \gls{pfw} core is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework}}
 
-% {{{2
-\subsection{Filesystem plugin upload}
+% {{{2 fs plugin
+\subsection{Filesystem plugin alignment}
 
 The file system plugin is used for global access to the filesystem. This can be to
 use \emph{/proc} entries for instance. I used this plugin as example in the rookie
@@ -525,9 +519,24 @@ the online documentation of the filesystem plugin, on \gls{GitHub}.
 
 The filesystem plugin is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework-plugins-filesystem/}}
 
-% {{{2
-\subsection{Alsa plugin upload}
+% {{{2 alsa plugin
+\subsection{Alsa plugin alignment}
 
+The \gls{alsa} plugin is used to handle \gls{alsa} (for desktop mostly) or TinyAlsa (for embedded \gls{android} devices mostly) subsystems.
+For our internal uses, we patched some \gls{aosp} projects such as TinyAlsa which allows us to support proprietary controls.
+The support of such controls was also implemented in the \gls{alsa} \gls{pfw} plugin. Since
+we want to open-source the plugin, those proprietary features needed to be removed.
+
+\subsubsection{Plugin refactoring}
+The \gls{alsa} plugin used to be divided in two separate plugins: one for \gls{alsa} \emph{controls} and one for \gls{alsa} mixers.
+This required the user to include them both if they need to use an \gls{alsa} subsystem since those plugins did not work as
+standalone.
+
+We decided to do a pair programming refactoring job to merge the two parts into one consistent plugin.
+This allowed us to remove all the \emph{template} usage in the \gls{cpp} code.
+The result is a far simpler and more elegant design which could be uploaded to \gls{GitHub}.
+
+\subsubsection{Align on GitHub}
 The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
 on a linux desktop environement to handle \gls{alsa} mixers.
 
