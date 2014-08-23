@@ -6,16 +6,48 @@
 
 \subsection{Time distribution}
 \begin{FrameWithSubSection}
-    \begin{block}{Code smells}
-        gantt
-    \end{block}
+\begin{ganttchart}[
+        x unit=0.5cm,
+        y unit title=.6cm,
+        y unit chart=.6cm,
+        hgrid=true,
+        vgrid={*1{red,  dotted}},
+        canvas/.style={fill=base2},
+        bar/.style={fill=orange},
+        title/.style={fill=base2},
+        group/.style={fill=blue, shape=ganttgroup},
+        bar height = 0.4,
+    ]{1}{24}
+    \gantttitlelist{1, ..., 24}{1} \\
+    \ganttbar{Arrival, installation}{1}{1} \\
+    \ganttgroup{Client deliverable}{4}{20} \\
+    \ganttbar{Improving build process}{4}{11} \\
+    \ganttbar{Multi-variant support}{5}{6} \\
+    \ganttbar{Fixed point enhancements}{9}{11}\\
+    \ganttbar{Multi modem support}{17}{20}\\
+    \ganttgroup{Open-sourcing}{1}{20} \\
+    \ganttbar{Newcomer documentation}{1}{4}\\
+    \ganttbar{Intellectual property}{12}{13}\\
+    \ganttbar{Alsa plugin refactor}{12}{14}\\
+    \ganttbar{Filesystem plugin update}{14}{15}\\
+    \ganttbar{Core update}{15}{18}\\
+    \ganttbar{Alsa plugin update}{17}{20}\\
+    \ganttgroup{University}{21}{24} \\
+    \ganttbar{Internship report}{21}{24} \\
+    \ganttbar{Slided internship}{23}{24}
+\end{ganttchart}
 \end{FrameWithSubSection}
 
 \subsection{Technical environment}
 \begin{FrameWithSubSection}
-    \begin{block}
-        vim git tmux gerrit bugzilla linux
-    \end{block}
+    \begin{itemize}
+        \item vim
+        \item git
+        \item tmux
+        \item gerrit
+        \item bugzilla
+        \item linux
+    \end{itemize}
 \end{FrameWithSubSection}
 \begin{FrameWithSubSection}
     \begin{block}
@@ -33,11 +65,15 @@
 
 \subsection{Agile methodology}
 \begin{FrameWithSubSection}
-    Some facts about agile
+    \begin{itemize}
+        \item Customer oriented
+        \item Responsive to changes
+        \item Short delivery time
+    \end{itemize}
 \end{FrameWithSubSection}
 
 \begin{FrameWithSubSection}
-    \frametitle Scrum board
-    % picture with scrum board
+    \frametitle {Scrum board}
+    \includegraphics[width=\textwidth]{../../report/src/img/taskboard.jpg}
 \end{FrameWithSubSection}
 
