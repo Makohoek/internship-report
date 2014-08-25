@@ -4,12 +4,15 @@
 %
 \section{Methodology}
 
-\subsection{Time distribution}
+\subsection{Time management}
 \begin{FrameWithSubSection}
+    \hspace*{-1.8cm}
+    TODO change fontsize here
+{\footnotesize%
 \begin{ganttchart}[
-        x unit=0.5cm,
-        y unit title=.6cm,
-        y unit chart=.6cm,
+        x unit=0.35cm,
+        y unit title=.4cm,
+        y unit chart=.4cm,
         hgrid=true,
         vgrid={*1{red,  dotted}},
         canvas/.style={fill=base2},
@@ -34,33 +37,34 @@
     \ganttbar{Alsa plugin update}{17}{20}\\
     \ganttgroup{University}{21}{24} \\
     \ganttbar{Internship report}{21}{24} \\
-    \ganttbar{Slided internship}{23}{24}
+    \ganttbar{Slides internship}{23}{24}
 \end{ganttchart}
+}
 \end{FrameWithSubSection}
 
-\subsection{Technical environment}
-\begin{FrameWithSubSection}
+\subsection{Environment}
+\begin{frame}
+    \frametitle{Technical environment}
     \begin{itemize}
-        \item vim
-        \item git
-        \item tmux
-        \item gerrit
-        \item bugzilla
-        \item linux
+        \item Vim, Tmux, Ssh
+        \item C++, Python, Bash, XML
+        \item Git, Gerrit
+        \item Bugzilla
     \end{itemize}
-\end{FrameWithSubSection}
-\begin{FrameWithSubSection}
-    \begin{block}
-        screen vim
-    \end{block}
-\end{FrameWithSubSection}
+\end{frame}
 
-\subsection{Team integration}
+\subsection{Team}
 \begin{FrameWithSubSection}
-    TODO insist on the fact that I had the level for integrating the team
-\end{FrameWithSubSection}
-\begin{FrameWithSubSection}
-    \frametitle Workflow
+    \begin{minipage}{0.49\textwidth}
+        \begin{itemize}
+            \item 6 members me included
+            \item Transition into agile: scrum
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+        \flushright
+        \includegraphics[height=0.85\textheight]{../../report/src/img/workflow.pdf}
+    \end{minipage}
 \end{FrameWithSubSection}
 
 \subsection{Agile methodology}
@@ -73,7 +77,21 @@
 \end{FrameWithSubSection}
 
 \begin{FrameWithSubSection}
-    \frametitle {Scrum board}
+    \frametitle{Scrum board}
     \includegraphics[width=\textwidth]{../../report/src/img/taskboard.jpg}
 \end{FrameWithSubSection}
 
+\begin{FrameWithSubSection}
+    \frametitle{Agile contributions}
+    \begin{minipage}{0.49\textwidth}
+        \begin{itemize}
+            \item Time management (\emph{Pomodoro technique}, \emph{croissant points})
+            \item Pair programming
+            \item Human focused retrospectives (\emph{Mad sad glad})
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+        \flushright
+        \includegraphics[width=\textwidth]{../../report/src/img/mgs.png}
+    \end{minipage}
+\end{FrameWithSubSection}

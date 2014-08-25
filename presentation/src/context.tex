@@ -5,23 +5,26 @@
 
 \section{Context}
 
-\subsection{Celad}
-\begin{FrameWithSubSection}
+\subsection{Company}
+\begin{frame}
+    \frametitle{Celad}
     \begin{minipage}{0.49\textwidth}
         \begin{itemize}
-            \item Some metrics
-            \item Some metrics
-            \item Some metrics
+            \item Company that hired me
+            \item French headquarters in Toulouse
+            \item Almost 800 employees
+            \item Embedded sector, Informations systems
+            \item One of the most important client in Toulouse is Intel
         \end{itemize}
     \end{minipage}
     \begin{minipage}{0.49\textwidth}
         \flushright
         \includegraphics[height=2cm]{../../report/src/img/logocelad.jpg}
     \end{minipage}
-\end{FrameWithSubSection}
+\end{frame}
 
-\subsection{Intel}
-\begin{FrameWithSubSection}
+\begin{frame}
+    \frametitle{Intel}
     \begin{minipage}{0.49\textwidth}
         \begin{itemize}
             \item Some metrics
@@ -33,10 +36,10 @@
         \flushright
         \includegraphics[height=2cm]{../../report/src/img/logointel.jpg}
     \end{minipage}
-\end{FrameWithSubSection}
+\end{frame}
 
-\subsection{Android}
-\begin{FrameWithSubSection}
+\subsection{Technical}
+\begin{frame}
     \begin{minipage}{0.49\textwidth}
         \begin{itemize}
             \item Some metrics
@@ -46,82 +49,76 @@
     \end{minipage}
     \begin{minipage}{0.49\textwidth}
         \flushright
-        TODO TODO TODO android image
-        \includegraphics[height=2cm]{../../report/src/img/logocelad.jpg}
+        \includegraphics[height=3cm]{./img/androidLogo.png}
     \end{minipage}
-\end{FrameWithSubSection}
-\begin{FrameWithSubSection}
+\end{frame}
+\begin{frame}
     \frametitle{Android architecture}
     \includegraphics[width=\textwidth]{../../report/src/img/android-archi-audio-hal.jpeg}
-\end{FrameWithSubSection}
+\end{frame}
 
-\subsection{Intel Audio HAL}
-\begin{FrameWithSubSection}
-    \begin{block}{Hardware Abstraction Layer}
-        \begin{itemize}
-            \item Scalability
-            \item Configurability
-        \end{itemize}
-    \end{block}
-\end{FrameWithSubSection}
-
-\begin{FrameWithSubSection}
-    % report must be compiled before this works
-    % TODO uncomment this
-    % \includegraphics[width=\textwidth]{../../report/src/img/hal-architecture.pdf}
-\end{FrameWithSubSection}
+\begin{frame}
+    \frametitle{Intel Audio HAL}
+    \begin{minipage}{0.40\textwidth}
+        \begin{block}{Hardware Abstraction Layer}
+            \begin{itemize}
+                \item Scalability
+                \item Configurability
+            \end{itemize}
+        \end{block}
+    \end{minipage}
+    \begin{minipage}{0.50\textwidth}
+        \flushright
+        % report must be compiled before this works
+        % TODO uncomment this
+        \includegraphics[height=0.85\textheight]{../../report/src/img/hal-architecture.pdf}
+    \end{minipage}
+\end{frame}
 
 
 \subsection{Parameter-framework}
-\begin{FrameWithSubSection}
-    \begin{minipage}{0.49\textwidth}
+\begin{frame}
+    \frametitle{Parameter-framework structure}
+    \begin{minipage}{0.40\textwidth}
     \begin{block}{Structure description}
         \begin{itemize}
             \item Structured in a tree
             \item XML description
+            \item Parameter definitions
         \end{itemize}
     \end{block}
     \end{minipage}
-    \begin{minipage}{0.49\textwidth}
-    %\fbox{\begin{minipage}{6cm}
-    %        \dirtree{%
-    %            .1 audio.
-    %                .2 microphone.
-    %                    .3 echo\_cancellation.
-    %                        .4 enable.
-    %                        .4 configuration.
-    %                            .5 gain.
-    %                            .5 coefficient.
-    %                .2 speaker.
-    %                    .3 equalizer.
-    %                        .4 enable.
-    %                        .4 configuration.
-    %                            .5 filter.
-    %                            .5 coefficient.
-    %        }
-    %\end{minipage}}
+    \begin{minipage}{0.50\textwidth}
+            \dirtree{%
+                .1 audio.
+                    .2 microphone.
+                        .3 echo\_cancellation.
+                            .4 enable.
+                            .4 configuration.
+                                .5 gain.
+                                .5 coefficient.
+                    .2 speaker.
+                        .3 equalizer.
+                            .4 enable.
+                            .4 configuration.
+                                .5 filter.
+                                .5 coefficient.
+            }
     \end{minipage}
-\end{FrameWithSubSection}
+\end{frame}
 
-\begin{FrameWithSubSection}
-    \begin{minipage}{0.49\textwidth}
+\begin{frame}
+    \frametitle{Parameter-framework settings}
+    \begin{minipage}{0.40\textwidth}
     \begin{block}{Domains description}
         \begin{itemize}
-            \item Structured in a tree
-            \item XML description
+            \item TODO
+            \item TODO
         \end{itemize}
     \end{block}
     \end{minipage}
-    \begin{minipage}{0.49\textwidth}
-        %\begin{lstlisting}[language=pfwLang]
-        %    Domain:
-        %        Conf: SpeakerWithEchoCancel
-        %            InputDevice Is Microphone
-        %            Component: audio/speaker/
-        %                echo_cancellation/enable = true
-        %                configuration/gain = 2
-        %                configuration/coefficient = 3
-        %            # -- snippet --
-        %\end{lstlisting}
+    \begin{minipage}{0.53\textwidth}
+        % [WORKAROUND] use of inputlisting since normal listing are not compiling
+        \lstinputlisting[language=pfwLang]{./code/example.pfw}
     \end{minipage}
-\end{FrameWithSubSection}
+\end{frame}
