@@ -3,8 +3,9 @@
 % mail: <mattijs.korpershoek@gmail.com>
 %
 
-% {{{1 features
+% {{{1 intro
 \section{Technical contributions}
+\subsection{Directions}
 \begin{FrameWithSubSection}
     \begin{itemize}
         \item Customer features
@@ -18,7 +19,8 @@
 \begin{FrameWithSubSection}
     \begin{itemize}
         \item More than \emph{80} patches delivered
-        \item Code used in Intel
+        \item Code integrated into Intel's code base
+        \item Software quality compliant
     \end{itemize}
 \end{FrameWithSubSection}
 
@@ -27,55 +29,131 @@
 \begin{frame}
     \frametitle{XML Validation at build time}
     % Decrire le nombre de fichiers erronés
+    \begin{itemize}
+        \item More than 40 000 lines of XML
+        \item More than 500 errors within those files
+        \item Validation with XSD files is necessary
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
     \frametitle{XML Validation at build time}
     % montrer avant
+    \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation.pdf}
 \end{frame}
 
 \begin{frame}
     \frametitle{XML Validation at build time}
     % montrer apres
+    \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation-after.pdf}
 \end{frame}
 
 % {{{2 fixed point
 \subsubsection{Fixed point parameter improvements}
 \begin{frame}
     \frametitle{Fixed point parameter improvements}
-    % probleme
+    \begin{block}{Fixed point numbers}
+        \begin{itemize}
+            \item $Qn.m$ notation
+                \begin{itemize}
+                    \item $n$ : fractional part
+                    \item $m$ : integral part
+                \end{itemize}
+            \item Rounding issues
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Fixed point parameter improvements}
-    % Illustration du problème
+    \frametitle{The problem}
+    \begin{minipage}{0.49\textwidth}
+        \begin{block}{Example for $Q2.3$}
+            \begin{itemize}
+                \item Quantum = $2^{-3} = 0.125$
+                \item UpperBound = $2^2 - Quantum = 3.875$
+                \item LowerBound = $-2^2 = -4$.
+            \end{itemize}
+        \end{block}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+        \flushright
+        \includegraphics[width=\textwidth]{../../report/src/img/fixedPoint.pdf}
+    \end{minipage}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The problem}
+    \lstinputlisting[language=bash]{./code/fixedPoint.bash}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Test suite}
+    \includegraphics[height=0.85\textheight]{../../report/src/img/fixedPointProcess.pdf}
 \end{frame}
 
 % {{{1 Opensourcing
 \subsection{Open-sourcing the Parameter-framework}
+\subsubsection{Context}
 \begin{FrameWithSubSection}
-    \begin{itemize}
-        \item Core component of Intel Audio HAL
-        \item Middleware standard
-        \item Visibility
-    \end{itemize}
+    \begin{block}{why open-sourcing this component?}
+        \begin{itemize}
+            \item Core component of intel audio hal
+            \item Middleware standard
+            \item Visibility
+        \end{itemize}
+    \end{block}
 \end{FrameWithSubSection}
 
-\begin{FrameWithSubSection}
-    \frametitle{Parameter-framework top contributors}
+\begin{frame}
+    \frametitle{GitHub top contributors}
     \centering
     \includegraphics[width=\textwidth]{../../report/src/img/statsGitHub.png}
-\end{FrameWithSubSection}
+\end{frame}
 
-
-\begin{FrameWithSubSection}
+\subsubsection{Documentation}
+\begin{frame}
     \frametitle{Newcomer documentation}
     \centering
-    \begin{block}{Is component ready for open-sourcing?}
+    \begin{block}{Is the component ready for open-sourcing?}
         \begin{itemize}
             \item Code review and study
             \item Documentation for external contributors
             \item More than 450 lines of documentation
         \end{itemize}
     \end{block}
-\end{FrameWithSubSection}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Newcomer documentation illustration}
+    \centering
+    TODO replace image by the .dot equivalent
+    \includegraphics[height=0.85\textheight]{../../report/src/img/tutos.pdf}
+\end{frame}
+
+\subsubsection{Branch sync process}
+\begin{frame}
+    \frametitle{Branch sync process}
+    \begin{block}{How to open-source the component?}
+        \begin{itemize}
+            \item Ensure external contributions are of quality
+            \item Avoid maintenance of 2 divergent code bases
+            \item Ensure no confidential information is exposed
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Branch sync process}
+    \centering
+    \includegraphics[width=\textwidth]{../../report/src/img/branches-process.pdf}
+\end{frame}
+
+\subsubsection{Open-sources projects}
+\begin{frame}
+    \frametitle{Projects which are open-source}
+    \begin{itemize}
+        \item Parameter-framework core
+        \item Parameter-framework ALSA plugin
+        \item Parameter-framework filesystem plugin
+    \end{itemize}
+\end{frame}
