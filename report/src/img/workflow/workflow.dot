@@ -42,6 +42,9 @@ start -> design
 design -> dev
 dev -> design
 
+/* start and design are on same line */
+{ rank=same; start; design }
+
 dev -> review [label="submit patch"];
 
 review [shape=diamond, label="Review ?"];
@@ -54,6 +57,7 @@ preint [shape=diamond, label="Gatekeeping ?"]
 preint -> dev [label="Regression found"];
 preint -> integrated [label="Validated"];
 
+{ rank=same; integrated; end }
 integrated -> end
 
 }

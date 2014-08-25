@@ -37,14 +37,14 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{XML Validation at build time}
-    % montrer avant
+    \frametitle{Build generation before}
+    \centering
     \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation.pdf}
 \end{frame}
 
 \begin{frame}
-    \frametitle{XML Validation at build time}
-    % montrer apres
+    \frametitle{Build generation after}
+    \centering
     \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation-after.pdf}
 \end{frame}
 
@@ -66,18 +66,18 @@
 
 \begin{frame}
     \frametitle{The problem}
-    \begin{minipage}{0.49\textwidth}
-        \begin{block}{Example for $Q2.3$}
-            \begin{itemize}
-                \item Quantum = $2^{-3} = 0.125$
-                \item UpperBound = $2^2 - Quantum = 3.875$
-                \item LowerBound = $-2^2 = -4$.
-            \end{itemize}
-        \end{block}
-    \end{minipage}
-    \begin{minipage}{0.49\textwidth}
+    \begin{minipage}{\textwidth}
         \flushright
         \includegraphics[width=\textwidth]{../../report/src/img/fixedPoint.pdf}
+    \end{minipage}
+    \begin{minipage}{\textwidth}
+        \begin{block}{Example for $Q2.3$}
+            \begin{itemize}
+                \item $Quantum$ = $2^{-3} = 0.125$
+                \item $UpperBound$ = $2^2 - Quantum = 3.875$
+                \item $LowerBound$ = $-2^2 = -4$.
+            \end{itemize}
+        \end{block}
     \end{minipage}
 \end{frame}
 
@@ -88,6 +88,7 @@
 
 \begin{frame}
     \frametitle{Test suite}
+    \centering
     \includegraphics[height=0.85\textheight]{../../report/src/img/fixedPointProcess.pdf}
 \end{frame}
 
@@ -95,20 +96,14 @@
 \subsection{Open-sourcing the Parameter-framework}
 \subsubsection{Context}
 \begin{FrameWithSubSection}
-    \begin{block}{why open-sourcing this component?}
+    \begin{block}{Why open-sourcing this component?}
         \begin{itemize}
-            \item Core component of intel audio hal
+            \item Core component of Intel audio HAL
             \item Middleware standard
             \item Visibility
         \end{itemize}
     \end{block}
 \end{FrameWithSubSection}
-
-\begin{frame}
-    \frametitle{GitHub top contributors}
-    \centering
-    \includegraphics[width=\textwidth]{../../report/src/img/statsGitHub.png}
-\end{frame}
 
 \subsubsection{Documentation}
 \begin{frame}
@@ -157,3 +152,10 @@
         \item Parameter-framework filesystem plugin
     \end{itemize}
 \end{frame}
+
+\begin{frame}
+    \frametitle{GitHub top contributors}
+    \centering
+    \includegraphics[width=\textwidth]{../../report/src/img/statsGitHub.png}
+\end{frame}
+
