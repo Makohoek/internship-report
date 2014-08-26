@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="437.92903"
-     inkscape:cy="147.58928"
+     inkscape:zoom="2.8"
+     inkscape:cx="174.62585"
+     inkscape:cy="90.524208"
      inkscape:document-units="px"
-     inkscape:current-layer="layer14"
+     inkscape:current-layer="layer10"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -379,6 +379,12 @@
          x="422.54834"
          id="tspan3499-9"
          sodipodi:role="line">P</tspan></text>
+    <path
+       inkscape:connector-curvature="0"
+       inkscape:connector-type="polyline"
+       id="path3379-8"
+       d="m 131.8008,132.34266 142.27831,0"
+       style="fill:none;stroke:#000000;stroke-width:1.43776703px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
   </g>
   <g
      style="display:inline"

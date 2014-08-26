@@ -204,11 +204,11 @@ this figure is not represented in real scale.
 \end{figureGraphics}
 
 \begin{itemize}
-    \item The Quantum $2^{-3} = 0.125$
-    \item UpperBound $2^2 - Quantum = 3.875$
-        This implies that it should be \emph{impossible} to set a number which is \emph{bigger} than $3.875$.
+    \item The Quantum is $2^{-3} = 0.125$
+    \item The UpperBound is $2^2 - Quantum = 3.875$.
+        This implies that it should be \emph{impossible} to set a larger value than $3.875$.
     \item The LowerBound is $-2^2 = -4$.
-        This implies that it should be \emph{impossible} to set a number which is \emph{smaller} than $-4$.
+        This implies that it should be \emph{impossible} to set a smaller value than $-4$.
 \end{itemize}
 
 With those values, we can illustrate the issue.
@@ -290,8 +290,8 @@ Figure \ref{fig:quantums} below shows some possible quantum values, where $m$ is
     $
 \end{figureGraphics}
 
-Since we assume that the quantum will always finish with a $5$, we can limits ourselves with displaying until that last digit.
-It happens that that last digit is always the $m^th$ digit after the comma.
+So we can assume that the quantum last digit is always $5$.
+It happens that that last digit is always the $m^{th}$ digit after the comma.
 So we just need to call \lstinline{setPrecision(m)} with $m$ as \emph{fractional part} of a $Qn.m$.
 Listing \ref{lst:resultFixedPoint} shows the correct interaction with the \gls{pfw} command-line interface.
 
@@ -462,7 +462,7 @@ With this tool, it took less than half day of work to change the 270 involved fi
 
 % {{{2 Align
 \subsection{Code alignment}
-On of the major problematics of open-sourcing a component is the way to version its source code.
+One of the major problematics of open-sourcing a component is the way to version its source code.
 The \gls{pfw} can receive contributions from several places:
 \begin{description}
     \item[External contributions] can be done via \gls{GitHub}. The contributor forks the project, makes his development in a feature
@@ -513,7 +513,7 @@ The file system plugin is used for global access to the filesystem. This can be 
 use \emph{/proc} entries for instance. I used this plugin as example in the rookie
 documentation I wrote as described in section \ref{sec:tutorials}.
 
-I also worked on an other example: \emph{controlling lEDS} via the filesystem
+I also worked on an other example: \emph{controlling LEDs} via the filesystem
 plugin on a Raspberry Pi.  This example was easy enough to be integrated into
 the online documentation of the filesystem plugin, on \gls{GitHub}.
 
