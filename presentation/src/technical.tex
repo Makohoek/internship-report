@@ -28,86 +28,62 @@
 \subsubsection{Xml Validation at build time}
 \begin{frame}
     \frametitle{XML Validation at build time}
-    \begin{itemize}
-        \item More than 40 000 lines of XML
-        \item More than 500 errors within those files
-        \item Validation with XSD files is necessary
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Build generation before}
-        \centering
-        \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation.pdf}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Build generation after}
-    \centering
-    \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation-after.pdf}
+    \begin{minipage}{0.4\textwidth}
+        \begin{itemize}
+            \item More than 40 000 lines of XML
+            \item More than 500 errors within those files
+            \item Automatic validation with XSD at build time
+            \item Prevents from submitting erroneous data
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \flushright
+        \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation-after.pdf}
+    \end{minipage}
 \end{frame}
 
 % {{{2 fixed point
 \subsubsection{Fixed point parameter improvements}
 \begin{frame}
     \frametitle{Fixed point parameter improvements}
-    \begin{block}{Fixed point numbers}
-        \begin{itemize}
-            \item $Qn.m$ notation
-                \begin{itemize}
-                    \item $n$ : fractional part
-                    \item $m$ : integral part
-                \end{itemize}
-            \item Rounding issues
-            \item \lstinline{std::setPrecision()}
-            \item Conversion to floating point
-        \end{itemize}
-    \end{block}
-\end{frame}
-
-\begin{frame}
-    \frametitle{The problem}
+    \begin{minipage}{0.5\textwidth}
+        \begin{block}{Fixed point numbers}
+            \begin{itemize}
+                \item $Qn.m$ notation
+                    \begin{itemize}
+                        \item $n$ : fractional part
+                        \item $m$ : integral part
+                    \end{itemize}
+                \item Rounding issues with conversion to floating point
+                \item \lstinline{std::setPrecision()}
+            \end{itemize}
+        \end{block}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+        \flushright
+        \begin{block}{Solution}
+            \begin{itemize}
+                \item Simple and elegant solution
+                \item Behavior test suite
+                \item Used in multiple Intel products
+            \end{itemize}
+        \end{block}
+    \end{minipage}
     \begin{minipage}{\textwidth}
         \flushright
         \includegraphics[width=\textwidth]{../../report/src/img/fixedPoint.pdf}
     \end{minipage}
-    \begin{minipage}{\textwidth}
-        \begin{block}{Example for $Q2.3$}
-            \begin{itemize}
-                \item $Quantum$ = $2^{-3} = 0.125$
-                \item $UpperBound$ = $2^2 - Quantum = 3.875$
-                \item $LowerBound$ = $-2^2 = -4$.
-            \end{itemize}
-        \end{block}
-    \end{minipage}
 \end{frame}
 
+% {{{2 multimodem
 \begin{frame}
-    \frametitle{The problem}
-    \lstinputlisting[language=bash]{./code/fixedPoint.bash}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Behavior description with a test suite}
-    \centering
-    \includegraphics[height=0.85\textheight]{../../report/src/img/fixedPointProcess.pdf}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Solution}
+    \frametitle{Modem instance awareness}
     \begin{itemize}
-        \item Change \lstinline{std::setPrecision()} argument
-        \item Use the fractional part, $m$
-        \item More digits to avoid round issues
+        \item Voice processing algorithms
+        \item Multiple modems for several phone carriers
+        \item Big team effort of more than 200 patches
+        \item Parameter-framework modem plugin
     \end{itemize}
-\end{frame}
-
-
-% TODO here add results and conclusion
-% And code of it working
-\begin{frame}
-    \frametitle{Results}
-    \lstinputlisting[language=bash]{./code/fixedPointOK.bash}
 \end{frame}
 
 % {{{1 Opensourcing
@@ -117,7 +93,7 @@
     \begin{block}{Why open-sourcing this component?}
         \begin{itemize}
             \item Core component of Intel audio HAL
-            \item Middleware standard
+            \item Potential to become middleware standard
             \item Visibility
         \end{itemize}
     \end{block}
@@ -163,11 +139,21 @@
 \subsubsection{Open-sources projects}
 \begin{frame}
     \frametitle{Projects which are open-source}
-    \begin{itemize}
-        \item Parameter-framework core
-        \item Parameter-framework ALSA plugin
-        \item Parameter-framework filesystem plugin
-    \end{itemize}
+    \begin{block}{01org}
+        \begin{itemize}
+            \item \href{https://01.org/}{Intel Open Source Technology Center}
+            \item \href{https://github.com/orgs/01org/teams/01-org-parameter-framework-owners}{GitHub organisation}
+        \end{itemize}
+   \end{block}
+    \begin{block}{Projects on GitHub}
+        \begin{itemize}
+            \item Parameter-framework \href{https://github.com/01org/parameter-framework}{core}
+            \item Parameter-framework \href{https://github.com/01org/parameter-framework-plugins-alsa}{ALSA plugin}
+            \item Parameter-framework \href{https://github.com/01org/parameter-framework-plugins-filesystem}{filesystem plugin}
+            \item Parameter-framework \href{https://github.com/01org/parameter-framework/wiki}{wiki}
+            \item Parameter-framework \href{https://github.com/01org/parameter-framework-samples}{sample files}
+        \end{itemize}
+    \end{block}
 \end{frame}
 
 \begin{frame}
