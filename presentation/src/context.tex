@@ -5,54 +5,24 @@
 
 \section{Context}
 
-%TODO 1 slides instead of 3
 \subsection{Company}
 \begin{frame}
-    \frametitle{Celad}
+    \frametitle{Company}
     \begin{minipage}{0.49\textwidth}
         \begin{itemize}
-            \item Company that hired me
-            \item French headquarters in Toulouse
-            \item Almost 800 employees
-            \item Embedded sector, Informations systems
-            \item One of the most important client in Toulouse is Intel
+            \item Hired by Celad
+            \item Intel is one of Celad's client
+            \item Android for Intel platforms
         \end{itemize}
     \end{minipage}
     \begin{minipage}{0.49\textwidth}
         \flushright
-        \includegraphics[height=2cm]{../../report/src/img/logocelad.jpg}
+        \includegraphics[height=1cm]{../../report/src/img/logocelad.jpg} \\[0.5cm]
+        \includegraphics[height=1cm]{../../report/src/img/logointel.jpg} \\[0.5cm]
+        \includegraphics[height=1cm]{./img/androidLogo.png}
     \end{minipage}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Intel}
-    \begin{minipage}{0.49\textwidth}
-        \begin{itemize}
-            \item Some metrics
-            \item Some metrics
-            \item Some metrics
-        \end{itemize}
-    \end{minipage}
-    \begin{minipage}{0.49\textwidth}
-        \flushright
-        \includegraphics[height=2cm]{../../report/src/img/logointel.jpg}
-    \end{minipage}
-\end{frame}
-
-\subsection{Technical}
-\begin{frame}
-    \begin{minipage}{0.49\textwidth}
-        \begin{itemize}
-            \item Some metrics
-            \item Some metrics
-            \item Google I/O trends left
-        \end{itemize}
-    \end{minipage}
-    \begin{minipage}{0.49\textwidth}
-        \flushright
-        \includegraphics[height=3cm]{./img/androidLogo.png}
-    \end{minipage}
-\end{frame}
 \begin{frame}
     \frametitle{Android architecture}
     \includegraphics[width=\textwidth]{../../report/src/img/android-archi-audio-hal.jpeg}
@@ -90,21 +60,21 @@
     \end{block}
     \end{minipage}
     \begin{minipage}{0.50\textwidth}
-%            \dirtree{%
-%                .1 audio.
-%                    .2 microphone.
-%                        .3 echo\_cancellation.
-%                            .4 enable.
-%                            .4 configuration.
-%                                .5 gain.
-%                                .5 coefficient.
-%                    .2 speaker.
-%                        .3 equalizer.
-%                            .4 enable.
-%                            .4 configuration.
-%                                .5 filter.
-%                                .5 coefficient.
-%            }
+            \dirtree{%
+                .1 audio.
+                    .2 microphone.
+                        .3 echo\_cancellation.
+                            .4 enable.
+                            .4 configuration.
+                                .5 gain.
+                                .5 coefficient.
+                    .2 speaker.
+                        .3 equalizer.
+                            .4 enable.
+                            .4 configuration.
+                                .5 filter.
+                                .5 coefficient.
+            }
     \end{minipage}
 \end{frame}
 
