@@ -28,7 +28,6 @@
 \subsubsection{Xml Validation at build time}
 \begin{frame}
     \frametitle{XML Validation at build time}
-    % Decrire le nombre de fichiers erronés
     \begin{itemize}
         \item More than 40 000 lines of XML
         \item More than 500 errors within those files
@@ -38,8 +37,8 @@
 
 \begin{frame}
     \frametitle{Build generation before}
-    \centering
-    \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation.pdf}
+        \centering
+        \includegraphics[height=0.85\textheight]{../../report/src/img/build-generation.pdf}
 \end{frame}
 
 \begin{frame}
@@ -60,6 +59,8 @@
                     \item $m$ : integral part
                 \end{itemize}
             \item Rounding issues
+            \item \lstinline{std::setPrecision()}
+            \item Conversion to floating point
         \end{itemize}
     \end{block}
 \end{frame}
@@ -87,9 +88,26 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Test suite}
+    \frametitle{Behavior description with a test suite}
     \centering
     \includegraphics[height=0.85\textheight]{../../report/src/img/fixedPointProcess.pdf}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Solution}
+    \begin{itemize}
+        \item Change \lstinline{std::setPrecision()} argument
+        \item Use the fractional part, $m$
+        \item More digits to avoid round issues
+    \end{itemize}
+\end{frame}
+
+
+% TODO here add results and conclusion
+% And code of it working
+\begin{frame}
+    \frametitle{Results}
+    \lstinputlisting[language=bash]{./code/fixedPointOK.bash}
 \end{frame}
 
 % {{{1 Opensourcing
@@ -121,7 +139,6 @@
 \begin{frame}
     \frametitle{Newcomer documentation illustration}
     \centering
-    TODO replace image by the .dot equivalent
     \includegraphics[height=0.85\textheight]{../../report/src/img/tutos.pdf}
 \end{frame}
 
