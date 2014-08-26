@@ -235,7 +235,7 @@ describing the tree from figure \ref{fig:pfwtree}.
 \subsubsection{Settings}
 The \gls{pfw} is also able to change multiple parameters without any manual action, depending on the context.
 The context is defined using a set of criteria. Those criteria are variables which can take a set of defined values.
-For example, a criterion called \emph{Output Device} can take several values such as \emph{Speaker} or \emph{Headset}.
+For example, a criterion called \emph{Input Device} can take several values such as \emph{Microphone} or \emph{Headset}.
 
 Depending on the value of those criteria, the \gls{pfw} can automatically apply a set of values towards
 multiple parameters.
@@ -245,14 +245,14 @@ which is translated into \gls{xml} by our build system.
 \begin{code}[language=pfwLang, caption=Settings file example, label=lst:pfwsettings]
 Domain:
     Conf: SpeakerWithEchoCancel
-        OutputDevice Is Speaker
+        InputDevice Is Microphone
         Component: audio/speaker/
             echo_cancellation/enable = true
             configuration/gain = 2
             configuration/coefficient = 3
         # -- snippet --
     Conf: HeadsetWithEchoCancel
-        OutputDevice Is Headset
+        InputDevice Is Headset
         Component: audio/headset/
             echo_cancellation/enable = true
             configuration/gain = 3

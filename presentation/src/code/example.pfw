@@ -1,0 +1,9 @@
+Domain:
+  Conf: SpeakerWithEchoCancel
+    All
+      InputDevice Is Micro
+      OutputDevice Is Speaker
+    Component: audio/speaker/
+      echo_cancellation/enable = true
+      configuration/gain = 2
+      configuration/coefficient = 3

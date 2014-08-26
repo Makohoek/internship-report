@@ -3,9 +3,9 @@
 % mail: <mattijs.korpershoek@gmail.com>
 %
 \documentclass[compress]{beamer}
-%%%%%%%%%%%
-% Headers %
-%%%%%%%%%%%
+%%%%%%%%%%%%%%
+%  Packages  %
+%%%%%%%%%%%%%%
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
@@ -18,7 +18,8 @@
 \usepackage{textpos} % for textblock
 \usepackage{mathtools} % math environment
 \usepackage{textcomp}
-%\usepackage{avant}
+\usepackage{pgfgantt}
+\usepackage{dirtree}
 
 %%%%%%%%%%%%%%%%%%%%%
 % Special variables %
@@ -42,15 +43,6 @@
 % the % are at the end of each line because with some text editors,
 % the LaTeX compiler may understand the \n as a command caracter.
 
-%%%%%%%%%%%%%%%%%%%%
-% caption settings %
-%%%%%%%%%%%%%%%%%%%%
-\DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox[HTML]{657B83}{\parbox{0.98\textwidth}{\hspace{15pt}#1#2#3}}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=true, margin=0pt, font={sf,footnotesize}}
-%\DeclareCaptionFormat{figure}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{0pt}#1#2#3}}}
-%\captionsetup[figure]{format=figure,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
-
 %%%%%%%%%%%%%%%%%%%%%%
 %  Solarized colors  %
 %%%%%%%%%%%%%%%%%%%%%%
@@ -71,32 +63,54 @@
 \definecolor{cyan}{HTML}{2AA198}
 \definecolor{green}{HTML}{859900}
 
+
+
+%%%%%%%%%%%%%%%%%%%%
+% caption settings %
+%%%%%%%%%%%%%%%%%%%%
+\DeclareCaptionFont{captionText}{\color{base1}}
+\DeclareCaptionFormat{listing}{\colorbox{base03}{\parbox{0.985\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=captionText,textfont=captionText, singlelinecheck=true, margin=0pt, font={sf,footnotesize}}
+\DeclareCaptionFormat{figure}{\colorbox{base03}{\parbox{0.985\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[figure]{format=figure,labelfont=captionText,textfont=captionText, singlelinecheck=false, margin=0pt, font={sf,footnotesize}}
+
+\lstdefinelanguage{pfwLang}
+{morekeywords={Domain, Conf, Component},
+sensitive=false,
+morecomment=[l]{\#},
+morestring=[b]",
+}
+
 \usepackage{inconsolata}
 \lstset{
-  basicstyle=\ttfamily,
-  language=bash,                     % c language
-  frame=lines,                        % bottom frame
-  sensitive=true
-  tabsize=2,
-  breaklines=true,
-  showstringspaces=false,
-  showspaces=false,
-  numbers=left,
-  backgroundcolor=\color{base3},
-  keywordstyle=\color{cyan},
-  commentstyle=\color{base1},
-  stringstyle=\color{blue},
-  numberstyle=\color{violet},
-  rulecolor=\color{base00},
-  morekeywords={nm, grep, mkff, owcet}
+    basicstyle=\ttfamily\footnotesize,
+    language=C,
+    frame=lines,
+    sensitive=true
+    tabsize=2,
+    breaklines=true,
+    showstringspaces=false,
+    showspaces=false,
+    backgroundcolor=\color{base3},
+    keywordstyle=\color{blue},
+    commentstyle=\color{base1},
+    stringstyle=\color{cyan},
+    numberstyle=\color{violet},
+    rulecolor=\color{base00},
+    morekeywords={pfw, setParameter, getParameter}
 }
+
+\lstnewenvironment{code}[1][]%
+{
+    \noindent
+    \minipage{\linewidth}
+    \vspace{0.5\baselineskip}
+        \lstset{#1}}
+{\endminipage}
 
 %%%%%%%%%
 % fonts %
 %%%%%%%%%
-%\definecolor{defaultFontColor}{HTML}{073642} % base 02
-%\renewcommand*\familydefault{\sfdefault}\color{defaultFontColor} %% Only if the base font of the document is to be typewriter style
-
 \usefonttheme[onlymath]{serif}
 \usepackage{fontspec}
 \defaultfontfeatures{Mapping=tex-text}

@@ -4,40 +4,93 @@
 %
 \section{Methodology}
 
-\subsection{Time distribution}
+\subsection{Time management}
 \begin{FrameWithSubSection}
-    \begin{block}{Code smells}
-        gantt
-    \end{block}
+    \hspace*{-0.8cm}
+\begin{ganttchart}[
+        x unit=0.35cm,
+        y unit title=.4cm,
+        y unit chart=.4cm,
+        hgrid=true,
+        vgrid={*1{red,  dotted}},
+        canvas/.style={fill=base2},
+        bar/.style={fill=orange},
+        title/.style={fill=base2},
+        group/.style={fill=blue, shape=ganttgroup},
+        bar height = 0.4,
+        bar label font = {\scriptsize},
+    ]{1}{24}
+    \gantttitlelist[title label font={\tiny}]{1, ..., 24}{1} \\
+    \ganttbar{Arrival, installation}{1}{1} \\
+    \ganttgroup{Client deliverables}{4}{20} \\
+    \ganttbar{Improving build process}{4}{11} \\
+    \ganttbar{Multi-variant support}{5}{6} \\
+    \ganttbar{Fixed point enhancements}{9}{11}\\
+    \ganttbar{Multi modem support}{17}{20}\\
+    \ganttgroup{Open-sourcing}{1}{20} \\
+    \ganttbar{Newcomer documentation}{1}{4}\\
+    \ganttbar{Intellectual property}{12}{13}\\
+    \ganttbar{Alsa plugin refactor}{12}{14}\\
+    \ganttbar{Filesystem plugin update}{14}{15}\\
+    \ganttbar{Core update}{15}{18}\\
+    \ganttbar{Alsa plugin update}{17}{20}\\
+    \ganttgroup{University}{21}{24} \\
+    \ganttbar{Internship report}{21}{24} \\
+    \ganttbar{Slides internship}{23}{24}
+\end{ganttchart}
 \end{FrameWithSubSection}
 
-\subsection{Technical environment}
+\subsection{Environment}
+\begin{frame}
+    \frametitle{Technical environment}
+    \begin{itemize}
+        \item Vim, Tmux, Ssh
+        \item C++, Python, Bash, XML
+        \item Git, Gerrit
+        \item Bugzilla
+    \end{itemize}
+\end{frame}
+
+\subsection{Team}
 \begin{FrameWithSubSection}
-    \begin{block}
-        vim git tmux gerrit bugzilla linux
-    \end{block}
-\end{FrameWithSubSection}
-\begin{FrameWithSubSection}
-    \begin{block}
-        screen vim
-    \end{block}
+    \begin{minipage}{0.49\textwidth}
+        \begin{itemize}
+            \item 6 members me included
+            \item Transition into agile: scrum
+            \item Developer workflow
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+        \flushright
+        \includegraphics[height=0.85\textheight]{../../report/src/img/workflow.pdf}
+    \end{minipage}
 \end{FrameWithSubSection}
 
-\subsection{Team integration}
+\subsection{Agile software development}
 \begin{FrameWithSubSection}
-    TODO insist on the fact that I had the level for integrating the team
-\end{FrameWithSubSection}
-\begin{FrameWithSubSection}
-    \frametitle Workflow
-\end{FrameWithSubSection}
-
-\subsection{Agile methodology}
-\begin{FrameWithSubSection}
-    Some facts about agile
+    \begin{itemize}
+        \item Customer oriented
+        \item Responsive to changes
+        \item Short delivery time
+    \end{itemize}
 \end{FrameWithSubSection}
 
 \begin{FrameWithSubSection}
-    \frametitle Scrum board
-    % picture with scrum board
+    \frametitle{Scrum board}
+    \includegraphics[width=\textwidth]{../../report/src/img/taskboard.jpg}
 \end{FrameWithSubSection}
 
+\begin{FrameWithSubSection}
+    \frametitle{Agile contributions}
+    \begin{minipage}{0.49\textwidth}
+        \begin{itemize}
+            \item Time management (\emph{Pomodoro technique}, \emph{croissant points})
+            \item Pair programming
+            \item Human focused retrospectives (\emph{Mad sad glad})
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+        \flushright
+        \includegraphics[width=\textwidth]{../../report/src/img/mgs.png}
+    \end{minipage}
+\end{FrameWithSubSection}
