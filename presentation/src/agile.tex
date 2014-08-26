@@ -6,7 +6,7 @@
 
 \subsection{Time management}
 \begin{FrameWithSubSection}
-    \hspace*{-1.2cm}
+    \hspace*{-0.8cm}
 \begin{ganttchart}[
         x unit=0.35cm,
         y unit title=.4cm,
@@ -18,13 +18,14 @@
         title/.style={fill=base2},
         group/.style={fill=blue, shape=ganttgroup},
         bar height = 0.4,
+        bar label font = {\scriptsize},
     ]{1}{24}
     \gantttitlelist[title label font={\tiny}]{1, ..., 24}{1} \\
     \ganttbar{Arrival, installation}{1}{1} \\
     \ganttgroup{Client deliverables}{4}{20} \\
-    \ganttbar[bar progress label font={\tiny}]{Improving build process}{4}{11} \\
-    \ganttbar[bar progress label font={\tiny}]{Multi-variant support}{5}{6} \\
-    \ganttbar[bar progress label font={\tiny}]{Fixed point enhancements}{9}{11}\\
+    \ganttbar{Improving build process}{4}{11} \\
+    \ganttbar{Multi-variant support}{5}{6} \\
+    \ganttbar{Fixed point enhancements}{9}{11}\\
     \ganttbar{Multi modem support}{17}{20}\\
     \ganttgroup{Open-sourcing}{1}{20} \\
     \ganttbar{Newcomer documentation}{1}{4}\\
@@ -65,7 +66,7 @@
     \end{minipage}
 \end{FrameWithSubSection}
 
-\subsection{Agile methodology}
+\subsection{Agile software development}
 \begin{FrameWithSubSection}
     \begin{itemize}
         \item Customer oriented
