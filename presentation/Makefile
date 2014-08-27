@@ -3,7 +3,7 @@ SRCDIR=src
 # without extension
 MAINFILE=main
 
-all:
+all: subdirs
 	cd ${SRCDIR} && xelatex ${MAINFILE}.tex && mv ${MAINFILE}.pdf ../ && cd ../ && mv ${MAINFILE}.pdf ${TITLE}.pdf
 
 clean:
@@ -11,3 +11,6 @@ clean:
 
 proper: clean
 	rm ${TITLE}.pdf
+
+subdirs:
+	./regen-imgs.sh
