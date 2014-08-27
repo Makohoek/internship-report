@@ -35,9 +35,9 @@ graph hierarchy
   rankdir="LR";  //left to right ranking
 
 ParameterFramework[label="Parameter-framework", fillcolor="#268bd2", fontcolor="#ffffff"];
-What[label="What settings\nto apply"];
-When[label="When to apply\nthe settings"];
-How[label="How to apply\nthe settings"];
+What[labeljust="r", label="[What]\nDescribe system in XML"];
+When[labeljust="r", label="[How]\nAccess to hardware\nvia a back-end"];
+How[labeljust="r", label="[When]\nCreate rules for\napplying specific values\nbased on conditions"];
 
 ParameterFramework -- What;
 ParameterFramework -- When;
@@ -46,4 +46,4 @@ ParameterFramework -- How;
 { rank=min; What; }
 { rank=same; ParameterFramework; How; }
 { rank=max; When; }
-
+}
