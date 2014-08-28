@@ -6,7 +6,7 @@ I had two major directions during my internship:
 \begin{itemize}
     \item Delivering new features for Intel and its customers.
         I have submitted more than \emph{80 patches} to the Intel codebase, which are now used by its customers.
-    \item Open-source the \gls{pfw} to give it some weight in the middleware community.
+    \item Open-sourcing the \gls{pfw} to give it some weight in the middleware community.
         For doing that, I had to change some code within the \gls{pfw}.
         Today, I am in the top five contributors on GitHub as shown on figure \ref{fig:githubContrib} below (My nickname is \emph{Makohoek}).
         \begin{figureGraphics}{Top contributors on the Parameter-framework core}{fig:githubContrib}
@@ -24,8 +24,8 @@ as described in section \ref{sec:quality}
 % {{{2 Xml validation at build time
 \subsection{XML validation at build time}
 
-For our Intel Audio \gls{hal}, we have a lot of structure files. More than one hundred.
-There a more than 40 000 lines of \gls{xml} structure files.
+For our Intel Audio \gls{hal}, we have a lot of structure files. More than one hundred, which represents
+more than 40 000 lines of \gls{xml} files.
 The writing of those structure files is done by human beings. Given the fact
 that humans can make mistakes, there is \emph{no guarantee} that those structure files are semantically correct.
 Furthermore, the \gls{pfw} expects that the files which are given do not contain any mistake.
@@ -39,7 +39,7 @@ In that case, the default size is $0$. Let's imagine we are computing a result a
 \end{figureGraphics}
 
 In that case we have a run-time error due to a \emph{division by zero}. This is only one possible consequence of bad structure files.
-This kind of problem should be detected when we are building our system, not at run-time. Having those problems at
+This kind of problem should be detected at build-time, not at run-time. Having those problems at
 run-time is far too time-consuming and thus far too expensive.
 
 In the next sections we will see how to detect those problems at build time.
@@ -63,12 +63,13 @@ Listing \ref{lst:xsd} shows a snippet illustrating that example \gls{xsd} file:
 With that knowledge in mind, I decided to write a \gls{python} tool to detect the possible errors in the existing structure files.
 
 \subsubsection{A tool to validate XML}
-To validate \gls{xml} with \gls{xsd} files, several tools exists already. The most widely used on linux is the \lstinline{xmllint} utility.
+To validate \gls{xml} with \gls{xsd} files, several tools already exist. The most widely used on linux is the \lstinline{xmllint} utility.
 This works very well but is limited to one file per usage. The script I wrote in \gls{python} was able to have two directories as input and check
 recursively every file.
 This tool highlighted that there were more than \emph{500 errors} within the hundred files.
 
-The problem with this \gls{python} script is that it did \emph{not use standard} \gls{python} libraries.
+This \gls{python} script worked great, but it had an issue. It did \emph{not use standard} \gls{python} libraries.
+Since this had to run on many different machines(more than a thousand), it was out of question to install those third-party libraries everywhere.
 We needed a more robust solution which was integrated into the build system without using external libraries.
 
 \subsubsection{Build process}
@@ -92,7 +93,7 @@ The figure \ref{fig:build-process} shows how it works:
     \item The \emph{.pfw} files are parsed via a set of scripts and translated into \gls{pfw} commands.
     \item Those commands are sent to a special \gls{pfw} instance which was started for this purpose only.
     \item After that, the \gls{pfw} exports the rules which have previously been created and dumps it into a settings \gls{xml} file.
-    \item Those \emph{settings} and \emph{structure} files are then stored on the smartphone or the tablet in \lstinline{/etc/}.
+    \item Those \emph{settings} and \emph{structure} files are then stored on the smartphone or the tablet on the file-system.
 \end{itemize}
 
 In this build process, we have to display errors when detecting \gls{xml} files which are not compliant with the rules from the
@@ -101,7 +102,7 @@ In this build process, we have to display errors when detecting \gls{xml} files 
 \subsubsection{Xml checker}
 
 Since we wanted a more robust solution, it was finally done within the \gls{pfw} itself.
-In fact, the parameter-framework already had some code to check \gls{xml} validity. It was not
+In fact, the parameter-framework had already some code to check \gls{xml} validity. It was not
 finished and I had to complete it.
 
 When that was done, I had to integrate the feature within the \lstinline{HostDomainGenerator} tool.
@@ -116,11 +117,11 @@ With the difference to the solution showed in figure \ref{fig:build-process}, he
     \item Give \gls{xsd} files towards the \lstinline{hostDomainGenerator} tool.
     \item Those are forwarded to the \gls{pfw}, which validates the \emph{structure} files before receiving the special commands.
     \item If the validation fails, it aborts the build.
-    \item Otherwise, it receives dumps the \emph{settings} file as usual.
+    \item Otherwise, it dumps the \emph{settings} file as usual.
 \end{itemize}
 
 \subsubsection{Outcome}
-In the end, this solution is widely used at Intel now. Every error described by the \gls{xsd} rules are removed.
+In the end, this solution is widely used at Intel now. All errors described by the \gls{xsd} rules have been removed.
 In a matter of two weeks, the integration team was able to clean up more than 500 errors from the \gls{xml} structure files.
 Moreover, it is impossible nowadays to let new validation errors go trough, since the system would not build.
 
@@ -129,7 +130,7 @@ Moreover, it is impossible nowadays to let new validation errors go trough, sinc
 \subsection{Multi-variant initial support}
 \subsubsection{Context}
 Intel has a various number of platforms for smarphones and tablets, which have different hardware specifications.
-Every platform also haves minor hardware variances.
+Each platform also haves minor hardware variances.
 For example, there is a platform with two hardware variants: the audio architecture is not the same.
 The architecture can for instance differ in a codec. Each of those different combinations is called a \emph{variant}.
 
@@ -161,7 +162,7 @@ This is just a proof of concept to show to customers that we are able to support
 % What are fixed points
 % Problem
 Fixed point numbers are useful for representing real numbers. Their
-usage is appropriate when the processor does not haves a floating point unit
+usage is appropriate when the processor does not have a floating point unit
 or when there is a performance gain by using them. Usually, fixed points are
 represented by $Qn.m$ format, where $n$ is the \emph{Integral part} and $m$ the
 \emph{Fractional part}.
@@ -364,8 +365,8 @@ In the end, we did deliver on time the expected results.
 \section{Open-sourcing on GitHub}
 
 In this section, I will cover everything which was done around open-sourcing the \gls{pfw}.
-As described in section \ref{sec:whyOpensourcing}, this component is a generic solution to tune and handle parameters
-our middleware scalability.
+As described in section \ref{sec:whyOpensourcing}, this component is a generic solution
+to tune and handle parameters we use to provide middleware scalability.
 
 \subsection{Introduction}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
@@ -507,7 +508,7 @@ This was a very good exercise to improve my \gls{git} skill.
 \subsection{Core alignment}
 The \gls{pfw} core is quite a big project, with about 30 000 lines of code.
 Align the internal tree and the \gls{GitHub} version of this project required quite some work.
-Some extra requirements apply on open-source projects, such as being compilable in a vanilla \gls{aosp} environment.
+Some extra requirements apply on open-source projects, such as being compilable in a \gls{vanilla} \gls{aosp} environment.
 
 There is a \gls{GitHub} organization which groups all Intel open-source projects. This
 organization is called \emph{01org}. I joined it during my internship in order to have admin rights
@@ -558,6 +559,6 @@ front page on this \gls{GitHub} project.  The README contains :
     plugin in order to be able to change the master volume on a linux desktop.
 \end{itemize}
 I also reorganised some code within this plugin since we used to rely on proprietary \gls{aosp} modifications.
-This plugin is now vanilla \gls{aosp} compatible, and can be used if the \gls{pfw} is installed.
+This plugin is now \gls{vanilla} \gls{aosp} compatible, and can be used if the \gls{pfw} is installed.
 
 The \gls{alsa} plugin is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework-plugins-alsa/}}
