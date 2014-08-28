@@ -55,7 +55,7 @@ They are responsible for the Audio \gls{hal} which is the interface between the
 libraries and the \gls{android} \gls{kernel}. Intel made a custom Audio \gls{hal} to
 replace \gls{android} default's one with their own one, which provides a lot more features.
 The Intel Audio \gls{hal} is present in every \gls{android} device from 2011 or later with Intel inside, such
-as the \emph{Motorola Razr I} from figure \ref{fig:razri}.
+as the \emph{Motorola Razr I} from figure \ref{fig:razri} which has an Atom processor.
 
 Their custom \gls{hal} is based around the \gls{pfw}, which will be described in the section \ref{sec:parameter-framework}.
 
@@ -122,7 +122,8 @@ in next section
 
 \subsection{Intel Audio HAL}
 Intel's Audio \gls{hal} for Android platforms is based on a generic, plugin-based solution: the \gls{pfw}.
-It runs in the \emph{userland}, which is easier to maintain than kernel-space code.
+It runs in the \emph{userland}, which is easier to maintain than kernel-space code. This is due
+to the fact that we can use more high level languages such as \gls{cpp}.
 Since this solution is plugin-based, it is easy to extend and add more subsystems if needed.
 
 There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal} below.
