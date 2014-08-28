@@ -35,33 +35,33 @@ Some key figures of Intel:
 \begin{itemize}
 \item Leading manufacturer of computer, networking and communications
   products,
-  \item 300 Facilities in 50 countries,
-  \item Over \$35B in Annual Revenues from customers in over 120
+  \item 300 facilities in 50 countries,
+  \item Over \$35B in annual revenues from customers in over 120
     countries,
-\item 23 Consecutive years of positive net income,
+\item 23 consecutive years of positive net income,
 \item Approximately 80,000 employees,
 \item 43,000 technical degrees, 12,000 Masters in Science, 4,000
   PhD’s, 4,000 MBA’s,
   \item One of the top ten most valuable brands in the world for 10
     consecutive years,
-\item Invests \$100 Million each year in education across more than 50
+\item Invests \$100 million each year in education across more than 50
   countries,
 \item One of the top ten Linux \gls{kernel} contributors.
 \end{itemize}
 
-\subsection{Intel Audio feature team in Toulouse}
-The team I worked with is the Audio feature team, in Toulouse.
-They are responsible for the Audio \gls{hal} which is the interface between the
-\gls{android} layers and the \gls{kernel}. Intel made a custom Audio \gls{hal} to
-replace \gls{android} default's one with their own one, which provides more features.
-The Intel Audio \gls{hal} is present in every \gls{android} device from 2011 or later with Intel inside, such
+\subsection{Intel audio feature team in Toulouse}
+The team I worked with is the audio feature team, in Toulouse.
+They are responsible for the audio \gls{hal} which is the interface between the
+\gls{android} layers and the \gls{kernel}. Intel made a custom audio \gls{hal} which provides more features than
+\gls{android}'s default one.
+The Intel audio \gls{hal} is present in every \gls{android} device from 2011 or later with Intel inside, such
 as the \emph{Motorola Razr I} from figure \ref{fig:razri} which has an Atom processor.
 
-Their custom \gls{hal} is based around the \gls{pfw}, which will be described in the section \ref{sec:parameter-framework}.
+Their custom \gls{hal} is based on the \gls{pfw}, which will be described in the section \ref{sec:parameter-framework}.
 
 
 \section{Topic of my internship}
-I worked within the Intel Audio development team, as an \emph{agile
+I worked within the Intel audio development team, as an \emph{agile
 software developer}. The team is customer oriented, using \gls{scrum}
 methodology (see chapter \ref{chap:organisation}). My tasks
 within the team were focused around open-sourcing the \gls{pfw} on
@@ -70,18 +70,18 @@ within the team were focused around open-sourcing the \gls{pfw} on
 
 \subsection{Why open-sourcing the Parameter-framework}\label{sec:whyOpensourcing}
 At the moment there is no standardization (such as POSIX for operating systems) in middleware. Due to the lack
-of standards, each company is reinventing their own solution for handling middleware problems in their own way.
-The \gls{pfw} which is the solution developed by the Intel Audio team is \emph{generic}, \emph{efficient} and \emph{scalable} enough to become a standard.
-With this ambition in mind, the Intel Audio team decided to open-source the core component of their Audio \gls{hal}, the \gls{pfw}.
+of standards, each company is reinventing its own solution for handling middleware problems in its own way.
+The \gls{pfw} which is the solution developed by the Intel audio team is \emph{generic}, \emph{efficient} and \emph{scalable} enough to become a standard.
+With this ambition in mind, the Intel audio team decided to open-source the core component of their audio \gls{hal}, the \gls{pfw}.
 The component is hosted on \gls{GitHub} which is the most popular code hosting site in the world.
 
 \subsection{My role regarding open-sourcing}
-In order to open-source such a complex component as the \gls{pfw}, the Intel Audio team needed to evaluate if the code was ready.
+In order to open-source such a complex component as the \gls{pfw}, the Intel audio team needed to evaluate if the code was ready.
 The code requires to be easy-to-understand so that the open-source community is willing to adopt it.
 Since I had never worked with that component before, I took a fresh look at the code. I had to try to \emph{understand the code} and the
 \emph{concepts} (explained at section \ref{sec:parameter-framework}) of the \gls{pfw} without any documentation.
 
-At the same time, internal developments were also made on this component, but on a different version of it.
+At the same time, internal developments were also made on this component, but on a different branch.
 This implies that there are two code repositories of the same component: the \emph{internal} one and the \emph{open-source} one.
 Keeping the two code repositories synchronized is very important because each divergence has a huge maintenance impact.
 My role was to setup and execute that synchronization process to avoid costly and painful future maintenance.
@@ -92,8 +92,8 @@ How this was done will be detailed later in section \ref{sec:syncProcess}.
 \section{Android}
 During my internship, I worked on the \gls{android} platform. This operating
 system has a complex software stack which goes from the Linux \gls{kernel} to
-applications such as \emph{Gmail}. This section gives an overview of the Android
-stack in order to highlight the part I worked on.
+applications such as \emph{Gmail}. This section gives an overview of the \gls{android}
+stack in order to highlight the components I worked with.
 
 \subsection{Global Android architecture}
 Android is a complex system, having more than 1 billion active users.
@@ -103,49 +103,49 @@ It is structured in different levels:
     \item[Applications] such as Gmail, which are seen by the end-user
     \item[Applications Framework] which is used by the applications, this is written in Java.
     \item[Libraries] which is composed of the Dalvik virtual machine and other C/\gls{cpp} frameworks.
-    \item[Hardware Abstraction Layer] which a part of the middleware stack that ties together the libraries
+    \item[Hardware Abstraction Layer (i.e. HAL)] which a part of the middleware stack that ties together the libraries
         and the \gls{kernel}. I worked in this section of the \gls{android} stack.
     \item[Linux kernel] which contains the drivers and provides the user-space functionalities for the
         middleware stack.
 \end{description}
 
 The figure \ref{fig:archi} shows android software stack and highlights the
-part I worked on during my internship, which is the Audio \gls{hal}.
+part I worked on during my internship, which is, as mentioned previously, the audio \gls{hal}.
 
 \begin{figureGraphics}{Global Android architecture}{fig:archi}
     \includegraphics[width=\textwidth]{./src/img/android-archi-audio-hal.jpeg}
 \end{figureGraphics}
 
-The Audio \gls{hal} is also one of the primary concerns of the Audio team in Toulouse and will be detailed
-in next section
+The audio \gls{hal} is also one of the primary concern of the audio team in Toulouse and is detailed
+in the next section.
 
 
-\subsection{Intel Audio HAL}
-Intel's Audio \gls{hal} for Android platforms is based on a generic, plugin-based solution: the \gls{pfw}.
+\subsection{Intel audio HAL}
+Intel's audio \gls{hal} for Android platforms is based on a generic, plugin-based solution: the \gls{pfw}.
 It runs in the \emph{userland}, which is easier to maintain than kernel-space code. This is due
 to the fact that we can use more high level languages such as \gls{cpp}.
-Since this solution is plugin-based, it is easy to extend and add more subsystems if needed.
+Since this solution is plugin-based, it is easy to extend.
 
-There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal} below.
-\begin{figureGraphics}{Simplified view of Intel Audio HAL}{fig:hal}
+There is an overview of the Intel audio \gls{hal} on figure \ref{fig:hal} below.
+\begin{figureGraphics}{Simplified view of Intel audio HAL}{fig:hal}
     \includegraphics[height=0.5\textheight]{./src/img/hal-architecture.pdf}
 \end{figureGraphics}
-Two different instances of \gls{pfw} exist in the Intel Audio \gls{hal}:
+Two different instances of \gls{pfw} exist in the Intel audio \gls{hal}:
 \begin{description}
     \item[The route Parameter-framework] communicates with the \emph{Stream Manager} and the \emph{Route Manager}.
         This side is responsible for translating events which come from upper layers into \emph{routes}, which
-        is the concept understandable by the route manager.
+        are the expected inputs for the route manager.
     \item[The audio Parameter-framework] communicates with the \emph{Route Manager} and the \gls{alsa} driver.
-        This side talks to the drivers in order to set the different mixers in the correct state. For example,
-        changing the gain of a mixer.
+        This side talks to the drivers in order to set the different audio mixers in the correct state. For example,
+        changing the gain of an audio mixer.
 \end{description}
 
-Some requirements of the Intel Audio \gls{hal}:
+Some requirements of the Intel audio \gls{hal}:
 \begin{itemize}
     \item Since the audio system needs to be tuned by the tuning engineers, the \gls{hal} should be configurable.
         It would have been very painful to recompile the code at each time it is needed to adapt the value of a mixer!
     \item Since the \gls{hal} needs to \emph{abstract} the hardware variations, it should also be scalable. It should be
-        easy to support new hardware.
+        easy to support any new hardware.
 \end{itemize}
 
 The \gls{pfw} is a way to fulfill those requirements.
@@ -171,7 +171,7 @@ This means that you can:
     \item Define (in \gls{xml} or in a domain-specific-language) conditions/rules upon which a given parameter must take a given value - aka. \emph{When} (Settings)
 \end{itemize}
 
-With this concepts, we can cover all the requirements we have for creating a scalable \gls{hal}.
+With these concepts, we can cover all the requirements we have for creating a scalable \gls{hal}.
 Now we are going to have a look at the motivation behind the creation of this framework.
 
 \subsection{Motivation}
@@ -179,18 +179,18 @@ During a phone call, the smartphone isn't just transmitting the sound received f
 applied on the audio signal which is transmitted and received.
 Figure \ref{fig:audioArch} below shows an example of an audio architecture which shows the components involved.
 
-\begin{figureGraphics}{Simplified audio architecture of a pandaboard}{fig:audioArch}
+\begin{figureGraphics}{Simplified audio architecture}{fig:audioArch}
     \includegraphics[width=\textwidth]{./src/img/audio-architecture.pdf}
 \end{figureGraphics}
 
 The sound goes:
 \begin{itemize}
     \item Trough the \emph{voice modem}
-    \item Via the \emph{Audio DSP} where some voice processing algorithms (such as noise reduction) are applied
+    \item Via the \emph{audio DSP} where some voice processing algorithms (such as noise reduction) are applied
     \item Towards the \emph{codec} to send the audio signal to the headset.
 \end{itemize}
 
-Those algorithms have a lot of parameters, which can change depending on the accessory for e.g. whether we are using a headset,
+Those algorithms have many parameters which can change depending on the accessory. For e.g. whether we are using a headset,
 or using the speaker. Furthermore, those parameters are \emph{often hardware dependent}.
 
 The \gls{pfw} was designed to manage easily those multiple parameters in a scalable way.
@@ -227,7 +227,7 @@ These structures are stored in \gls{xml} files. This is great because it implies
 to recompile the \gls{pfw} when changing the structure we are describing.
 
 In listing \ref{lst:pfwstructure}, when can see the \gls{xml} structure file
-describing the tree from figure \ref{fig:pfwtree}.
+describing a part of the tree from figure \ref{fig:pfwtree}.
 
 \begin{code}[language=pfwXml, caption=Structure file example snippet, label=lst:pfwstructure]
 <!--snippet-->
@@ -270,5 +270,7 @@ Domain:
 \end{code}
 
 \subsubsection{Extensibility}
-Since the \gls{pfw} is \emph{plugin-based}, it is easy to extend its functionality to other usages than Audio, such
-as Camera, or Bluetooth. I contributed on the filesystem plugin for example, which can be used to handle \lstinline{/proc/} entries.
+Since the \gls{pfw} is \emph{plugin-based}, it is easy to use it in other domains than audio, such
+as camera or bluetooth.
+
+For example, I contributed on the filesystem plugin, which can be used to handle \lstinline{/proc/} entries.

@@ -24,7 +24,7 @@ as described in section \ref{sec:quality}
 % {{{2 Xml validation at build time
 \subsection{XML validation at build time}
 
-For our Intel Audio \gls{hal}, we have a lot of structure files. More than one hundred, which represents
+For our Intel audio \gls{hal}, we have a lot of structure files. More than one hundred, which represents
 more than 40 000 lines of \gls{xml} files.
 The writing of those structure files is done by human beings. Given the fact
 that humans can make mistakes, there is \emph{no guarantee} that those structure files are semantically correct.
@@ -73,7 +73,7 @@ Since this had to run on many different machines(more than a thousand), it was o
 We needed a more robust solution which was integrated into the build system without using external libraries.
 
 \subsubsection{Build process}
-To understand how the robust solution is implemented, we need to have a look at the build process around the \gls{pfw}.
+To understand how the final solution is implemented, we need to have a look at the build process around the \gls{pfw}.
 
 During the build process, we are translating settings files from a special format (which was shown in \ref{lst:pfwsettings}) into \gls{xml}.
 That special format, which is called \emph{.pfw language}, is used for rule based
@@ -130,11 +130,11 @@ Moreover, it is impossible nowadays to let new validation errors go trough, sinc
 \subsection{Multi-variant initial support}
 \subsubsection{Context}
 Intel has a various number of platforms for smarphones and tablets, which have different hardware specifications.
-Each platform also haves minor hardware variances.
+Each platform also has minor hardware variances.
 For example, there is a platform with two hardware variants: the audio architecture is not the same.
 The architecture can for instance differ in a codec. Each of those different combinations is called a \emph{variant}.
 
-A customer requirement was to be able to have one single package for the Intel Audio \gls{hal} which works on every variant.
+A customer requirement is to be able to have one single package for the Intel audio \gls{hal} which works on every variant.
 With this concern in mind, we had to rework the \gls{hal} a bit.
 In fact, as seen in section \ref{sec:parameter-framework}, the \gls{pfw} needs \gls{xml} files which are hardware dependent.
 
@@ -145,7 +145,7 @@ This had to be reworked into a single package.
 \subsubsection{Implementation}
 For an initial step, we decided to include every \gls{xml} file for all the possible variants.
 The problem is that at run-time, the Stream manager (which is in the \gls{hal}) has \emph{no idea} about which configuration file
-it should load for his \gls{pfw} instance.
+it should load for its \gls{pfw} instance.
 
 The Stream manager needs to be smarter. In our case, as each variant has a different sound card name, we decided to
 rely on this information to decide which configuration of the \gls{pfw} would be loaded.
@@ -185,8 +185,8 @@ Fixed point number have their own type, called \emph{FixedPointParameters}. Of c
         In fact, \lstinline{setPrecision()} is \emph{rounding up} instead of \emph{truncating} the last digit of a floating point number.
         For instance:
         \begin{itemize}
-            \item \lstinline[language=C++]{cout << setPrecision(3) << 3.14159265} returns $3.14$.
-            \item \lstinline[language=C++]{cout << setPrecision(5) << 3.14159265} returns $3.1416$ instead of $3.1415$.
+            \item \lstinline[language=C++]{cout << setPrecision(3) << 3.14159265;} returns $3.14$.
+            \item \lstinline[language=C++]{cout << setPrecision(5) << 3.14159265;} returns $3.1416$ instead of $3.1415$.
         \end{itemize}
         It is not possible to change the \emph{rounding} behavior to \emph{truncating} behavior because
         \lstinline{setPrecision()} relies on the \lstinline{fesetround()} methods which is only available in the \gls{cpp} 11 norm.
@@ -197,7 +197,7 @@ In the next section we will study an example showing the issue.
 
 Let's take the case of a $Q2.3$ number: the \emph{Integral part} is $2$ and the
 \emph{Fractional part} is $3$.
-Since we have a fractional part of $3$ bits, the minimal step between two numbers coded in $Q2.3$ is
+Since we have a fractional part of $3$ bits, the minimal step between two numbers encoded in $Q2.3$ is
 $2^{-3}$. This minimal step is called the \emph{Quantum}.
 
 Some special values can be represented for a $Q2.3$ number. Figure \ref{fig:fixedPointValues} below shows those values. Note that
@@ -336,15 +336,15 @@ is useful to use the same device for corporate and private purposes.
 Besided, in some developing countries phone carriers do not cover the whole country. The habitants of those
 countries need several phone carriers to use their smartphone smoothly.
 For those purposes, the platform must support two modems.
-Within the Intel Audio \gls{hal}, we are handling some voice processing algorithms from the signal coming from the modem.
+Within the Intel audio \gls{hal}, we are handling some voice processing algorithms applicable to the signal coming from the modem.
 Naturally, we have a \gls{pfw} plugin to abstract the modem. This plugin did not support multiple modems.
 
 I had to add \emph{modem instance awareness} to the plugin so that Intel could ship devices with multiple modems.
 
 \subsubsection{Plugins}
-Given the fact that there are multiple modems protocols available on the market, there are also multiple \gls{pfw} plugins,
+Given the fact that there are multiple modem protocols available on the market, there are also multiple \gls{pfw} plugins,
 one for each modem family.
-I had to modify \emph{each plugin} to handle modem instance awareness. That awareness comes from \gls{xml} attributes which are
+I had to modify each plugin to handle modem instance awareness. That awareness comes from \gls{xml} attributes which are
 retrieved in the plugin's code.
 The implementation will not be detailed because it is confidential.
 
@@ -355,7 +355,7 @@ to support as many modems as we want.
 
 Supporting multiple modems was a big team effort. It took more than 200 patchs to be completely implemented.
 I had to collaborate a lot with coworkers and other \gls{scrum} teams to be sure that we deliver something consistent.
-In the end, we did deliver on time the expected results.
+In the end, we delivered on time the expected results.
 
 
 \newpage
@@ -369,7 +369,7 @@ As described in section \ref{sec:whyOpensourcing}, this component is a generic s
 to tune and handle parameters we use to provide middleware scalability.
 
 \subsection{Introduction}
-In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
+In order to stimulate the usage of the \gls{pfw} for other projects than the Intel audio \gls{hal},
 our team decided to release the source-code on \gls{GitHub}.
 \gls{GitHub} is the biggest code hosting site in the world. It favors social software development, with a commenting system
 to share knowledge about code.
@@ -383,8 +383,8 @@ the community to use the \gls{pfw}. But in order to open-source the \gls{pfw}, a
 
 Around this activity, I covered several topics:
 \begin{description}
-    \item[Communicating, Documentating] the \gls{pfw} components.
-    \item[Push, clean, enchance, align] the code to make sure no proprietary
+    \item[Communicating and documenting] the \gls{pfw} components.
+    \item[Push, clean, enchance and align] the code to make sure no proprietary
         elements are made public.
 \end{description}
 
@@ -403,7 +403,7 @@ tutorials:
 \begin{description}
     \item[Compile and install]
         is a step-by-step guide about how to get the \gls{pfw}'s sources,
-        build it and install it as a standalone on Ubuntu.
+        build it and install it as a standalone tool on Ubuntu.
     \item[Run a simple example]
         is a how-to about running the \gls{pfw} command-line interface,
         such as \lstinline{remote-process} and \lstinline {test-platform}.  In
@@ -416,14 +416,14 @@ tutorials:
         The tutorial describes how to add a new user mood and how to add other musicians to
         the play-list.
     \item[An introduction to the .pfw language]\label{desc:pfw-language}
-        is a tutorial about the .pfw language. This language was
+        provides a tutorial about the .pfw language. This language was
         created to simplify the writing of settings files for the
         \gls{pfw}. Those files are then converted by \lstinline{hostDomainGenerator} into \gls{xml}, which is
-        the only language the \gls{pfw} understands. This tutorial is not online for the moment.
+        the only language the \gls{pfw} understands. This one is not online for the moment.
 \end{description}
 These tutorials have been written in \gls{markdown}, the standard format used
 on \gls{GitHub}.
-They are currently online on the wiki page\footnote{see annex on page \pageref{chap:annex}}.
+They are currently online on the \gls{GitHub}'s wiki page\footnote{see annex on page \pageref{chap:annex}}.
 
 Figure \ref{fig:tutos} shows the rendering of a tutorial on the wiki.
 \begin{figureGraphics}{Tutorial preview from the core wiki}{fig:tutos}
@@ -439,13 +439,13 @@ thanks to these tutorials.
 % {{{2 ip plan
 \subsection{Parameter-framework's intellectual property}
 Before the code of the \gls{pfw} could be open-sourced, it had to be compliant with Intel's open-source policy.
-Intellectual property is highly valuated at Intel. The \gls{pfw} needed to be released under
+Intellectual property is highly valued at Intel. The \gls{pfw} need to be released under
 BSD license.
 For that purpose, all the source files must contain the correct \emph{BSD license header}.
 However, there are more than \emph{270 source files} which needed to be released on \gls{GitHub}.
 Changing all those files by hand seems very time consuming, so I requested if a helper tool exists for that matter.
 
-\subsubsection{license checker}
+\subsubsection{License checker}
 According to the team, there was no helper for changing software licenses easily.
 Given the fact that I did not want to change 270 files by hand, I
 wrote an internal tool in \gls{python} which performs the license check semi-automatically.
@@ -483,10 +483,10 @@ The difficulty is to maintain two \gls{git} repositories with the same code base
 have to be ported to the other one. This should be done \emph{as soon as possible}. If that is not the case it would imply maintaining two different
 code bases which is very expensive.
 
-\subsection{Branch sync process}\label{sec:syncProcess}
+\subsection{Branch synchronization process}\label{sec:syncProcess}
 Since we work internally on the \gls{pfw} and can receive external contributions via \gls{pullrequests},
 it is quite difficult to keep both repositories in sync.
-On figure \ref{fig:branch-process} we can see how we plan to synchronize the different code.
+On figure \ref{fig:branch-process} we can see how we plan to synchronize the different code basis.
 
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
     \includegraphics[width=\textwidth]{./src/img/branches-process-crop.pdf}
@@ -502,7 +502,7 @@ I worked on three different projects to set up this branch process:
     \item The filesystem plugin.
 \end{itemize}
 
-This was a very good exercise to improve my \gls{git} skill.
+This was a very good exercise to improve my \gls{git} skills.
 
 % {{{2 core align
 \subsection{Core alignment}
@@ -510,20 +510,16 @@ The \gls{pfw} core is quite a big project, with about 30 000 lines of code.
 Align the internal tree and the \gls{GitHub} version of this project required quite some work.
 Some extra requirements apply on open-source projects, such as being compilable in a \gls{vanilla} \gls{aosp} environment.
 
-There is a \gls{GitHub} organization which groups all Intel open-source projects. This
-organization is called \emph{01org}. I joined it during my internship in order to have admin rights
-on the projects I had to open-source.
-
 The \gls{pfw} core is available on \gls{GitHub}\footnote{\url{https://github.com/01org/parameter-framework}}
 
 % {{{2 fs plugin
 \subsection{Filesystem plugin alignment}
 
-The file system plugin is used for global access to the filesystem. This can be to
-use \emph{/proc} entries for instance. I used this plugin as example in the rookie
+The file system plugin is used for global access to the filesystem. For example, this can be to
+read and modify files in \lstinline{/proc}. I used this plugin as example in the newcomer
 documentation I wrote as described in section \ref{sec:tutorials}.
 
-I also worked on an other example: \emph{controlling LEDs} via the filesystem
+I also worked on another example: \emph{controlling LEDs} via the filesystem
 plugin on a Raspberry Pi.  This example was easy enough to be integrated into
 the online documentation of the filesystem plugin, on \gls{GitHub}.
 
@@ -547,7 +543,7 @@ This allowed us to remove all the \emph{template} usage in the \gls{cpp} code.
 The result is a far simpler and more elegant design which could be uploaded to \gls{GitHub}.
 
 \subsubsection{Align on GitHub}
-The \gls{alsa} \gls{pfw} plugin is used on within the Intel Audio \gls{hal}. It can also by used
+The \gls{alsa} \gls{pfw} plugin is used on within the Intel audio \gls{hal}. It can also by used
 on a linux desktop environement to handle \gls{alsa} mixers.
 
 To demonstrate the power of this plugin, I wrote the README file which is on the
