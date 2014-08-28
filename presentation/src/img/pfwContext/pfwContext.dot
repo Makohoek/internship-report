@@ -35,9 +35,9 @@ graph hierarchy
   rankdir="LR";  //left to right ranking
 
 ParameterFramework[label="Parameter-framework", fillcolor="#268bd2", fontcolor="#ffffff"];
-What[labeljust="r", label="[What]\nDescribe system in XML"];
-When[labeljust="r", label="[How]\nAccess to hardware\nvia a back-end"];
-How[labeljust="r", label="[When]\nCreate rules for\napplying specific values\nbased on conditions"];
+What[labeljust="r", label=<<font color="#268bd2">What</font><br/>Describe system in XML>];
+When[labeljust="r", label=<<font color="#268bd2">How</font><br/>Access to hardware<br/>via a back-end>];
+How[labeljust="r", label=<<font color="#268bd2">When</font><br/>Create rules for<br/>applying specific values<br/>based on conditions>];
 
 ParameterFramework -- What;
 ParameterFramework -- When;
