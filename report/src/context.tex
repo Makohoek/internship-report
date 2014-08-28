@@ -53,7 +53,7 @@ Some key figures of Intel:
 The team I worked with is the Audio feature team, in Toulouse.
 They are responsible for the Audio \gls{hal} which is the interface between the
 \gls{android} layers and the \gls{kernel}. Intel made a custom Audio \gls{hal} to
-replace \gls{android} default's one with their own one, which provides a lot more features.
+replace \gls{android} default's one with their own one, which provides more features.
 The Intel Audio \gls{hal} is present in every \gls{android} device from 2011 or later with Intel inside, such
 as the \emph{Motorola Razr I} from figure \ref{fig:razri} which has an Atom processor.
 
@@ -78,7 +78,7 @@ The component is hosted on \gls{GitHub} which is the most popular code hosting s
 \subsection{My role regarding open-sourcing}
 In order to open-source such a complex component as the \gls{pfw}, the Intel Audio team needed to evaluate if the code was ready.
 The code requires to be easy-to-understand so that the open-source community is willing to adopt it.
-Since I never worked with that component, I took a fresh look at the code. I had to try to \emph{understand the code} and the
+Since I had never worked with that component before, I took a fresh look at the code. I had to try to \emph{understand the code} and the
 \emph{concepts} (explained at section \ref{sec:parameter-framework}) of the \gls{pfw} without any documentation.
 
 At the same time, internal developments were also made on this component, but on a different version of it.
@@ -132,10 +132,10 @@ There is an overview of the Intel Audio \gls{hal} on figure \ref{fig:hal} below.
 \end{figureGraphics}
 Two different instances of \gls{pfw} exist in the Intel Audio \gls{hal}:
 \begin{description}
-    \item[The route] \gls{pfw} communicates with the \emph{Stream Manager} and the \emph{Route Manager}.
+    \item[The route Parameter-framework] communicates with the \emph{Stream Manager} and the \emph{Route Manager}.
         This side is responsible for translating events which come from upper layers into \emph{routes}, which
         is the concept understandable by the route manager.
-    \item[The audio] \gls{pfw} communicates with the \emph{Route Manager} and the \gls{alsa} driver.
+    \item[The audio Parameter-framework] communicates with the \emph{Route Manager} and the \gls{alsa} driver.
         This side talks to the drivers in order to set the different mixers in the correct state. For example,
         changing the gain of a mixer.
 \end{description}
