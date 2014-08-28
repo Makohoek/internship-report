@@ -1,6 +1,6 @@
 \chapter{Methodology}\label{chap:organisation}
 
-In this chapter, we will discover how I accomplished my work within the Intel Audio team.
+In this chapter, we will discover how I accomplished my work within the Intel audio team.
 This includes developer process, planning schedule and agile methodology.
 
 \section{Workflow and environment}
@@ -14,20 +14,20 @@ It is a strict procedure that results in software of great quality with very few
     \includegraphics[height=0.5\textheight]{./src/img/workflow.pdf}
 \end{figureGraphics}
 
-This workflow is the same for every developer of the Intel Audio team. It is
+This workflow is the same for every developer of the Intel audio team. It is
 detailed in the subsections below.
 
 \subsection{Pair programming}
 Before detailing the workflow, I want to introduce \emph{pair programming}.
-The concept of pair-programming is quite old. It is developing with \emph{two persons} on a \emph{single computer}.
-One person is the \emph{observer}. He is thinking ahead of the future problems that may occur and double checking
+The concept of pair-programming is quite old. It consists in developing with \emph{two persons} on a \emph{single computer}.
+One person is the \emph{observer}. He thinks ahead of the future problems that may occur and double checks
 everything that his colleague is doing. The other person, the \emph{driver} is writing the code.
 
 A lot of managers are very skeptical about this approach because they see it as a \emph{waste of time}.
 But it has a lot of advantages:
 \begin{description}
     \item[Sharing knowledge] with colleagues. This is \emph{vital} to avoid having \emph{silos} in a team. It is important
-        that every member should be replaceable. This is especially true when people are having time off.
+        that every member should be replaceable. This is especially true when people are out of office.
     \item[Being focused] on the task that need to be done. It is a lot more difficult to be interrupted by something when working
         in pair. The \emph{observer} is here to guard that both stay focused and motivated.
     \item[It is great fun] which is also very important. Often, people get frustrated when debugging something complex.
@@ -36,7 +36,7 @@ But it has a lot of advantages:
 This development practice is something I taught the team. We practiced it quite a few times during my internship and most of
 my colleagues are happy to work in pair with each other.
 It is really efficient when combining it with a time-management procedure,
-such as the \emph{pomodoro technique}.
+such as the \gls{pomodoro}.
 
 \subsection{Development}
 Android source tree contains more than 700 projects. They have their own build system
@@ -49,7 +49,7 @@ than compiling on my local machine (about 10 times faster).
 This server also helps to have the same developer environment to avoid
 time-consuming installations on local machines.
 
-Working remotely on that server restrict developers to use command line programs only because
+Working remotely on that server restricts developers to use command line programs only because
 launching a graphical session for each user would require too much computing power.
 During my internship, I sharpened my skills in \gls{vim} and discovered \gls{tmux}.
 On the figure \ref{fig:setup} below, there is a screenshot of my development setup at Intel.
@@ -58,7 +58,7 @@ On the figure \ref{fig:setup} below, there is a screenshot of my development set
     \includegraphics[width=\textwidth]{./src/img/setup.pdf}
 \end{figureGraphics}
 
-When the code is ready, I push it via \gls{git} on \gls{gerrit} to be reviewed.
+When the code is ready, I push it via \gls{git} on \gls{gerrit} for review.
 
 \subsection{Git}
 \gls{git} is a distributed revision control system initially designed for kernel
@@ -73,7 +73,7 @@ patches I have delivered during my internship have been reviewed and met the
 expected quality.
 
 Those reviews are done with the official \gls{android} review tool which is \gls{gerrit}.
-It is based on a notation system with inline comments and its usage is pretty straightforward.
+It is based on a notation system with in-line comments and its usage is pretty straightforward.
 Its interface is showed on figure \ref{fig:gerrit} below.
 
 \begin{figureGraphics}{Gerrit code review}{fig:gerrit}
@@ -90,7 +90,7 @@ After code review and a few reworks, the code is validated by the development te
 The super reviewer gives the developer the permission to submit his work to the gatekeeping team.
 They are responsible for testing complex use cases and they ensure there is neither regression nor side effects
 due to the modifications the development team made.
-A lot of automatic and manual tests scenarios are ran which cover \emph{voice call}, \emph{voip call}, \emph{media playback}
+A lot of automatic and manual tests scenarios are run. They cover \emph{voice call}, \emph{voip call}, \emph{media playback}
 and more. Of course, more complex tests are done depending on the functionality under development.
 
 
@@ -164,11 +164,11 @@ diagram.
     \ganttbar{Alsa plugin update}{17}{20}\\
     \ganttgroup{University}{21}{24} \\
     \ganttbar{Internship report}{21}{24} \\
-    \ganttbar{Slided internship}{23}{24}
+    \ganttbar{Slides internship}{23}{24}
 \end{ganttchart}
 \end{figureGraphics}
 
-Every task has a dedicated section in this document to describe what have been done.
+Every task has a dedicated section in this document to describe what has been done.
 This can be found in chapter \ref{chap:contributions}.
 
 
@@ -306,9 +306,9 @@ Work considered done is something which is \emph{shippable} and provide \emph{ad
 
 This presentation is important to show the contributions that the team made. When I arrived in the team, the
 demos were a bit too long and far too technical. I contributed into changing that. Our demos are more
-\emph{business oriented} and focused on the client's needs. The demo time has gone from one our and a half to less than an our.
+\emph{business oriented} and focused on the client's needs. The demo time has gone from one hour and a half to less than an hour.
 This helps us keeping things short and keeping off-topics away from the meeting.
-I participated in every Demo and even showed some products since I was member of the \gls{scrum} team.
+I participated in every Demo and even showed some products as a member of the \gls{scrum} team.
 
 \subsubsection{Retrospectives}
 After the Demo, the team has a look back at how the last sprint happened. This short meeting is made
