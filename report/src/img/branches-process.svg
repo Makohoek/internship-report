@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="branches-process.pdf"
+   sodipodi:docname="branches-process.svg"
    inkscape:export-filename="/home/lab/dev/scalpe/pfw/branches_dev3.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
@@ -26,10 +26,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="174.62585"
-     inkscape:cy="90.524208"
+     inkscape:cx="213.45778"
+     inkscape:cy="161.95278"
      inkscape:document-units="px"
-     inkscape:current-layer="layer10"
+     inkscape:current-layer="layer9"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -116,14 +116,14 @@
     <text
        sodipodi:linespacing="125%"
        id="text6668"
-       y="111.74863"
-       x="2.8571777"
+       y="81.748627"
+       x="6.785749"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#800080;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
        xml:space="preserve"><tspan
-         y="111.74863"
-         x="2.8571777"
+         y="81.748627"
+         x="6.785749"
          id="tspan6670"
-         sodipodi:role="line">github</tspan></text>
+         sodipodi:role="line">GitHub</tspan></text>
   </g>
   <g
      style="display:inline"
@@ -207,19 +207,18 @@
          y="677.59991"
          x="259.50861"
          id="tspan3499"
-         sodipodi:role="line">P</tspan></text>
+         sodipodi:role="line">G</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text4018"
-       y="703.76221"
-       x="118.19353"
+       y="182.93692"
+       x="0.24676514"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#800080;fill-opacity:1;stroke:none;display:inline;font-family:Monospace;-inkscape-font-specification:Monospace"
-       xml:space="preserve"
-       transform="translate(-41.946763,-512.82529)"><tspan
-         y="703.76221"
-         x="118.19353"
+       xml:space="preserve"><tspan
+         y="182.93692"
+         x="0.24676514"
          id="tspan4020"
-         sodipodi:role="line">mainline</tspan></text>
+         sodipodi:role="line">Intel code line</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text6957"
@@ -230,7 +229,7 @@
          y="314.28571"
          x="35"
          id="tspan6959"
-         sodipodi:role="line">gerrit reviews</tspan></text>
+         sodipodi:role="line">Intel reviews</tspan></text>
     <path
        inkscape:connector-curvature="3"
        inkscape:connector-type="polyline"
@@ -240,14 +239,18 @@
     <text
        sodipodi:linespacing="125%"
        id="text7471"
-       y="315"
-       x="212.14287"
+       y="286.78571"
+       x="295"
        style="font-size:18px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#4d4d4d;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        xml:space="preserve"><tspan
-         y="315"
-         x="212.14287"
+         y="286.78571"
+         x="295"
          id="tspan7473"
-         sodipodi:role="line">&quot;P&quot; means the patchs in the branch went through preint</tspan></text>
+         sodipodi:role="line">&quot;G&quot; means the patchs in the branch</tspan><tspan
+         y="309.28571"
+         x="295"
+         sodipodi:role="line"
+         id="tspan3063">went through Gatekeeping</tspan></text>
   </g>
   <g
      style="display:inline"
@@ -378,7 +381,7 @@
          y="677.59991"
          x="422.54834"
          id="tspan3499-9"
-         sodipodi:role="line">P</tspan></text>
+         sodipodi:role="line">G</tspan></text>
     <path
        inkscape:connector-curvature="0"
        inkscape:connector-type="polyline"
@@ -476,7 +479,7 @@
          y="67.822968"
          x="248.11475"
          id="tspan6670-5"
-         sodipodi:role="line">github fork</tspan></text>
+         sodipodi:role="line">GitHub fork</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text6951"
@@ -487,7 +490,7 @@
          y="14.999999"
          x="245"
          id="tspan6953"
-         sodipodi:role="line">github reviews</tspan></text>
+         sodipodi:role="line">GitHub reviews</tspan></text>
     <path
        inkscape:connector-curvature="3"
        inkscape:connector-type="polyline"
@@ -531,7 +534,7 @@
          y="65.102821"
          x="488.52359"
          id="tspan3476"
-         sodipodi:role="line">P</tspan></text>
+         sodipodi:role="line">G</tspan></text>
     <path
        inkscape:connection-start="#path2985-52"
        inkscape:connection-start-point="d4"

@@ -63,7 +63,7 @@ graph hierarchy
   VoiceModem -- Algo2 [dir=forward, arrowhead="normal", label="voice", penwidth="2.0"];
    Algo2 -- Algo1 [dir=forward, arrowhead="normal", label="voice", penwidth="2.0"];
    Algo1 -- Codec [dir=forward, arrowhead="normal", label="voice", penwidth="2.0"];
-   Codec -- Speaker [dir=forward, arrowhead="normal", label="voice", penwidth="2.0"];
+   Codec -- Headset [dir=forward, arrowhead="normal", label="voice", penwidth="2.0"];
 
 { rank=min; Algo1; Algo2; Algo3 }
 

@@ -28,7 +28,7 @@ For our Intel Audio \gls{hal}, we have a lot of structure files. More than one h
 There a more than 40 000 lines of \gls{xml} structure files.
 The writing of those structure files is done by human beings. Given the fact
 that humans can make mistakes, there is \emph{no guarantee} that those structure files are semantically correct.
-Furthermore, the \gls{pfw} expects that the files which are given no not contain any mistake.
+Furthermore, the \gls{pfw} expects that the files which are given do not contain any mistake.
 
 An example can be that someone forgot to specify the \emph{size} attribute of a parameter.
 In that case, the default size is $0$. Let's imagine we are computing a result as showed in figure \ref{fig:runtimeerror}.
@@ -91,7 +91,7 @@ The figure \ref{fig:build-process} shows how it works:
 \begin{itemize}
     \item The \emph{.pfw} files are parsed via a set of scripts and translated into \gls{pfw} commands.
     \item Those commands are sent to a special \gls{pfw} instance which was started for this purpose only.
-    \item After that, the \gls{pfw} exports the rules which were created previously and dumps it into a settings \gls{xml} file.
+    \item After that, the \gls{pfw} exports the rules which have previously been created and dumps it into a settings \gls{xml} file.
     \item Those \emph{settings} and \emph{structure} files are then stored on the smartphone or the tablet in \lstinline{/etc/}.
 \end{itemize}
 
@@ -115,7 +115,7 @@ With the difference to the solution showed in figure \ref{fig:build-process}, he
 \begin{itemize}
     \item Give \gls{xsd} files towards the \lstinline{hostDomainGenerator} tool.
     \item Those are forwarded to the \gls{pfw}, which validates the \emph{structure} files before receiving the special commands.
-    \item If the checks fail, it aborts the build.
+    \item If the validation fails, it aborts the build.
     \item Otherwise, it receives dumps the \emph{settings} file as usual.
 \end{itemize}
 
@@ -133,11 +133,11 @@ Every platform also haves minor hardware variances.
 For example, there is a platform with two hardware variants: the audio architecture is not the same.
 The architecture can for instance differ in a codec. Each of those different combinations is called a \emph{variant}.
 
-An customer's requirement was to be able to have one single package for the Intel Audio \gls{hal} which works on every variant.
+A customer requirement was to be able to have one single package for the Intel Audio \gls{hal} which works on every variant.
 With this concern in mind, we had to rework the \gls{hal} a bit.
 In fact, as seen in section \ref{sec:parameter-framework}, the \gls{pfw} needs \gls{xml} files which are hardware dependent.
 
-Within the our build system, we are aware of which \gls{xml} files should be loaded, since that depends the variant we are building.
+Within the our build system, we are aware of which \gls{xml} files should be loaded, since that depends on the variant we are building.
 So, for each variant, we build a different package which includes the correct \gls{xml} files.
 This had to be reworked into a single package.
 
@@ -146,7 +146,9 @@ For an initial step, we decided to include every \gls{xml} file for all the poss
 The problem is that at run-time, the Stream manager (which is in the \gls{hal}) has \emph{no idea} about which configuration file
 it should load for his \gls{pfw} instance.
 
-The Stream manager need to be smarter. In order to detect what the current sound card is, we can read from \lstinline{/proc/asound} entries.
+The Stream manager needs to be smarter. In our case, as each variant has a different sound card name, we decided to
+rely on this information to decide which configuration of the \gls{pfw} would be loaded.
+In order to detect what the current sound card is, we can read from \lstinline{/proc/asound} entries.
 The current implementation relies on the content of \lstinline{/proc/asound/cards}.
 We have a map in the Stream manager which has as key the \emph{sound card name} and as value the \gls{xml} file which should be loaded.
 This is viable since there are less than five hardware variances at most for each platform.
@@ -352,7 +354,7 @@ to support as many modems as we want.
 
 Supporting multiple modems was a big team effort. It took more than 200 patchs to be completely implemented.
 I had to collaborate a lot with coworkers and other \gls{scrum} teams to be sure that we deliver something consistent.
-In the end, we did deliver on time the expected results
+In the end, we did deliver on time the expected results.
 
 
 \newpage
@@ -362,8 +364,8 @@ In the end, we did deliver on time the expected results
 \section{Open-sourcing on GitHub}
 
 In this section, I will cover everything which was done around open-sourcing the \gls{pfw}.
-As described in section \ref{sec:whyOpensourcing}, this component is a generic solution for handling middleware problematics in
-a scalable way.
+As described in section \ref{sec:whyOpensourcing}, this component is a generic solution to tune and handle parameters
+our middleware scalability.
 
 \subsection{Introduction}
 In order to stimulate the usage of the \gls{pfw} for other projects than the Intel Audio \gls{hal},
@@ -404,9 +406,14 @@ tutorials:
     \item[Run a simple example]
         is a how-to about running the \gls{pfw} command-line interface,
         such as \lstinline{remote-process} and \lstinline {test-platform}.  In
-        this how-to, the configuration and setting files are provided so that
+        this how-to, the configuration and settings files are provided so that
         the user can focus on the results. The example covers music play-list
         changing based on a user's mood.
+    \item[Modifying the example]
+        is about changing the previously used example. This helps to understand
+        how to configure the \gls{pfw}, add new parameters and change how they are applied.
+        The tutorial describes how to add a new user mood and how to add other musicians to
+        the play-list.
     \item[An introduction to the .pfw language]\label{desc:pfw-language}
         is a tutorial about the .pfw language. This language was
         created to simplify the writing of settings files for the
@@ -424,6 +431,8 @@ Figure \ref{fig:tutos} shows the rendering of a tutorial on the wiki.
 
 At the moment, this documentation is used by other teams which need to train themselves on the \gls{pfw}.
 There are more than \emph{450 lines} of text in these tutorials.
+Some colleagues external to the team have been able to understand the concepts of the \gls{pfw} in 30 minutes
+thanks to these tutorials.
 
 
 % {{{2 ip plan
@@ -479,7 +488,7 @@ it is quite difficult to keep both repositories in sync.
 On figure \ref{fig:branch-process} we can see how we plan to synchronize the different code.
 
 \begin{figureGraphics}{Final branch process}{fig:branch-process}
-    \includegraphics[width=\textwidth]{./src/img/branches-process.pdf}
+    \includegraphics[width=\textwidth]{./src/img/branches-process-crop.pdf}
 \end{figureGraphics}
 At the end of every sprint, we are re-aligning the internal source tree with the one in \gls{GitHub}.
 External contributions go trough a special feature branch, which is tested with the gatekeeping mechanism described in section \ref{sec:gatekeeping}.
