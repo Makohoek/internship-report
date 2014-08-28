@@ -171,19 +171,19 @@ During a phone call, the smartphone isn't just transmitting the sound received f
 applied on the audio signal which is transmitted and received.
 Figure \ref{fig:audioArch} below shows an example of an audio architecture which shows the components involved.
 
-\begin{figureGraphics}{Audio architecture of a pandaboard}{fig:audioArch}
-    \includegraphics[height=0.5\textheight]{./src/img/Audio_arch2.jpg}
+\begin{figureGraphics}{Simplified audio architecture of a pandaboard}{fig:audioArch}
+    \includegraphics[height=0.5\textheight]{./src/img/audio-architecture.pdf}
 \end{figureGraphics}
 
 The sound goes:
 \begin{itemize}
     \item Trough the \emph{voice modem}
-    \item Via the \emph{Audio Back End} where some voice processing algorithms (such as noise reduction) are applied
-    \item Towards the \emph{Phoenix codec} to send the audio signal towards the headset.
+    \item Via the \emph{Audio DSP} where some voice processing algorithms (such as noise reduction) are applied
+    \item Towards the \emph{codec} to send the audio signal towards the headset.
 \end{itemize}
 
-Those algorithms have a lot of parameters, which can change depending on the use case for e.g. whether we are in a phone call,
-or listening to some music. Furthermore, those parameters are \emph{often hardware dependent}.
+Those algorithms have a lot of parameters, which can change depending on the accessory for e.g. whether we are using a headset,
+or using the speaker. Furthermore, those parameters are \emph{often hardware dependent}.
 
 The \gls{pfw} was designed to manage easily those multiple parameters in a scalable way.
 
